@@ -3941,11 +3941,18 @@ img { max-width: 100%; height: auto; }
 
     /* ---------- LOADER ---------- */
     const loader = document.getElementById('loader');
-    window.addEventListener('load', () => {
-        setTimeout(() => loader.classList.add('is-hidden'), 1900);
-    });
-    // Safety fallback in case 'load' never fires
-    setTimeout(() => loader && loader.classList.add('is-hidden'), 4000);
+    const _loaderKey = 'miamilounge_loader_carta';
+    const _today = new Date().toISOString().slice(0, 10);
+    const _lastShown = localStorage.getItem(_loaderKey);
+    if (_lastShown === _today) {
+        loader.classList.add('is-hidden');
+    } else {
+        localStorage.setItem(_loaderKey, _today);
+        window.addEventListener('load', () => {
+            setTimeout(() => loader.classList.add('is-hidden'), 1900);
+        });
+        setTimeout(() => loader && loader.classList.add('is-hidden'), 4000);
+    }
 
     /* ---------- YEAR ---------- */
     const yearEl = document.getElementById('year');
