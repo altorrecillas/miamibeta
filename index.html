@@ -1468,6 +1468,91 @@ blockquote footer {
         section { page-break-inside: avoid; }
     }
 
+
+/* ==================================================
+   LANGUAGE SWITCHER
+   ================================================== */
+.lang-switcher {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.72);
+    cursor: pointer;
+    transition: color 0.3s, border-color 0.3s, background 0.3s;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+}
+.lang-btn:hover {
+    color: #fff;
+    border-color: var(--pink);
+    background: rgba(255,46,147,0.08);
+}
+.lang-btn .lang-flag { font-size: 17px; line-height: 1; }
+.lang-btn .lang-code { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; }
+.lang-btn .lang-arrow { font-size: 9px; opacity: 0.6; transition: transform 0.3s var(--ease); }
+.lang-switcher.is-open .lang-arrow { transform: rotate(180deg); }
+.lang-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 140px;
+    background: rgba(20,3,42,0.98);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
+    z-index: 200;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(255,46,147,0.08);
+}
+.lang-switcher.is-open .lang-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.lang-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border: none;
+    background: none;
+    text-align: left;
+    letter-spacing: 0.02em;
+}
+.lang-option:hover { background: rgba(255,46,147,0.1); color: #fff; }
+.lang-option.is-active { color: var(--pink); background: rgba(255,46,147,0.08); }
+.lang-option .lang-option-flag { font-size: 18px; line-height: 1; }
+
+@media (max-width: 1024px) {
+    .lang-switcher { margin-right: 6px; }
+}
+@media (max-width: 640px) {
+    .lang-btn .lang-code { display: none; }
+}
+
     </style>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌴%3C/text%3E%3C/svg%3E" />
 </head>
@@ -1533,16 +1618,36 @@ blockquote footer {
             </span>
         </a>
         <nav class="nav-links">
-            <a href="#about" data-cursor="link">Nosotros</a>
-            <a href="galeria.html" data-cursor="link">Galería</a>
-            <a href="#cocktails" data-cursor="link">Cócteles</a>
-            <a href="carta.html" data-cursor="link">Carta</a>
-            <a href="#contact" data-cursor="link">Contacto</a>
+            <a href="#about" data-cursor="link" data-i18n="nav.about">Nosotros</a>
+            <a href="galeria.html" data-cursor="link" data-i18n="nav.gallery">Galería</a>
+            <a href="#cocktails" data-cursor="link" data-i18n="nav.cocktails">Cócteles</a>
+            <a href="carta.html" data-cursor="link" data-i18n="nav.menu">Carta</a>
+            <a href="#contact" data-cursor="link" data-i18n="nav.contact">Contacto</a>
         </nav>
         <a href="tel:+34691691080" class="nav-cta" data-cursor="link">
-            <span>Reservar</span>
+            <span data-i18n="nav.book">Reservar</span>
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
+        <!-- LANGUAGE SWITCHER -->
+        <div class="lang-switcher" id="langSwitcher">
+            <button class="lang-btn" id="langBtn" aria-label="Language / Idioma" aria-expanded="false" aria-haspopup="listbox">
+                <span class="lang-flag" id="langCurrentFlag">🇪🇸</span>
+                <span class="lang-code" id="langCurrentCode">ES</span>
+                <span class="lang-arrow">▾</span>
+            </button>
+            <div class="lang-dropdown" role="listbox" id="langDropdown">
+                <button class="lang-option is-active" role="option" data-lang="es">
+                    <span class="lang-option-flag">🇪🇸</span> Español
+                </button>
+                <button class="lang-option" role="option" data-lang="fr">
+                    <span class="lang-option-flag">🇫🇷</span> Français
+                </button>
+                <button class="lang-option" role="option" data-lang="en">
+                    <span class="lang-option-flag">🇬🇧</span> English
+                </button>
+            </div>
+        </div>
+
         <button class="nav-burger" id="navBurger" aria-label="Menú">
             <span></span><span></span><span></span>
         </button>
@@ -1550,12 +1655,12 @@ blockquote footer {
 
     <!-- Mobile menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#about">Nosotros</a>
-        <a href="galeria.html">Galería</a>
-        <a href="#cocktails">Cócteles</a>
-        <a href="carta.html">Carta</a>
-        <a href="#contact">Contacto</a>
-        <a href="tel:+34691691080" class="mobile-cta">Reservar mesa</a>
+        <a href="#about" data-i18n="nav.about">Nosotros</a>
+        <a href="galeria.html" data-i18n="nav.gallery">Galería</a>
+        <a href="#cocktails" data-i18n="nav.cocktails">Cócteles</a>
+        <a href="carta.html" data-i18n="nav.menu">Carta</a>
+        <a href="#contact" data-i18n="nav.contact">Contacto</a>
+        <a href="tel:+34691691080" class="mobile-cta" data-i18n="nav.bookTable">Reservar mesa</a>
     </div>
 
     <!-- =============== HERO =============== -->
@@ -1572,7 +1677,7 @@ blockquote footer {
         <div class="hero-content">
             <div class="hero-tag" data-reveal>
                 <span class="dot" id="statusDot"></span>
-                Temporada 2026 · Miami Platja · Tarragona
+                <span data-i18n="hero.tag">Temporada 2026 · Miami Platja · Tarragona</span>
             </div>
             <h1 class="hero-title" data-reveal data-delay="100">
                 <span class="hero-line">Miami</span>
@@ -1580,33 +1685,33 @@ blockquote footer {
                 <span class="hero-line gradient">Cocktail Bar</span>
             </h1>
             <p class="hero-loc" data-reveal data-delay="150">
-                Miami Platja <span class="loc-dot">·</span> Costa Dorada <span class="loc-dot">·</span> España
+                Miami Platja <span class="loc-dot">·</span> Costa Dorada <span class="loc-dot">·</span> <span data-i18n="hero.country">España</span>
             </p>
-            <p class="hero-sub" data-reveal data-delay="200">
+            <p class="hero-sub" data-reveal data-delay="200" data-i18n="hero.sub">
                 Cócteles artesanales elaborados al momento, una terraza chill-out con sofás, hamacas y columpios para desconectar junto al mar, y un ambiente cuidado que invita a relajarse y disfrutar sin prisas. Un rincón imprescindible en la <strong>Costa Dorada</strong> donde cada detalle está pensado para que vivas una experiencia única.
             </p>
             <div class="hero-ctas" data-reveal data-delay="300">
                 <a href="#contact" class="btn btn-primary" data-cursor="link">
-                    Reservar mesa
+                    <span data-i18n="hero.cta1">Reservar mesa</span>
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                 </a>
                 <a href="carta.html" class="btn btn-ghost" data-cursor="link">
-                    Ver carta completa
+                    <span data-i18n="hero.cta2">Ver carta completa</span>
                 </a>
             </div>
 
             <div class="hero-stats" data-reveal data-delay="400">
                 <div class="stat">
                     <strong>4.5<span>/5</span></strong>
-                    <span>Google Reviews</span>
+                    <span data-i18n="hero.stat1">Google Reviews</span>
                 </div>
                 <div class="stat">
                     <strong>2.436</strong>
-                    <span>seguidores en Facebook</span>
+                    <span data-i18n="hero.stat2">seguidores en Facebook</span>
                 </div>
                 <div class="stat">
                     <strong>3.835</strong>
-                    <span>visitas registradas</span>
+                    <span data-i18n="hero.stat3">visitas registradas</span>
                 </div>
             </div>
         </div>
@@ -1620,20 +1725,20 @@ blockquote footer {
     <!-- =============== MARQUEE =============== -->
     <div class="marquee">
         <div class="marquee-track">
-            <span>Cócteles artesanales</span><span class="dot">◆</span>
-            <span>Terraza chill-out</span><span class="dot">◆</span>
-            <span>Sofás, hamacas & columpios</span><span class="dot">◆</span>
+            <span data-i18n="marquee.1">Cócteles artesanales</span><span class="dot">◆</span>
+            <span data-i18n="marquee.2">Terraza chill-out</span><span class="dot">◆</span>
+            <span data-i18n="marquee.3">Sofás, hamacas & columpios</span><span class="dot">◆</span>
 
-            <span>Pet-friendly</span><span class="dot">◆</span>
-            <span>WiFi gratis</span><span class="dot">◆</span>
-            <span>Accesible</span><span class="dot">◆</span>
-            <span>Cócteles artesanales</span><span class="dot">◆</span>
-            <span>Terraza chill-out</span><span class="dot">◆</span>
-            <span>Sofás, hamacas & columpios</span><span class="dot">◆</span>
+            <span data-i18n="marquee.4">Pet-friendly</span><span class="dot">◆</span>
+            <span data-i18n="marquee.5">WiFi gratis</span><span class="dot">◆</span>
+            <span data-i18n="marquee.6">Accesible</span><span class="dot">◆</span>
+            <span data-i18n="marquee.1">Cócteles artesanales</span><span class="dot">◆</span>
+            <span data-i18n="marquee.2">Terraza chill-out</span><span class="dot">◆</span>
+            <span data-i18n="marquee.3">Sofás, hamacas & columpios</span><span class="dot">◆</span>
 
-            <span>Pet-friendly</span><span class="dot">◆</span>
-            <span>WiFi gratis</span><span class="dot">◆</span>
-            <span>Accesible</span><span class="dot">◆</span>
+            <span data-i18n="marquee.4">Pet-friendly</span><span class="dot">◆</span>
+            <span data-i18n="marquee.5">WiFi gratis</span><span class="dot">◆</span>
+            <span data-i18n="marquee.6">Accesible</span><span class="dot">◆</span>
         </div>
     </div>
 
@@ -1642,28 +1747,28 @@ blockquote footer {
         <div class="container">
             <div class="about-grid">
                 <div class="about-text" data-reveal>
-                    <span class="eyebrow">— Sobre nosotros</span>
+                    <span class="eyebrow" data-i18n="about.eyebrow">— Sobre nosotros</span>
                     <h2 class="section-title">
                         El lounge-bar de <em>referencia</em><br/>
                         en <span class="gradient">Miami Platja</span>.
                     </h2>
-                    <p class="lead">
+                    <p class="lead" data-i18n="about.lead">
                         <strong>Miami Lounge</strong> es un lounge-bar de referencia en Miami Playa,
                         con una <strong>amplia terraza decorada con colores vivos</strong> y con vistas a la avenida principal.
                     </p>
-                    <p>
+                    <p data-i18n="about.p1">
                         Especializado en <strong>cócteles artesanales</strong> elaborados con ingredientes de calidad, ofrece
                         tanto creaciones de la casa como clásicos revisitados, con opciones para todos los gustos y ritmos de fiesta.
                         El ambiente combina <strong>música</strong> y buenas vibraciones con <strong>noches temáticas</strong>,
                         creando un espacio dinámico donde compartir buenas conversaciones y disfrutar bajo las estrellas.
                     </p>
-                    <p>
+                    <p data-i18n="about.p2">
                         Dispone de <strong>diferentes zonas de asientos</strong> — sofás, hamacas y columpios —
                         que se adaptan tanto a encuentros íntimos como a grupos de amigos. El servicio, valorado por su
                         amabilidad y profesionalidad, incluye recomendaciones personalizadas de cócteles y un trato
                         cercano que hace que cada visita sea memorable.
                     </p>
-                    <p>
+                    <p data-i18n="about.quote">
                         <em>"Una parada imprescindible para quien busca disfrutar de la vida nocturna en la Costa Dorada."</em>
                     </p>
 
@@ -1671,29 +1776,29 @@ blockquote footer {
                         <div class="af-item">
                             <div class="af-icon">🍹</div>
                             <div>
-                                <strong>Cócteles artesanales</strong>
-                                <span>De la casa y clásicos</span>
+                                <strong data-i18n="about.feat1.title">Cócteles artesanales</strong>
+                                <span data-i18n="about.feat1.sub">De la casa y clásicos</span>
                             </div>
                         </div>
                         <div class="af-item">
                             <div class="af-icon">🛋️</div>
                             <div>
-                                <strong>Sofás & hamacas</strong>
-                                <span>Y columpios para relajarte</span>
+                                <strong data-i18n="about.feat2.title">Sofás & hamacas</strong>
+                                <span data-i18n="about.feat2.sub">Y columpios para relajarte</span>
                             </div>
                         </div>
                         <div class="af-item">
                             <div class="af-icon">🎵</div>
                             <div>
-                                <strong>Música para disfrutar</strong>
-                                <span>Ambiente agradable</span>
+                                <strong data-i18n="about.feat3.title">Música para disfrutar</strong>
+                                <span data-i18n="about.feat3.sub">Ambiente agradable</span>
                             </div>
                         </div>
                         <div class="af-item">
                             <div class="af-icon">🐶</div>
                             <div>
-                                <strong>Pet-friendly</strong>
-                                <span>Ven con tu amigo peludo</span>
+                                <strong data-i18n="about.feat4.title">Pet-friendly</strong>
+                                <span data-i18n="about.feat4.sub">Ven con tu amigo peludo</span>
                             </div>
                         </div>
                     </div>
@@ -1702,7 +1807,7 @@ blockquote footer {
                 <div class="about-media" data-reveal data-delay="200">
                     <div class="about-card">
                         <img src="img/miami-7.jpg" alt="Terraza Miami Lounge" loading="lazy" decoding="async"/>
-                        <div class="about-card-tag">Terraza chill-out</div>
+                        <div class="about-card-tag" data-i18n="about.imgTag">Terraza chill-out</div>
                     </div>
                     <div class="about-card small">
                         <img src="img/miami-8.jpg" alt="Cócteles Miami Lounge" loading="lazy" decoding="async"/>
@@ -1719,47 +1824,47 @@ blockquote footer {
     <section class="gallery" id="gallery">
         <div class="container">
             <div class="section-head" data-reveal>
-                <span class="eyebrow">— Galería</span>
+                <span class="eyebrow" data-i18n="gallery.eyebrow">— Galería</span>
                 <h2 class="section-title">Una <em>experiencia</em> para <span class="gradient">los sentidos</span></h2>
-                <p class="section-sub">Cócteles, atardeceres, música y el auténtico ambiente de Miami Platja.</p>
+                <p class="section-sub" data-i18n="gallery.sub">Cócteles, atardeceres, música y el auténtico ambiente de Miami Platja.</p>
             </div>
 
             <div class="gallery-grid">
                 <a href="img/miami-1.jpg" class="g-item g-big" data-reveal data-cursor="view">
                     <img src="img/miami-1.jpg" alt="Miami Lounge ambiente" loading="lazy" decoding="async"/>
-                    <div class="g-overlay"><span>+ Ver</span></div>
+                    <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
                 <a href="img/miami-2.jpg" class="g-item g-tall" data-reveal data-cursor="view">
                     <img src="img/miami-2.jpg" alt="Terraza Miami Lounge" loading="lazy" decoding="async"/>
-                    <div class="g-overlay"><span>+ Ver</span></div>
+                    <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
                 <a href="img/miami-3.jpg" class="g-item" data-reveal data-cursor="view">
                     <img src="img/miami-3.jpg" alt="Miami Lounge interior" loading="lazy" decoding="async"/>
-                    <div class="g-overlay"><span>+ Ver</span></div>
+                    <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
                 <a href="img/miami-4.jpg" class="g-item" data-reveal data-cursor="view">
                     <img src="img/miami-4.jpg" alt="Cócteles Miami Lounge" loading="lazy" decoding="async"/>
-                    <div class="g-overlay"><span>+ Ver</span></div>
+                    <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
                 <a href="img/miami-5.jpg" class="g-item" data-reveal data-cursor="view">
                     <img src="img/miami-5.jpg" alt="Terraza Miami Lounge" loading="lazy" decoding="async"/>
-                    <div class="g-overlay"><span>+ Ver</span></div>
+                    <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
                 <a href="img/miami-10.jpg" class="g-item g-wide" data-reveal data-cursor="view">
                     <img src="img/miami-10.jpg" alt="Miami Lounge ambiente" loading="lazy" decoding="async"/>
-                    <div class="g-overlay"><span>+ Ver</span></div>
+                    <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
                 <a href="img/miami-11.jpg" class="g-item g-tall" data-reveal data-cursor="view">
                     <img src="img/miami-11.jpg" alt="Cócteles Miami Lounge" loading="lazy" decoding="async"/>
-                    <div class="g-overlay"><span>+ Ver</span></div>
+                    <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
                 <a href="img/miami-12.jpg" class="g-item" data-reveal data-cursor="view">
                     <img src="img/miami-12.jpg" alt="Ambiente Miami Lounge" loading="lazy" decoding="async"/>
-                    <div class="g-overlay"><span>+ Ver</span></div>
+                    <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
                 <a href="img/miami-13.jpg" class="g-item" data-reveal data-cursor="view">
                     <img src="img/miami-13.jpg" alt="Noche en Miami Lounge" loading="lazy" decoding="async"/>
-                    <div class="g-overlay"><span>+ Ver</span></div>
+                    <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
             </div>
         </div>
@@ -1776,9 +1881,9 @@ blockquote footer {
     <section class="cocktails" id="cocktails">
         <div class="container">
             <div class="section-head" data-reveal>
-                <span class="eyebrow">— Nuestra carta</span>
+                <span class="eyebrow" data-i18n="cocktails.eyebrow">— Nuestra carta</span>
                 <h2 class="section-title">Cócteles <em>de autor</em> y <span class="gradient">clásicos</span></h2>
-                <p class="section-sub">Una selección artesanal para todos los gustos. Con y sin alcohol.</p>
+                <p class="section-sub" data-i18n="cocktails.sub">Una selección artesanal para todos los gustos. Con y sin alcohol.</p>
             </div>
 
             <div class="cocktails-grid">
@@ -1788,8 +1893,8 @@ blockquote footer {
                         <span class="cocktail-emoji" aria-hidden="true">🍹</span>
                     </div>
                     <h3>Mojito</h3>
-                    <p>Ron blanco, hierbabuena fresca, lima y soda. El clásico cubano que nunca falla.</p>
-                    <span class="cocktail-tag">Clásico</span>
+                    <p data-i18n="cocktails.mojito.desc">Ron blanco, hierbabuena fresca, lima y soda. El clásico cubano que nunca falla.</p>
+                    <span class="cocktail-tag" data-i18n="cocktails.mojito.tag">Clásico</span>
                 </article>
 
                 <article class="cocktail-card" data-reveal data-delay="100">
@@ -1798,8 +1903,8 @@ blockquote footer {
                         <span class="cocktail-emoji" aria-hidden="true">🍹</span>
                     </div>
                     <h3>Caipiriña</h3>
-                    <p>Cachaça, lima fresca y azúcar. Pura energía brasileña en tu copa.</p>
-                    <span class="cocktail-tag">Tropical</span>
+                    <p data-i18n="cocktails.caipirinha.desc">Cachaça, lima fresca y azúcar. Pura energía brasileña en tu copa.</p>
+                    <span class="cocktail-tag" data-i18n="cocktails.caipirinha.tag">Tropical</span>
                 </article>
 
                 <article class="cocktail-card" data-reveal data-delay="200">
@@ -1808,8 +1913,8 @@ blockquote footer {
                         <span class="cocktail-emoji" aria-hidden="true">🍓</span>
                     </div>
                     <h3>Marcoco</h3>
-                    <p>La creación de la casa que no puedes dejar de probar. Pregunta por él.</p>
-                    <span class="cocktail-tag">De Autor</span>
+                    <p data-i18n="cocktails.marcoco.desc">La creación de la casa que no puedes dejar de probar. Pregunta por él.</p>
+                    <span class="cocktail-tag" data-i18n="cocktails.marcoco.tag">De Autor</span>
                 </article>
 
                 <article class="cocktail-card" data-reveal data-delay="300">
@@ -1817,9 +1922,9 @@ blockquote footer {
                         <div class="cocktail-glow"></div>
                         <span class="cocktail-emoji" aria-hidden="true">🍷</span>
                     </div>
-                    <h3>Sangría de la casa</h3>
-                    <p>Receta artesanal con vino, frutas frescas y un toque secreto. El must del verano.</p>
-                    <span class="cocktail-tag">Casera</span>
+                    <h3 data-i18n="cocktails.sangria.name">Sangría de la casa</h3>
+                    <p data-i18n="cocktails.sangria.desc">Receta artesanal con vino, frutas frescas y un toque secreto. El must del verano.</p>
+                    <span class="cocktail-tag" data-i18n="cocktails.sangria.tag">Casera</span>
                 </article>
 
                 <article class="cocktail-card" data-reveal data-delay="400">
@@ -1827,9 +1932,9 @@ blockquote footer {
                         <div class="cocktail-glow"></div>
                         <span class="cocktail-emoji" aria-hidden="true">🍺</span>
                     </div>
-                    <h3>Cervezas & combinados</h3>
-                    <p>Cervezas bien frías, gin tonics premium, combinados clásicos y de autor.</p>
-                    <span class="cocktail-tag">Cervezas</span>
+                    <h3 data-i18n="cocktails.beers.name">Cervezas & combinados</h3>
+                    <p data-i18n="cocktails.beers.desc">Cervezas bien frías, gin tonics premium, combinados clásicos y de autor.</p>
+                    <span class="cocktail-tag" data-i18n="cocktails.beers.tag">Cervezas</span>
                 </article>
 
                 <article class="cocktail-card" data-reveal data-delay="500">
@@ -1837,9 +1942,9 @@ blockquote footer {
                         <div class="cocktail-glow"></div>
                         <span class="cocktail-emoji" aria-hidden="true">🍹</span>
                     </div>
-                    <h3>Sin alcohol</h3>
-                    <p>Mojito de frutas, virgin coladas y mocktails refrescantes. Para todos.</p>
-                    <span class="cocktail-tag">Mocktails</span>
+                    <h3 data-i18n="cocktails.mocktails.name">Sin alcohol</h3>
+                    <p data-i18n="cocktails.mocktails.desc">Mojito de frutas, virgin coladas y mocktails refrescantes. Para todos.</p>
+                    <span class="cocktail-tag" data-i18n="cocktails.mocktails.tag">Mocktails</span>
                 </article>
             </div>
         </div>
@@ -1859,30 +1964,30 @@ blockquote footer {
         <div class="container">
             <div class="schedule-wrap" data-reveal>
                 <div class="schedule-text">
-                    <span class="eyebrow">— Te esperamos</span>
+                    <span class="eyebrow" data-i18n="schedule.eyebrow">— Te esperamos</span>
                     <h2 class="season-badge">
-                        <span class="dot"></span> Temporada verano 2026 · ¡Ya estamos abiertos!
+                        <span class="dot"></span> <span data-i18n="schedule.badge">Temporada verano 2026 · ¡Ya estamos abiertos!</span>
                     </h2>
-                    <h2 class="section-title">Horario de <em>apertura</em></h2>
+                    <h2 class="section-title" data-i18n="schedule.title">Horario de <em>apertura</em></h2>
                     <p>
-                        Miami Lounge abre <strong>todas las noches del verano</strong> para que disfrutes
-                        de cócteles, buena música y la mejor compañía en la Costa Dorada.
+                        <span data-i18n="schedule.p">Miami Lounge abre <strong>todas las noches del verano</strong> para que disfrutes
+                        de cócteles, buena música y la mejor compañía en la Costa Dorada.</span>
                     </p>
-                    <p class="schedule-note">⚠️ Horario de temporada (verano 2026).. Llámanos o escríbenos al <a href="https://instagram.com/miamiloungebar" target="_blank" rel="noopener">@miamiloungebar</a> para reservas o eventos privados.</p>
+                    <p class="schedule-note" data-i18n="schedule.note">⚠️ Horario de temporada (verano 2026).. Llámanos o escríbenos al <a href="https://instagram.com/miamiloungebar" target="_blank" rel="noopener">@miamiloungebar</a> para reservas o eventos privados.</p>
                     <a href="tel:+34691691080" class="btn btn-primary" data-cursor="link">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        Llamar para reservar
+                        <span data-i18n="schedule.cta">Llamar para reservar</span>
                     </a>
                 </div>
 
                 <ul class="schedule-list">
-                    <li class="hot"><span>Lunes</span><strong>19:00 — 02:30</strong></li>
-                    <li class="hot"><span>Martes</span><strong>19:00 — 02:30</strong></li>
-                    <li class="hot"><span>Miércoles</span><strong>19:00 — 02:30</strong></li>
-                    <li class="hot"><span>Jueves</span><strong>19:00 — 02:30</strong></li>
-                    <li class="hot"><span>Viernes</span><strong>19:00 — 02:30</strong></li>
-                    <li class="hot"><span>Sábado</span><strong>19:00 — 02:30</strong></li>
-                    <li class="hot"><span>Domingo</span><strong>19:00 — 02:30</strong></li>
+                    <li class="hot"><span data-i18n="schedule.mon">Lunes</span><strong>19:00 — 02:30</strong></li>
+                    <li class="hot"><span data-i18n="schedule.tue">Martes</span><strong>19:00 — 02:30</strong></li>
+                    <li class="hot"><span data-i18n="schedule.wed">Miércoles</span><strong>19:00 — 02:30</strong></li>
+                    <li class="hot"><span data-i18n="schedule.thu">Jueves</span><strong>19:00 — 02:30</strong></li>
+                    <li class="hot"><span data-i18n="schedule.fri">Viernes</span><strong>19:00 — 02:30</strong></li>
+                    <li class="hot"><span data-i18n="schedule.sat">Sábado</span><strong>19:00 — 02:30</strong></li>
+                    <li class="hot"><span data-i18n="schedule.sun">Domingo</span><strong>19:00 — 02:30</strong></li>
                 </ul>
             </div>
         </div>
@@ -1892,21 +1997,21 @@ blockquote footer {
     <section class="testimonials">
         <div class="container">
             <div class="section-head" data-reveal>
-                <span class="eyebrow">— Lo que dicen</span>
-                <h2 class="section-title">2.436 razones para <em>venir</em></h2>
-                <p class="section-sub">Reseñas reales de Google y TripAdvisor (4.5/5 sobre 895 opiniones).</p>
+                <span class="eyebrow" data-i18n="reviews.eyebrow">— Lo que dicen</span>
+                <h2 class="section-title" data-i18n="reviews.title">2.436 razones para <em>venir</em></h2>
+                <p class="section-sub" data-i18n="reviews.sub">Reseñas reales de Google y TripAdvisor (4.5/5 sobre 895 opiniones).</p>
             </div>
             <div class="t-grid">
                 <blockquote data-reveal>
-                    <p>"Una cálida bienvenida, un lugar bien equipado, una terraza preciosa, un servicio y cócteles de primera. ¡Una delicia! Encontramos este lugar durante nuestro paseo nocturno. Ambos cócteles (caipiriña y mojito) estaban deliciosos."</p>
+                    <p><span data-i18n="reviews.r1">"Una cálida bienvenida, un lugar bien equipado, una terraza preciosa, un servicio y cócteles de primera. ¡Una delicia! Encontramos este lugar durante nuestro paseo nocturno. Ambos cócteles (caipiriña y mojito) estaban deliciosos."</span></p>
                     <footer>— ju ju · Google</footer>
                 </blockquote>
                 <blockquote data-reveal data-delay="100">
-                    <p>"¡El Miami Lounge es muy recomendable! 🍹 Las bebidas están preparadas de forma excelente y tienen un sabor delicioso. El personal es súper amable y atento; te sientes como en casa enseguida. La música también se adapta perfectamente al ambiente. ¡La sangría está buenísima!"</p>
+                    <p><span data-i18n="reviews.r2">"¡El Miami Lounge es muy recomendable! 🍹 Las bebidas están preparadas de forma excelente y tienen un sabor delicioso. El personal es súper amable y atento; te sientes como en casa enseguida. La música también se adapta perfectamente al ambiente. ¡La sangría está buenísima!"</span></p>
                     <footer>— Per Röger · Google</footer>
                 </blockquote>
                 <blockquote data-reveal data-delay="200">
-                    <p>"Nice terrace/garden in Caribbean style. Very often music from 22:00 till 24:00 then it stops because of license. The house-made sangria was highlighted for its taste, and live music added to the ambiance. This is the best bar in the area."</p>
+                    <p><span data-i18n="reviews.r3">"Nice terrace/garden in Caribbean style. Very often music from 22:00 till 24:00 then it stops because of license. The house-made sangria was highlighted for its taste, and live music added to the ambiance. This is the best bar in the area."</span></p>
                     <footer>— Chris M · Google</footer>
                 </blockquote>
             </div>
@@ -1918,15 +2023,15 @@ blockquote footer {
         <div class="container">
             <div class="contact-grid">
                 <div class="contact-info" data-reveal>
-                    <span class="eyebrow">— Encuéntranos</span>
-                    <h2 class="section-title">Ven a <em>vivirlo</em></h2>
-                    <p>En el corazón de <strong>Miami Platja</strong>, a un paso de la playa, en la avenida principal de la Costa Dorada.</p>
+                    <span class="eyebrow" data-i18n="contact.eyebrow">— Encuéntranos</span>
+                    <h2 class="section-title" data-i18n="contact.title">Ven a <em>vivirlo</em></h2>
+                    <p data-i18n="contact.sub">En el corazón de <strong>Miami Platja</strong>, a un paso de la playa, en la avenida principal de la Costa Dorada.</p>
 
                     <ul class="contact-list">
                         <li>
                             <span class="ci-icon" aria-hidden="true">📍</span>
                             <div>
-                                <strong>Dirección</strong>
+                                <strong data-i18n="contact.address">Dirección</strong>
                                 <a href="https://maps.google.com/?q=Avinguda+de+Barcelona,+40,+43892+Miami+Platja,+Tarragona" target="_blank" rel="noopener" data-cursor="link">
                                     Avinguda de Barcelona, 40<br/>43892 Miami Platja, Tarragona
                                 </a>
@@ -1935,28 +2040,28 @@ blockquote footer {
                         <li>
                             <span class="ci-icon" aria-hidden="true">📞</span>
                             <div>
-                                <strong>Teléfono</strong>
+                                <strong data-i18n="contact.phone">Teléfono</strong>
                                 <a href="tel:+34691691080" data-cursor="link">+34 691 69 10 80</a>
                             </div>
                         </li>
                         <li>
                             <span class="ci-icon" aria-hidden="true">✉️</span>
                             <div>
-                                <strong>Email</strong>
+                                <strong data-i18n="contact.email">Email</strong>
                                 <a href="mailto:nanievies@gmail.com" data-cursor="link">nanievies@gmail.com</a>
                             </div>
                         </li>
                         <li>
                             <span class="ci-icon" aria-hidden="true">🌐</span>
                             <div>
-                                <strong>Web</strong>
+                                <strong data-i18n="contact.web">Web</strong>
                                 <a href="https://www.miamilounge.es/" target="_blank" rel="noopener" data-cursor="link">www.miamilounge.es</a>
                             </div>
                         </li>
                         <li>
                             <span class="ci-icon" aria-hidden="true">🌴</span>
                             <div>
-                                <strong>Zona</strong>
+                                <strong data-i18n="contact.zone">Zona</strong>
                                 <span>Mont-roig del Camp · Costa Dorada</span>
                             </div>
                         </li>
@@ -1964,14 +2069,14 @@ blockquote footer {
                             <span class="ci-icon" aria-hidden="true">🐶</span>
                             <div>
                                 <strong>Pet-friendly</strong>
-                                <span>Tu mascota es bienvenida en nuestra terraza</span>
+                                <span data-i18n="contact.pet">Tu mascota es bienvenida en nuestra terraza</span>
                             </div>
                         </li>
                         <li>
                             <span class="ci-icon" aria-hidden="true">♿</span>
                             <div>
-                                <strong>Accesible</strong>
-                                <span>Adaptado para personas con movilidad reducida</span>
+                                <strong data-i18n="contact.accessible">Accesible</strong>
+                                <span data-i18n="contact.accessibleDesc">Adaptado para personas con movilidad reducida</span>
                             </div>
                         </li>
                     </ul>
@@ -1979,7 +2084,7 @@ blockquote footer {
                     <div class="socials">
                         <a href="https://www.facebook.com/miamiloungecocteles" target="_blank" rel="noopener" data-cursor="link" aria-label="Facebook">Facebook</a>
                         <a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener" data-cursor="link" aria-label="Instagram">Instagram</a>
-                        <a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener" data-cursor="link" aria-label="Turismo">Turismo</a>
+                        <a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener" data-cursor="link" aria-label="Turismo" data-i18n="contact.tourism">Turismo</a>
                         <a href="https://g.page/r/miami-lounge-miami-platja" target="_blank" rel="noopener" data-cursor="link" aria-label="Google">Google</a>
                     </div>
                 </div>
@@ -2009,34 +2114,34 @@ blockquote footer {
                         <span class="nav-logo-mark big">M</span>
                         <strong>MIAMI LOUNGE BAR</strong>
                     </div>
-                    <p>Lounge-bar de referencia en Miami Platja, Costa Dorada. Cócteles, música y atardeceres mediterráneos.</p>
+                    <p data-i18n="footer.brand">Lounge-bar de referencia en Miami Platja, Costa Dorada. Cócteles, música y atardeceres mediterráneos.</p>
                 </div>
                 <div class="footer-cols">
                     <div>
-                        <h4>Contacto</h4>
+                        <h4 data-i18n="footer.col1.title">Contacto</h4>
                         <p>Av. de Barcelona, 40<br/>43892 Miami Platja, Tarragona</p>
                         <p><a href="tel:+34691691080">+34 691 69 10 80</a></p>
                         <p><a href="mailto:nanievies@gmail.com">nanievies@gmail.com</a></p>
                         <p><a href="https://www.miamilounge.es/" target="_blank" rel="noopener">www.miamilounge.es</a></p>
                     </div>
                     <div>
-                        <h4>Síguenos</h4>
+                        <h4 data-i18n="footer.col2.title">Síguenos</h4>
                         <p><a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener">Instagram</a></p>
                         <p><a href="https://www.facebook.com/miamiloungecocteles" target="_blank" rel="noopener">Facebook</a></p>
-                        <p><a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener">Web oficial turismo</a></p>
+                        <p><a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener" data-i18n="footer.col2.tourism">Web oficial turismo</a></p>
                         <p><a href="https://www.tripadvisor.com/" target="_blank" rel="noopener">TripAdvisor</a></p>
                     </div>
                     <div>
-                        <h4>Información</h4>
-                        <p><a href="#">Aviso legal</a></p>
-                        <p><a href="#">Privacidad</a></p>
-                        <p><a href="#">Cookies</a></p>
+                        <h4 data-i18n="footer.col3.title">Información</h4>
+                        <p><a href="#" data-i18n="footer.col3.legal">Aviso legal</a></p>
+                        <p><a href="#" data-i18n="footer.col3.privacy">Privacidad</a></p>
+                        <p><a href="#" data-i18n="footer.col3.cookies">Cookies</a></p>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
                 <span>© <span id="year"></span> Miami Lounge Bar · Miami Platja, Tarragona.</span>
-                <span>Drink responsibly · Bebe con responsabilidad. +18</span>
+                <span data-i18n="footer.responsible">Drink responsibly · Bebe con responsabilidad. +18</span>
             </div>
         </div>
         <div class="footer-marquee">
@@ -2046,13 +2151,224 @@ blockquote footer {
 
     <!-- =============== LIGHTBOX =============== -->
     <div class="lightbox" id="lightbox" aria-hidden="true">
-        <button class="lb-close" id="lbClose" aria-label="Cerrar">×</button>
-        <button class="lb-prev" id="lbPrev" aria-label="Anterior">‹</button>
-        <button class="lb-next" id="lbNext" aria-label="Siguiente">›</button>
+        <button class="lb-close" id="lbClose" aria-label="Cerrar" data-i18n-aria="lb.close">×</button>
+        <button class="lb-prev" id="lbPrev" aria-label="Anterior" data-i18n-aria="lb.prev">‹</button>
+        <button class="lb-next" id="lbNext" aria-label="Siguiente" data-i18n-aria="lb.next">›</button>
         <img id="lbImg" alt="" loading="lazy" decoding="async"/>
         <div class="lb-counter" id="lbCounter"></div>
     </div>
         <script>
+
+/* ==================================================
+   MIAMI LOUNGE BAR — i18n (ES / FR / EN)
+   ================================================== */
+const i18nData = {
+    es: {
+        "nav.about":"Nosotros","nav.gallery":"Galería","nav.cocktails":"Cócteles","nav.menu":"Carta","nav.contact":"Contacto","nav.book":"Reservar","nav.bookTable":"Reservar mesa",
+        "hero.tag":"Temporada 2026 · Miami Platja · Tarragona","hero.country":"España",
+        "hero.sub":"Cócteles artesanales elaborados al momento, una terraza chill-out con sofás, hamacas y columpios para desconectar junto al mar, y un ambiente cuidado que invita a relajarse y disfrutar sin prisas. Un rincón imprescindible en la <strong>Costa Dorada</strong> donde cada detalle está pensado para que vivas una experiencia única.",
+        "hero.cta1":"Reservar mesa","hero.cta2":"Ver carta completa","hero.stat1":"Google Reviews","hero.stat2":"seguidores en Facebook","hero.stat3":"visitas registradas",
+        "marquee.1":"Cócteles artesanales","marquee.2":"Terraza chill-out","marquee.3":"Sofás, hamacas & columpios","marquee.4":"Pet-friendly","marquee.5":"WiFi gratis","marquee.6":"Accesible",
+        "about.eyebrow":"— Sobre nosotros",
+        "about.feat1.title":"Cócteles artesanales","about.feat1.sub":"De la casa y clásicos",
+        "about.feat2.title":"Sofás & hamacas","about.feat2.sub":"Y columpios para relajarte",
+        "about.feat3.title":"Música para disfrutar","about.feat3.sub":"Ambiente agradable",
+        "about.feat4.title":"Pet-friendly","about.feat4.sub":"Ven con tu amigo peludo",
+        "about.imgTag":"Terraza chill-out",
+        "about.lead":"<strong>Miami Lounge</strong> es un lounge-bar de referencia en Miami Playa, con una <strong>amplia terraza decorada con colores vivos</strong> y con vistas a la avenida principal.",
+        "about.p1":"Especializado en <strong>cócteles artesanales</strong> elaborados con ingredientes de calidad, ofrece tanto creaciones de la casa como clásicos revisitados, con opciones para todos los gustos y ritmos de fiesta. El ambiente combina <strong>música</strong> y buenas vibraciones con <strong>noches temáticas</strong>, creando un espacio dinámico donde compartir buenas conversaciones y disfrutar bajo las estrellas.",
+        "about.p2":"Dispone de <strong>diferentes zonas de asientos</strong> — sofás, hamacas y columpios — que se adaptan tanto a encuentros íntimos como a grupos de amigos. El servicio, valorado por su amabilidad y profesionalidad, incluye recomendaciones personalizadas de cócteles y un trato cercano que hace que cada visita sea memorable.",
+        "about.quote":"<em>\"Una parada imprescindible para quien busca disfrutar de la vida nocturna en la Costa Dorada.\"</em>",
+        "gallery.eyebrow":"— Galería","gallery.sub":"Cócteles, atardeceres, música y el auténtico ambiente de Miami Platja.","gallery.view":"+ Ver","gallery.btn":"Ver más fotos",
+        "cocktails.eyebrow":"— Nuestra carta","cocktails.sub":"Una selección artesanal para todos los gustos. Con y sin alcohol.",
+        "cocktails.mojito.desc":"Ron blanco, hierbabuena fresca, lima y soda. El clásico cubano que nunca falla.","cocktails.mojito.tag":"Clásico",
+        "cocktails.caipirinha.desc":"Cachaça, lima fresca y azúcar. Pura energía brasileña en tu copa.","cocktails.caipirinha.tag":"Tropical",
+        "cocktails.marcoco.desc":"La creación de la casa que no puedes dejar de probar. Pregunta por él.","cocktails.marcoco.tag":"De Autor",
+        "cocktails.sangria.name":"Sangría de la casa","cocktails.sangria.desc":"Receta artesanal con vino, frutas frescas y un toque secreto. El must del verano.","cocktails.sangria.tag":"Casera",
+        "cocktails.beers.name":"Cervezas & combinados","cocktails.beers.desc":"Cervezas bien frías, gin tonics premium, combinados clásicos y de autor.","cocktails.beers.tag":"Cervezas",
+        "cocktails.mocktails.name":"Sin alcohol","cocktails.mocktails.desc":"Mojito de frutas, virgin coladas y mocktails refrescantes. Para todos.","cocktails.mocktails.tag":"Mocktails",
+        "cocktails.btn":"Ver carta",
+        "schedule.eyebrow":"— Te esperamos","schedule.badge":"Temporada verano 2026 · ¡Ya estamos abiertos!","schedule.title":"Horario de <em>apertura</em>",
+        "schedule.p":"Miami Lounge abre <strong>todas las noches del verano</strong> para que disfrutes de cócteles, buena música y la mejor compañía en la Costa Dorada.",
+        "schedule.note":"⚠️ Horario de temporada (verano 2026). Llámanos o escríbenos al <a href=\"https://instagram.com/miamiloungebar\" target=\"_blank\" rel=\"noopener\">@miamiloungebar</a> para reservas o eventos privados.",
+        "schedule.cta":"Llamar para reservar",
+        "schedule.mon":"Lunes","schedule.tue":"Martes","schedule.wed":"Miércoles","schedule.thu":"Jueves","schedule.fri":"Viernes","schedule.sat":"Sábado","schedule.sun":"Domingo",
+        "reviews.eyebrow":"— Lo que dicen","reviews.title":"2.436 razones para <em>venir</em>","reviews.sub":"Reseñas reales de Google y TripAdvisor (4.5/5 sobre 895 opiniones).",
+        "reviews.r1":"\"Una cálida bienvenida, un lugar bien equipado, una terraza preciosa, un servicio y cócteles de primera. ¡Una delicia! Encontramos este lugar durante nuestro paseo nocturno. Ambos cócteles (caipiriña y mojito) estaban deliciosos.\"",
+        "reviews.r2":"\"¡El Miami Lounge es muy recomendable! 🍹 Las bebidas están preparadas de forma excelente y tienen un sabor delicioso. El personal es súper amable y atento; te sientes como en casa enseguida. La música también se adapta perfectamente al ambiente. ¡La sangría está buenísima!\"",
+        "reviews.r3":"\"Nice terrace/garden in Caribbean style. Very often music from 22:00 till 24:00 then it stops because of license. The house-made sangria was highlighted for its taste, and live music added to the ambiance. This is the best bar in the area.\"",
+        "contact.eyebrow":"— Encuéntranos","contact.title":"Ven a <em>vivirlo</em>",
+        "contact.sub":"En el corazón de <strong>Miami Platja</strong>, a un paso de la playa, en la avenida principal de la Costa Dorada.",
+        "contact.address":"Dirección","contact.phone":"Teléfono","contact.email":"Email","contact.web":"Web","contact.zone":"Zona",
+        "contact.pet":"Tu mascota es bienvenida en nuestra terraza","contact.accessible":"Accesible","contact.accessibleDesc":"Adaptado para personas con movilidad reducida","contact.tourism":"Turismo",
+        "footer.brand":"Lounge-bar de referencia en Miami Platja, Costa Dorada. Cócteles, música y atardeceres mediterráneos.",
+        "footer.col1.title":"Contacto","footer.col2.title":"Síguenos","footer.col2.tourism":"Web oficial turismo",
+        "footer.col3.title":"Información","footer.col3.legal":"Aviso legal","footer.col3.privacy":"Privacidad","footer.col3.cookies":"Cookies",
+        "footer.responsible":"Drink responsibly · Bebe con responsabilidad. +18",
+        "lb.close":"Cerrar","lb.prev":"Anterior","lb.next":"Siguiente"
+    },
+    fr: {
+        "nav.about":"À propos","nav.gallery":"Galerie","nav.cocktails":"Cocktails","nav.menu":"Carte","nav.contact":"Contact","nav.book":"Réserver","nav.bookTable":"Réserver une table",
+        "hero.tag":"Saison 2026 · Miami Platja · Tarragona","hero.country":"Espagne",
+        "hero.sub":"Cocktails artisanaux préparés sur place, une terrasse chill-out avec canapés, hamacs et balançoires pour se déconnecter au bord de la mer, et une ambiance soignée qui invite à se détendre et profiter sans se presser. Un endroit incontournable sur la <strong>Costa Dorada</strong> où chaque détail est pensé pour vous offrir une expérience unique.",
+        "hero.cta1":"Réserver une table","hero.cta2":"Voir la carte complète","hero.stat1":"Avis Google","hero.stat2":"abonnés sur Facebook","hero.stat3":"visites enregistrées",
+        "marquee.1":"Cocktails artisanaux","marquee.2":"Terrasse chill-out","marquee.3":"Canapés, hamacs & balançoires","marquee.4":"Animaux bienvenus","marquee.5":"WiFi gratuit","marquee.6":"Accessible PMR",
+        "about.eyebrow":"— À propos",
+        "about.feat1.title":"Cocktails artisanaux","about.feat1.sub":"Maison et classiques",
+        "about.feat2.title":"Canapés & hamacs","about.feat2.sub":"Et balançoires pour vous détendre",
+        "about.feat3.title":"Musique & ambiance","about.feat3.sub":"Atmosphère agréable",
+        "about.feat4.title":"Animaux bienvenus","about.feat4.sub":"Venez avec votre ami à poils",
+        "about.imgTag":"Terrasse chill-out",
+        "about.lead":"<strong>Miami Lounge</strong> est un bar lounge de référence à Miami Playa, avec une <strong>grande terrasse décorée de couleurs vives</strong> et vue sur l'avenue principale.",
+        "about.p1":"Spécialisé dans les <strong>cocktails artisanaux</strong> élaborés avec des ingrédients de qualité, il propose aussi bien des créations maison que des classiques revisités. L'ambiance allie <strong>musique</strong> et bonnes vibrations avec des <strong>soirées thématiques</strong>, créant un espace dynamique pour partager de bonnes conversations sous les étoiles.",
+        "about.p2":"Il dispose de <strong>différentes zones de sièges</strong> — canapés, hamacs et balançoires — qui s'adaptent aussi bien aux rencontres intimes qu'aux groupes d'amis. Le service, apprécié pour son amabilité et son professionnalisme, inclut des recommandations personnalisées de cocktails.",
+        "about.quote":"<em>\"Un arrêt incontournable pour ceux qui veulent profiter de la vie nocturne de la Costa Dorada.\"</em>",
+        "gallery.eyebrow":"— Galerie","gallery.sub":"Cocktails, couchers de soleil, musique et l'ambiance authentique de Miami Platja.","gallery.view":"+ Voir","gallery.btn":"Voir plus de photos",
+        "cocktails.eyebrow":"— Notre carte","cocktails.sub":"Une sélection artisanale pour tous les goûts. Avec et sans alcool.",
+        "cocktails.mojito.desc":"Rhum blanc, menthe fraîche, citron vert et soda. Le classique cubain qui ne déçoit jamais.","cocktails.mojito.tag":"Classique",
+        "cocktails.caipirinha.desc":"Cachaça, citron vert frais et sucre. Pure énergie brésilienne dans votre verre.","cocktails.caipirinha.tag":"Tropical",
+        "cocktails.marcoco.desc":"La création maison à ne pas manquer. Demandez-le au comptoir.","cocktails.marcoco.tag":"Signature",
+        "cocktails.sangria.name":"Sangria maison","cocktails.sangria.desc":"Recette artisanale avec du vin, des fruits frais et une touche secrète. Le must de l'été.","cocktails.sangria.tag":"Maison",
+        "cocktails.beers.name":"Bières & cocktails","cocktails.beers.desc":"Bières bien fraîches, gin tonics premium, cocktails classiques et signatures.","cocktails.beers.tag":"Bières",
+        "cocktails.mocktails.name":"Sans alcool","cocktails.mocktails.desc":"Mojito aux fruits, virgin coladas et mocktails rafraîchissants. Pour tout le monde.","cocktails.mocktails.tag":"Mocktails",
+        "cocktails.btn":"Voir la carte",
+        "schedule.eyebrow":"— On vous attend","schedule.badge":"Saison été 2026 · Déjà ouverts !","schedule.title":"Horaires <em>d'ouverture</em>",
+        "schedule.p":"Miami Lounge ouvre <strong>toutes les nuits de l'été</strong> pour que vous profitiez de cocktails, bonne musique et la meilleure compagnie sur la Costa Dorada.",
+        "schedule.note":"⚠️ Horaires de saison (été 2026). Appelez-nous ou écrivez-nous sur <a href=\"https://instagram.com/miamiloungebar\" target=\"_blank\" rel=\"noopener\">@miamiloungebar</a> pour les réservations ou événements privés.",
+        "schedule.cta":"Appeler pour réserver",
+        "schedule.mon":"Lundi","schedule.tue":"Mardi","schedule.wed":"Mercredi","schedule.thu":"Jeudi","schedule.fri":"Vendredi","schedule.sat":"Samedi","schedule.sun":"Dimanche",
+        "reviews.eyebrow":"— Ce qu'ils disent","reviews.title":"2.436 raisons de <em>venir</em>","reviews.sub":"Avis réels de Google et TripAdvisor (4.5/5 sur 895 avis).",
+        "reviews.r1":"\"Un accueil chaleureux, un endroit bien équipé, une terrasse magnifique, un service et des cocktails de première classe. Un délice ! Nous avons trouvé cet endroit lors de notre promenade nocturne. Les deux cocktails étaient délicieux.\"",
+        "reviews.r2":"\"Le Miami Lounge est très recommandable ! 🍹 Les boissons sont excellentes et délicieuses. Le personnel est super aimable et attentionné ; on se sent chez soi immédiatement. La musique s'adapte parfaitement à l'ambiance. La sangria est délicieuse !\"",
+        "reviews.r3":"\"Terrasse/jardin de style caribéen. Souvent de la musique de 22h à minuit. La sangria maison est à souligner pour son goût. C'est le meilleur bar de la région.\"",
+        "contact.eyebrow":"— Trouvez-nous","contact.title":"Venez <em>nous rendre visite</em>",
+        "contact.sub":"Au cœur de <strong>Miami Platja</strong>, à deux pas de la plage, sur l'avenue principale de la Costa Dorada.",
+        "contact.address":"Adresse","contact.phone":"Téléphone","contact.email":"E-mail","contact.web":"Site web","contact.zone":"Zone",
+        "contact.pet":"Votre animal de compagnie est le bienvenu sur notre terrasse","contact.accessible":"Accessible","contact.accessibleDesc":"Adapté aux personnes à mobilité réduite","contact.tourism":"Tourisme",
+        "footer.brand":"Bar lounge de référence à Miami Platja, Costa Dorada. Cocktails, musique et couchers de soleil méditerranéens.",
+        "footer.col1.title":"Contact","footer.col2.title":"Suivez-nous","footer.col2.tourism":"Site officiel tourisme",
+        "footer.col3.title":"Informations","footer.col3.legal":"Mentions légales","footer.col3.privacy":"Confidentialité","footer.col3.cookies":"Cookies",
+        "footer.responsible":"Consommez avec modération. +18",
+        "lb.close":"Fermer","lb.prev":"Précédent","lb.next":"Suivant"
+    },
+    en: {
+        "nav.about":"About","nav.gallery":"Gallery","nav.cocktails":"Cocktails","nav.menu":"Menu","nav.contact":"Contact","nav.book":"Book now","nav.bookTable":"Book a table",
+        "hero.tag":"Season 2026 · Miami Platja · Tarragona","hero.country":"Spain",
+        "hero.sub":"Handcrafted cocktails made fresh to order, a chill-out terrace with sofas, hammocks and swings to unwind by the sea, and a carefully curated atmosphere that invites you to relax and enjoy without rushing. A must-visit spot on the <strong>Costa Dorada</strong> where every detail is designed for an unforgettable experience.",
+        "hero.cta1":"Book a table","hero.cta2":"View full menu","hero.stat1":"Google Reviews","hero.stat2":"Facebook followers","hero.stat3":"registered visits",
+        "marquee.1":"Handcrafted cocktails","marquee.2":"Chill-out terrace","marquee.3":"Sofas, hammocks & swings","marquee.4":"Pet-friendly","marquee.5":"Free WiFi","marquee.6":"Accessible",
+        "about.eyebrow":"— About us",
+        "about.feat1.title":"Handcrafted cocktails","about.feat1.sub":"House specials & classics",
+        "about.feat2.title":"Sofas & hammocks","about.feat2.sub":"And swings to relax in",
+        "about.feat3.title":"Music & good vibes","about.feat3.sub":"Pleasant atmosphere",
+        "about.feat4.title":"Pet-friendly","about.feat4.sub":"Bring your furry friend",
+        "about.imgTag":"Chill-out terrace",
+        "about.lead":"<strong>Miami Lounge</strong> is the reference lounge bar at Miami Playa, with a <strong>spacious terrace decorated in vibrant colours</strong> overlooking the main avenue.",
+        "about.p1":"Specialising in <strong>handcrafted cocktails</strong> made with quality ingredients, offering both house creations and revisited classics for all tastes. The atmosphere blends <strong>music</strong> and good vibes with <strong>themed nights</strong>, creating a dynamic space to share great conversations and enjoy under the stars.",
+        "about.p2":"It features <strong>different seating areas</strong> — sofas, hammocks and swings — that suit both intimate encounters and groups of friends. The service, praised for its friendliness and professionalism, includes personalised cocktail recommendations.",
+        "about.quote":"<em>\"A must-stop for anyone looking to enjoy the nightlife of the Costa Dorada.\"</em>",
+        "gallery.eyebrow":"— Gallery","gallery.sub":"Cocktails, sunsets, music and the authentic atmosphere of Miami Platja.","gallery.view":"+ View","gallery.btn":"See more photos",
+        "cocktails.eyebrow":"— Our menu","cocktails.sub":"An artisan selection for all tastes. With and without alcohol.",
+        "cocktails.mojito.desc":"White rum, fresh mint, lime and soda. The Cuban classic that never disappoints.","cocktails.mojito.tag":"Classic",
+        "cocktails.caipirinha.desc":"Cachaça, fresh lime and sugar. Pure Brazilian energy in your glass.","cocktails.caipirinha.tag":"Tropical",
+        "cocktails.marcoco.desc":"The house creation you simply must try. Ask for it at the bar.","cocktails.marcoco.tag":"Signature",
+        "cocktails.sangria.name":"House sangria","cocktails.sangria.desc":"Artisan recipe with wine, fresh fruit and a secret touch. The summer must-have.","cocktails.sangria.tag":"House-made",
+        "cocktails.beers.name":"Beers & cocktails","cocktails.beers.desc":"Ice-cold beers, premium gin & tonics, classic and signature mixes.","cocktails.beers.tag":"Beers",
+        "cocktails.mocktails.name":"Non-alcoholic","cocktails.mocktails.desc":"Fruit mojitos, virgin coladas and refreshing mocktails. For everyone.","cocktails.mocktails.tag":"Mocktails",
+        "cocktails.btn":"View menu",
+        "schedule.eyebrow":"— We're waiting for you","schedule.badge":"Summer season 2026 · Now open!","schedule.title":"Opening <em>hours</em>",
+        "schedule.p":"Miami Lounge opens <strong>every night of the summer</strong> so you can enjoy cocktails, great music and the best company on the Costa Dorada.",
+        "schedule.note":"⚠️ Seasonal hours (summer 2026). Call us or message us at <a href=\"https://instagram.com/miamiloungebar\" target=\"_blank\" rel=\"noopener\">@miamiloungebar</a> for reservations or private events.",
+        "schedule.cta":"Call to book",
+        "schedule.mon":"Monday","schedule.tue":"Tuesday","schedule.wed":"Wednesday","schedule.thu":"Thursday","schedule.fri":"Friday","schedule.sat":"Saturday","schedule.sun":"Sunday",
+        "reviews.eyebrow":"— What they say","reviews.title":"2,436 reasons to <em>visit us</em>","reviews.sub":"Real reviews from Google and TripAdvisor (4.5/5 based on 895 reviews).",
+        "reviews.r1":"\"A warm welcome, a well-equipped place, a beautiful terrace, top-notch service and cocktails. A delight! We found this place during our evening stroll. Both cocktails (caipirinha and mojito) were delicious.\"",
+        "reviews.r2":"\"Miami Lounge is highly recommended! 🍹 The drinks are prepared excellently and taste amazing. The staff is super friendly and attentive; you feel at home straight away. The music perfectly matches the atmosphere. The sangria is amazing!\"",
+        "reviews.r3":"\"Nice terrace/garden in Caribbean style. Very often music from 22:00 till 24:00 then it stops because of license. The house-made sangria was highlighted for its taste, and live music added to the ambiance. This is the best bar in the area.\"",
+        "contact.eyebrow":"— Find us","contact.title":"Come and <em>experience it</em>",
+        "contact.sub":"In the heart of <strong>Miami Platja</strong>, steps from the beach, on the main avenue of the Costa Dorada.",
+        "contact.address":"Address","contact.phone":"Phone","contact.email":"Email","contact.web":"Website","contact.zone":"Area",
+        "contact.pet":"Your pet is welcome on our terrace","contact.accessible":"Accessible","contact.accessibleDesc":"Adapted for people with reduced mobility","contact.tourism":"Tourism",
+        "footer.brand":"Reference lounge bar in Miami Platja, Costa Dorada. Cocktails, music and Mediterranean sunsets.",
+        "footer.col1.title":"Contact","footer.col2.title":"Follow us","footer.col2.tourism":"Official tourism website",
+        "footer.col3.title":"Information","footer.col3.legal":"Legal notice","footer.col3.privacy":"Privacy","footer.col3.cookies":"Cookies",
+        "footer.responsible":"Drink responsibly. +18",
+        "lb.close":"Close","lb.prev":"Previous","lb.next":"Next"
+    }
+};
+
+const langMeta = {
+    es: { flag: '🇪🇸', code: 'ES', htmlLang: 'es' },
+    fr: { flag: '🇫🇷', code: 'FR', htmlLang: 'fr' },
+    en: { flag: '🇬🇧', code: 'EN', htmlLang: 'en' }
+};
+
+let currentLang = localStorage.getItem('miamilounge_lang') || 'es';
+
+function t(key) {
+    return (i18nData[currentLang] && i18nData[currentLang][key] !== undefined)
+        ? i18nData[currentLang][key]
+        : (i18nData['es'][key] !== undefined ? i18nData['es'][key] : key);
+}
+
+function applyTranslations() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = t(key);
+        if (val !== undefined) el.innerHTML = val;
+    });
+    document.documentElement.lang = langMeta[currentLang].htmlLang;
+    document.querySelectorAll('.lang-option').forEach(btn => {
+        btn.classList.toggle('is-active', btn.getAttribute('data-lang') === currentLang);
+    });
+    const meta = langMeta[currentLang];
+    const flagEl = document.getElementById('langCurrentFlag');
+    const codeEl = document.getElementById('langCurrentCode');
+    if (flagEl) flagEl.textContent = meta.flag;
+    if (codeEl) codeEl.textContent = meta.code;
+}
+
+function setLang(lang) {
+    if (!i18nData[lang]) return;
+    currentLang = lang;
+    localStorage.setItem('miamilounge_lang', lang);
+    applyTranslations();
+    const sw = document.getElementById('langSwitcher');
+    if (sw) {
+        sw.classList.remove('is-open');
+        const btn = document.getElementById('langBtn');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const switcher = document.getElementById('langSwitcher');
+    const langBtn  = document.getElementById('langBtn');
+    if (switcher && langBtn) {
+        langBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            const open = switcher.classList.toggle('is-open');
+            langBtn.setAttribute('aria-expanded', String(open));
+        });
+        switcher.querySelectorAll('.lang-option').forEach(opt => {
+            opt.addEventListener('click', () => setLang(opt.getAttribute('data-lang')));
+        });
+        document.addEventListener('click', e => {
+            if (!switcher.contains(e.target)) {
+                switcher.classList.remove('is-open');
+                langBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                switcher.classList.remove('is-open');
+                langBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+    applyTranslations();
+});
+
 /* === INLINED script.js === */
 /* ==================================================
    MIAMI LOUNGE BAR — Interactivity
