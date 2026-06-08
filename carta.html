@@ -4005,8 +4005,11 @@ img { max-width: 100%; height: auto; }
         loader.classList.add('is-hidden');
     } else {
         localStorage.setItem(_loaderKey, _today);
-        window.addEventListener('load', () => {
-            setTimeout(() => loader.classList.add('is-hidden'), 1900);
+        const hideLoader = () => setTimeout(() => loader.classList.add('is-hidden'), 1900);
+        if (document.readyState === 'complete') {
+          hideLoader();
+        } else {
+          window.addEventListener('load', hideLoader);
         });
         setTimeout(() => loader && loader.classList.add('is-hidden'), 4000);
     }

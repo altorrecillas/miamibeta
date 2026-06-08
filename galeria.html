@@ -641,9 +641,12 @@ document.addEventListener('DOMContentLoaded', () => {
     loader.classList.add('is-hidden');
   } else {
     localStorage.setItem(loaderKey, today);
-    window.addEventListener('load', () => {
-      setTimeout(() => loader.classList.add('is-hidden'), 1800);
-    });
+    const hideLoader = () => setTimeout(() => loader.classList.add('is-hidden'), 1800);
+    if (document.readyState === 'complete') {
+      hideLoader();
+    } else {
+      window.addEventListener('load', hideLoader);
+    }
     setTimeout(() => loader.classList.add('is-hidden'), 4000);
   }
 
