@@ -245,6 +245,54 @@
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
       [data-reveal] { opacity: 1; transform: none; }
     }
+
+/* ==================================================
+   LANGUAGE SWITCHER
+   ================================================== */
+.lang-switcher { position: relative; display: flex; align-items: center; flex-shrink: 0; }
+.lang-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50px;
+    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.72);
+    cursor: pointer;
+    transition: color 0.3s, border-color 0.3s, background 0.3s;
+    white-space: nowrap; letter-spacing: 0.03em;
+}
+.lang-btn:hover { color: #fff; border-color: var(--pink); background: rgba(255,46,147,0.08); }
+.lang-btn .lang-flag { font-size: 17px; line-height: 1; }
+.lang-btn .lang-code { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; }
+.lang-btn .lang-arrow { font-size: 9px; opacity: 0.6; transition: transform 0.3s var(--ease); }
+.lang-switcher.is-open .lang-arrow { transform: rotate(180deg); }
+.lang-dropdown {
+    position: absolute; top: calc(100% + 10px); right: 0;
+    min-width: 140px;
+    background: rgba(20,3,42,0.98);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    overflow: hidden; opacity: 0; visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
+    z-index: 200;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(255,46,147,0.08);
+}
+.lang-switcher.is-open .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+.lang-option {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%; padding: 10px 16px;
+    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7);
+    cursor: pointer; transition: background 0.2s, color 0.2s;
+    border: none; background: none; text-align: left; letter-spacing: 0.02em;
+}
+.lang-option:hover { background: rgba(255,46,147,0.1); color: #fff; }
+.lang-option.is-active { color: var(--pink); background: rgba(255,46,147,0.08); }
+.lang-option .lang-option-flag { font-size: 18px; line-height: 1; }
+@media (max-width: 1024px) { .lang-switcher { margin-right: 6px; } }
+@media (max-width: 640px) { .lang-btn .lang-code { display: none; } }
+
   </style>
 </head>
 <body>
@@ -313,16 +361,28 @@
       <span class="nav-logo-text"><strong>MIAMI</strong><em>lounge bar</em></span>
     </a>
     <nav class="nav-links">
-      <a href="index.html#about" data-cursor="link">Nosotros</a>
-      <a href="galeria.html" class="is-active" data-cursor="link">Galería</a>
-      <a href="index.html#cocktails" data-cursor="link">Cócteles</a>
-      <a href="carta.html" data-cursor="link">Carta</a>
-      <a href="index.html#contact" data-cursor="link">Contacto</a>
+      <a href="index.html#about" data-cursor="link" data-i18n="nav.about">Nosotros</a>
+      <a href="galeria.html" class="is-active" data-cursor="link" data-i18n="nav.gallery">Galería</a>
+      <a href="index.html#cocktails" data-cursor="link" data-i18n="nav.cocktails">Cócteles</a>
+      <a href="carta.html" data-cursor="link" data-i18n="nav.menu">Carta</a>
+      <a href="index.html#contact" data-cursor="link" data-i18n="nav.contact">Contacto</a>
     </nav>
     <a href="tel:+34691691086" class="nav-cta" data-cursor="link">
-      <span>Reservar</span>
+      <span data-i18n="nav.book">Reservar</span>
       <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
     </a>
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang-btn" id="langBtn" aria-label="Language / Idioma" aria-expanded="false" aria-haspopup="listbox">
+        <span class="lang-flag" id="langCurrentFlag">🇪🇸</span>
+        <span class="lang-code" id="langCurrentCode">ES</span>
+        <span class="lang-arrow">▾</span>
+      </button>
+      <div class="lang-dropdown" role="listbox" id="langDropdown">
+        <button class="lang-option is-active" role="option" data-lang="es"><span class="lang-option-flag">🇪🇸</span> Español</button>
+        <button class="lang-option" role="option" data-lang="fr"><span class="lang-option-flag">🇫🇷</span> Français</button>
+        <button class="lang-option" role="option" data-lang="en"><span class="lang-option-flag">🇬🇧</span> English</button>
+      </div>
+    </div>
     <button class="nav-burger" id="navBurger" aria-label="Menú" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -330,11 +390,11 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html#about">Nosotros</a>
-    <a href="galeria.html">Galería</a>
-    <a href="index.html#cocktails">Cócteles</a>
-    <a href="carta.html">Carta</a>
-    <a href="index.html#contact">Contacto</a>
+    <a href="index.html#about" data-i18n="nav.about">Nosotros</a>
+    <a href="galeria.html" data-i18n="nav.gallery">Galería</a>
+    <a href="index.html#cocktails" data-i18n="nav.cocktails">Cócteles</a>
+    <a href="carta.html" data-i18n="nav.menu">Carta</a>
+    <a href="index.html#contact" data-i18n="nav.contact">Contacto</a>
     <a href="tel:+34691691086" class="mobile-cta">Reservar mesa</a>
   </div>
 
@@ -359,10 +419,10 @@
     <section class="page-hero">
       <div class="page-hero-bg" aria-hidden="true"></div>
       <div class="container page-hero-content">
-        <span class="page-hero-eyebrow" data-reveal>Miami Lounge Bar</span>
-        <h1 data-reveal data-delay="80"><span class="gradient">Galería</span></h1>
+        <span class="page-hero-eyebrow" data-reveal data-i18n="hero.eyebrow">Miami Lounge Bar</span>
+        <h1 data-reveal data-delay="80" data-i18n="hero.title"><span class="gradient">Galería</span></h1>
         <p class="page-hero-sub" data-reveal data-delay="160">
-          Momentos únicos en nuestra terraza. Cócteles, música y las mejores noches de la Costa Dorada.
+          <span data-i18n="hero.sub">Momentos únicos en nuestra terraza. Cócteles, música y las mejores noches de la Costa Dorada.</span>
         </p>
       </div>
     </section>
@@ -370,7 +430,7 @@
     <section class="gallery-section" id="galeria">
       <div class="container">
         <p class="gallery-stats" data-reveal data-delay="80">
-          <strong>28</strong> fotos &middot; Miami Platja, Costa Dorada
+          <span data-i18n="gallery.stats"><strong>28</strong> fotos · Miami Platja, Costa Dorada</span>
         </p>
         <div class="gallery-masonry" id="galleryGrid" data-reveal data-delay="120">
           <a href="galeria/galeria1.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 1"><img src="galeria/galeria1.jpg" alt="Miami Lounge Bar foto 1" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
@@ -405,7 +465,7 @@
         <div style="text-align:center;margin-top:clamp(40px,6vw,72px)" data-reveal>
           <a href="index.html" class="back-link" data-cursor="link">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            Volver al inicio
+            <span data-i18n="back.home">Volver al inicio</span>
           </a>
         </div>
       </div>
@@ -420,17 +480,154 @@
         <span class="footer-logo-text"><strong>MIAMI</strong><em>lounge bar</em></span>
       </div>
       <nav class="footer-links">
-        <a href="index.html#about" data-cursor="link">Nosotros</a>
-        <a href="galeria.html" data-cursor="link">Galería</a>
-        <a href="index.html#cocktails" data-cursor="link">Cócteles</a>
-        <a href="carta.html" data-cursor="link">Carta</a>
-        <a href="index.html#contact" data-cursor="link">Contacto</a>
+        <a href="index.html#about" data-cursor="link" data-i18n="footer.nav.about">Nosotros</a>
+        <a href="galeria.html" data-cursor="link" data-i18n="footer.nav.gallery">Galería</a>
+        <a href="index.html#cocktails" data-cursor="link" data-i18n="footer.nav.cocktails">Cócteles</a>
+        <a href="carta.html" data-cursor="link" data-i18n="footer.nav.menu">Carta</a>
+        <a href="index.html#contact" data-cursor="link" data-i18n="footer.nav.contact">Contacto</a>
       </nav>
-      <p class="footer-copy">&copy; <span id="year"></span> Miami Lounge Bar &middot; Miami Platja, Costa Dorada &middot; <a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener" data-cursor="link">@miamiloungebar</a></p>
+      <p class="footer-copy"><span data-i18n="footer.responsible" style="display:inline">Drink responsibly · Bebe con responsabilidad. +18</span> &middot; © <span id="year"></span> Miami Lounge Bar &middot; Miami Platja, Costa Dorada &middot; <a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener" data-cursor="link">@miamiloungebar</a></p>
     </div>
   </footer>
 
   <script>
+
+/* ==================================================
+   i18n — reads shared localStorage key from index.html
+   ================================================== */
+const i18nData = {
+    es: {
+        "nav.about":"Nosotros",
+        "nav.gallery":"Galería",
+        "nav.cocktails":"Cócteles",
+        "nav.menu":"Carta",
+        "nav.contact":"Contacto",
+        "nav.book":"Reservar",
+        "nav.bookTable":"Reservar mesa",
+        "footer.nav.about":"Nosotros",
+        "footer.nav.gallery":"Galería",
+        "footer.nav.cocktails":"Cócteles",
+        "footer.nav.menu":"Carta",
+        "footer.nav.contact":"Contacto",
+        "hero.eyebrow":"Miami Lounge Bar",
+        "hero.title":"<span class=\"gradient\">Galería</span>",
+        "hero.sub":"Momentos únicos en nuestra terraza. Cócteles, música y las mejores noches de la Costa Dorada.",
+        "gallery.stats":"<strong>28</strong> fotos · Miami Platja, Costa Dorada",
+        "lb.close":"Cerrar",
+        "lb.prev":"Anterior",
+        "lb.next":"Siguiente",
+        "footer.responsible":"Drink responsibly · Bebe con responsabilidad. +18",
+        "back.home":"Volver al inicio"
+    },
+    fr: {
+        "nav.about":"À propos",
+        "nav.gallery":"Galerie",
+        "nav.cocktails":"Cocktails",
+        "nav.menu":"Carte",
+        "nav.contact":"Contact",
+        "nav.book":"Réserver",
+        "nav.bookTable":"Réserver une table",
+        "footer.nav.about":"À propos",
+        "footer.nav.gallery":"Galerie",
+        "footer.nav.cocktails":"Cocktails",
+        "footer.nav.menu":"Carte",
+        "footer.nav.contact":"Contact",
+        "hero.eyebrow":"Miami Lounge Bar",
+        "hero.title":"<span class=\"gradient\">Galerie</span>",
+        "hero.sub":"Moments uniques sur notre terrasse. Cocktails, musique et les meilleures nuits de la Costa Dorada.",
+        "gallery.stats":"<strong>28</strong> photos · Miami Platja, Costa Dorada",
+        "lb.close":"Fermer",
+        "lb.prev":"Précédent",
+        "lb.next":"Suivant",
+        "footer.responsible":"Consommez avec modération. +18",
+        "back.home":"Retour à l'accueil"
+    },
+    en: {
+        "nav.about":"About",
+        "nav.gallery":"Gallery",
+        "nav.cocktails":"Cocktails",
+        "nav.menu":"Menu",
+        "nav.contact":"Contact",
+        "nav.book":"Book now",
+        "nav.bookTable":"Book a table",
+        "footer.nav.about":"About",
+        "footer.nav.gallery":"Gallery",
+        "footer.nav.cocktails":"Cocktails",
+        "footer.nav.menu":"Menu",
+        "footer.nav.contact":"Contact",
+        "hero.eyebrow":"Miami Lounge Bar",
+        "hero.title":"<span class=\"gradient\">Gallery</span>",
+        "hero.sub":"Unique moments on our terrace. Cocktails, music and the best nights on the Costa Dorada.",
+        "gallery.stats":"<strong>28</strong> photos · Miami Platja, Costa Dorada",
+        "lb.close":"Close",
+        "lb.prev":"Previous",
+        "lb.next":"Next",
+        "footer.responsible":"Drink responsibly. +18",
+        "back.home":"Back to home"
+    }
+};
+const langMeta = {
+    es: { flag: '🇪🇸', code: 'ES', htmlLang: 'es' },
+    fr: { flag: '🇫🇷', code: 'FR', htmlLang: 'fr' },
+    en: { flag: '🇬🇧', code: 'EN', htmlLang: 'en' }
+};
+let currentLang = localStorage.getItem('miamilounge_lang') || 'es';
+function t(key) {
+    return (i18nData[currentLang] && i18nData[currentLang][key] !== undefined)
+        ? i18nData[currentLang][key]
+        : (i18nData['es'][key] !== undefined ? i18nData['es'][key] : key);
+}
+function applyTranslations() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const val = t(el.getAttribute('data-i18n'));
+        if (val !== undefined) el.innerHTML = val;
+    });
+    document.documentElement.lang = langMeta[currentLang].htmlLang;
+    document.querySelectorAll('.lang-option').forEach(btn => {
+        btn.classList.toggle('is-active', btn.getAttribute('data-lang') === currentLang);
+    });
+    const meta = langMeta[currentLang];
+    const flagEl = document.getElementById('langCurrentFlag');
+    const codeEl = document.getElementById('langCurrentCode');
+    if (flagEl) flagEl.textContent = meta.flag;
+    if (codeEl) codeEl.textContent = meta.code;
+}
+function setLang(lang) {
+    if (!i18nData[lang]) return;
+    currentLang = lang;
+    localStorage.setItem('miamilounge_lang', lang);
+    applyTranslations();
+    const sw = document.getElementById('langSwitcher');
+    if (sw) { sw.classList.remove('is-open'); document.getElementById('langBtn').setAttribute('aria-expanded','false'); }
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const switcher = document.getElementById('langSwitcher');
+    const langBtn  = document.getElementById('langBtn');
+    if (switcher && langBtn) {
+        langBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            const open = switcher.classList.toggle('is-open');
+            langBtn.setAttribute('aria-expanded', String(open));
+        });
+        switcher.querySelectorAll('.lang-option').forEach(opt => {
+            opt.addEventListener('click', () => setLang(opt.getAttribute('data-lang')));
+        });
+        document.addEventListener('click', e => {
+            if (!switcher.contains(e.target)) {
+                switcher.classList.remove('is-open');
+                langBtn.setAttribute('aria-expanded','false');
+            }
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                switcher.classList.remove('is-open');
+                langBtn.setAttribute('aria-expanded','false');
+            }
+        });
+    }
+    applyTranslations();
+});
+
   'use strict';
 
   /* LOADER */
