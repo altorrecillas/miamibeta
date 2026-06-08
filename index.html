@@ -1546,7 +1546,7 @@ blockquote footer {
         #ff2e93, #ff6b00, #ffd700, #ff4500, #ff2e93, #b794f6, #ff6b00, #ffd700, #ff2e93);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out; mask-composite: exclude; padding: 1.5px;
-    animation: igFireBorder 2.5s linear infinite;
+    animation: igFireBorder 5s linear infinite;
     opacity: 0.9;
 }
 /* Shimmer sweep */
@@ -1559,7 +1559,7 @@ blockquote footer {
         rgba(255,200,100,0.08) 62%,
         transparent 80%);
     background-size: 300% 100%;
-    animation: igFireShimmer 2.2s ease-in-out infinite;
+    animation: igFireShimmer 5s ease-in-out infinite;
     z-index: 0; pointer-events: none;
 }
 @property --fire-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
@@ -1579,7 +1579,7 @@ blockquote footer {
         radial-gradient(ellipse 80% 40% at 20% 60%, rgba(255,100,0,0.08) 0%, transparent 70%),
         radial-gradient(ellipse 60% 30% at 80% 40%, rgba(255,46,147,0.08) 0%, transparent 70%),
         radial-gradient(ellipse 40% 60% at 50% 100%, rgba(255,180,0,0.07) 0%, transparent 80%);
-    animation: igEmberPulse 3s ease-in-out infinite alternate;
+    animation: igEmberPulse 6s ease-in-out infinite alternate;
     pointer-events: none; z-index: 0;
 }
 @keyframes igEmberPulse {
@@ -1595,7 +1595,7 @@ blockquote footer {
         0 0 120px rgba(255,200,0,0.12),
         inset 0 1px 0 rgba(255,255,255,0.12);
 }
-.ig-banner:hover::before { animation-duration: 1.2s; opacity: 1; }
+.ig-banner:hover::before { animation-duration: 2s; opacity: 1; }
 /* BADGE — fire style */
 .ig-badge {
     display: inline-flex; align-items: center; gap: 7px;
@@ -1606,7 +1606,7 @@ blockquote footer {
     letter-spacing: 0.12em; text-transform: uppercase; color: #fff;
     white-space: nowrap; flex-shrink: 0; position: relative; z-index: 1;
     box-shadow: 0 4px 20px rgba(255,69,0,0.55), 0 0 12px rgba(255,180,0,0.3);
-    animation: igBadgeFire 2s ease-in-out infinite;
+    animation: igBadgeFire 4.5s ease-in-out infinite;
 }
 @keyframes igBadgeFire {
     0%, 100% {
@@ -1665,6 +1665,70 @@ blockquote footer {
     .ig-divider { display: none; }
 }
 @media (max-width: 380px) { .ig-badge { display: none; } }
+
+/* IG BANNER — Premium blur aura */
+.ig-glow-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 38px;
+}
+.ig-glow-wrap .ig-banner {
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+}
+/* Multi-layer blurred glow behind the banner */
+.ig-glow-wrap::before,
+.ig-glow-wrap::after {
+    content: '';
+    position: absolute;
+    border-radius: 80px;
+    pointer-events: none;
+    z-index: 0;
+}
+/* Outer soft aura — large, very blurred */
+.ig-glow-wrap::before {
+    inset: -18px -24px;
+    background: conic-gradient(from var(--glow-angle, 0deg),
+        rgba(255,46,147,0.22),
+        rgba(255,107,0,0.28),
+        rgba(255,200,0,0.20),
+        rgba(255,46,147,0.15),
+        rgba(139,92,246,0.18),
+        rgba(255,107,0,0.25),
+        rgba(255,46,147,0.22));
+    filter: blur(28px);
+    animation: igGlowRotate 8s linear infinite, igGlowPulse 4s ease-in-out infinite alternate;
+    opacity: 0.75;
+}
+/* Inner tight glow — sharper, more intense */
+.ig-glow-wrap::after {
+    inset: -6px -10px;
+    background: linear-gradient(135deg,
+        rgba(255,69,0,0.20) 0%,
+        rgba(255,46,147,0.18) 40%,
+        rgba(255,200,0,0.15) 70%,
+        rgba(139,92,246,0.12) 100%);
+    filter: blur(12px);
+    animation: igGlowPulse 3.5s ease-in-out infinite alternate-reverse;
+    opacity: 0.8;
+}
+@property --glow-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes igGlowRotate { to { --glow-angle: 360deg; } }
+@keyframes igGlowPulse {
+    0%   { opacity: 0.55; transform: scale(0.97); }
+    100% { opacity: 0.90; transform: scale(1.04); }
+}
+/* On hover — intensify aura */
+.ig-glow-wrap:hover::before {
+    opacity: 1;
+    filter: blur(36px);
+    animation-duration: 4s, 2s;
+}
+.ig-glow-wrap:hover::after {
+    opacity: 1;
+    filter: blur(16px);
+}
 
     </style>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌴%3C/text%3E%3C/svg%3E" />
@@ -1788,6 +1852,7 @@ blockquote footer {
                 <span class="hero-line italic">Lounge</span>
                 <span class="hero-line gradient">Cocktail Bar</span>
             </h1>
+            <div class="ig-glow-wrap">
             <a href="https://www.instagram.com/miamiloungebar/" target="_blank" rel="noopener" class="ig-banner" data-reveal data-delay="250" aria-label="Síguenos en Instagram">
                 <div class="ig-embers" aria-hidden="true"></div>
                 <div class="ig-badge">
@@ -1804,6 +1869,7 @@ blockquote footer {
                 </div>
                 <span class="ig-arrow" aria-hidden="true">→</span>
             </a>
+            </div>
             <p class="hero-sub" data-reveal data-delay="200" data-i18n="hero.sub">
                 Cócteles artesanales elaborados al momento, una terraza chill-out con sofás, hamacas y columpios para desconectar junto al mar, y un ambiente cuidado que invita a relajarse y disfrutar sin prisas. Un rincón imprescindible en la <strong>Costa Dorada</strong> donde cada detalle está pensado para que vivas una experiencia única.
             </p>
