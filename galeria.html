@@ -296,9 +296,26 @@
 @media (max-width: 1024px) { .lang-switcher { margin-right: 6px; } }
 @media (max-width: 640px) { .lang-btn .lang-code { display: none; } }
 
+  
+  /* SCROLL PROGRESS BAR */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: var(--grad-sunset);
+    z-index: 10005;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(255,46,147,0.6), 0 0 20px rgba(255,46,147,0.3);
+    border-radius: 0 2px 2px 0;
+  }
+
   </style>
 </head>
 <body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
 
   <div class="grain" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"></div>
@@ -789,5 +806,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (Math.abs(d) > 50) goTo(cur + (d > 0 ? 1 : -1));
   }, { passive: true });
   </script>
+
+<script>
+
+  /* SCROLL PROGRESS BAR */
+  const scrollBar = document.querySelector('.scroll-progress');
+  if (scrollBar) {
+    const updateProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      scrollBar.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+
+</script>
 </body>
 </html>

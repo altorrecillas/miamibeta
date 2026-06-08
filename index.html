@@ -1733,10 +1733,27 @@ blockquote footer {
     filter: blur(16px);
 }
 
-    </style>
+    
+  /* SCROLL PROGRESS BAR */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: var(--grad-sunset);
+    z-index: 10005;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(255,46,147,0.6), 0 0 20px rgba(255,46,147,0.3);
+    border-radius: 0 2px 2px 0;
+  }
+
+  </style>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌴%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
 
     <!-- =============== LOADER =============== -->
     <div class="loader" id="loader">
@@ -2827,5 +2844,22 @@ document.addEventListener('DOMContentLoaded', () => {
             setInterval(updateDot, 60000);
         })();
     </script>
+
+<script>
+
+  /* SCROLL PROGRESS BAR */
+  const scrollBar = document.querySelector('.scroll-progress');
+  if (scrollBar) {
+    const updateProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      scrollBar.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+
+</script>
 </body>
 </html>
