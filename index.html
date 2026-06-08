@@ -1553,6 +1553,146 @@ blockquote footer {
     .lang-btn .lang-code { display: none; }
 }
 
+/* ==================================================
+   INSTAGRAM BANNER — Hero
+   ================================================== */
+.ig-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 44px;
+    padding: 14px 22px;
+    background: linear-gradient(135deg, rgba(255,46,147,0.12) 0%, rgba(139,92,246,0.12) 50%, rgba(255,107,53,0.12) 100%);
+    border: 1px solid transparent;
+    border-radius: 60px;
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+    overflow: hidden;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s;
+    animation: igPulseIn 0.7s 1.4s var(--ease-bounce) both;
+}
+
+/* Animated gradient border */
+.ig-banner::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 60px;
+    padding: 1px;
+    background: linear-gradient(135deg, #ff2e93, #b794f6, #ff6b35, #00f0ff, #ff2e93);
+    background-size: 300% 300%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    animation: igBorderFlow 3s linear infinite;
+}
+
+/* Shimmer sweep */
+.ig-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+    background-size: 200% 100%;
+    animation: igShimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes igBorderFlow {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes igShimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+@keyframes igPulseIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ig-banner:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 16px 50px rgba(255,46,147,0.35), 0 0 40px rgba(139,92,246,0.2);
+}
+
+/* Live dot */
+.ig-live-dot {
+    position: relative;
+    width: 9px; height: 9px;
+    flex-shrink: 0;
+}
+.ig-live-dot::before,
+.ig-live-dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--pink);
+}
+.ig-live-dot::after {
+    background: transparent;
+    border: 1.5px solid var(--pink);
+    inset: -4px;
+    animation: igDotPulse 1.8s ease-out infinite;
+}
+@keyframes igDotPulse {
+    0%   { transform: scale(0.8); opacity: 1; }
+    100% { transform: scale(2);   opacity: 0; }
+}
+
+/* Instagram icon */
+.ig-icon {
+    width: 34px; height: 34px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    display: grid; place-items: center;
+    box-shadow: 0 4px 15px rgba(220,39,67,0.4);
+    transition: transform 0.3s var(--ease-bounce);
+    position: relative; z-index: 1;
+}
+.ig-banner:hover .ig-icon { transform: rotate(-8deg) scale(1.1); }
+.ig-icon svg { width: 18px; height: 18px; fill: #fff; }
+
+/* Text */
+.ig-banner-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    position: relative; z-index: 1;
+}
+.ig-banner-text strong {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+}
+.ig-banner-text span {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Arrow */
+.ig-arrow {
+    margin-left: 4px;
+    font-size: 16px;
+    color: var(--pink);
+    position: relative; z-index: 1;
+    transition: transform 0.3s var(--ease);
+}
+.ig-banner:hover .ig-arrow { transform: translateX(4px); }
+
+@media (max-width: 480px) {
+    .ig-banner { margin-top: 32px; padding: 12px 18px; gap: 10px; }
+    .ig-banner-text strong { font-size: 13px; }
+}
+
     </style>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌴%3C/text%3E%3C/svg%3E" />
 </head>
@@ -1714,6 +1854,21 @@ blockquote footer {
                     <span data-i18n="hero.stat3">visitas registradas</span>
                 </div>
             </div>
+
+            <!-- INSTAGRAM BANNER -->
+            <a href="https://www.instagram.com/miamiloungebar/" target="_blank" rel="noopener" class="ig-banner" data-reveal data-delay="500" aria-label="Síguenos en Instagram">
+                <span class="ig-live-dot" aria-hidden="true"></span>
+                <div class="ig-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </div>
+                <div class="ig-banner-text">
+                    <strong data-i18n="ig.text">🔥 Últimas novedades — ¡no te lo pierdas!</strong>
+                    <span data-i18n="ig.handle">@miamiloungebar</span>
+                </div>
+                <span class="ig-arrow" aria-hidden="true">→</span>
+            </a>
         </div>
 
         <a href="#about" class="hero-scroll" aria-label="Scroll">
@@ -2205,7 +2360,7 @@ const i18nData = {
         "footer.col1.title":"Contacto","footer.col2.title":"Síguenos","footer.col2.tourism":"Web oficial turismo",
         "footer.col3.title":"Información","footer.col3.legal":"Aviso legal","footer.col3.privacy":"Privacidad","footer.col3.cookies":"Cookies",
         "footer.responsible":"Drink responsibly · Bebe con responsabilidad. +18",
-        "lb.close":"Cerrar","lb.prev":"Anterior","lb.next":"Siguiente",
+        "lb.close":"Cerrar","lb.prev":"Anterior","lb.next":"Siguiente","ig.text":"🔥 Últimas novedades — ¡no te lo pierdas!","ig.handle":"@miamiloungebar",
         "about.title":"El lounge-bar de <em>referencia</em><br/>en <span class=\"gradient\">Miami Platja</span>.",
         "gallery.title":"Una <em>experiencia</em> para <span class=\"gradient\">los sentidos</span>",
         "cocktails.title":"Cócteles <em>de autor</em> y <span class=\"gradient\">clásicos</span>",
@@ -2256,7 +2411,7 @@ const i18nData = {
         "footer.col1.title":"Contact","footer.col2.title":"Suivez-nous","footer.col2.tourism":"Site officiel tourisme",
         "footer.col3.title":"Informations","footer.col3.legal":"Mentions légales","footer.col3.privacy":"Confidentialité","footer.col3.cookies":"Cookies",
         "footer.responsible":"Consommez avec modération. +18",
-        "lb.close":"Fermer","lb.prev":"Précédent","lb.next":"Suivant",
+        "lb.close":"Fermer","lb.prev":"Précédent","lb.next":"Suivant","ig.text":"🔥 Dernières nouvelles — ne ratez pas ça !","ig.handle":"@miamiloungebar",
         "about.title":"Le bar lounge de <em>référence</em><br/>à <span class=\"gradient\">Miami Platja</span>.",
         "gallery.title":"Une <em>expérience</em> pour <span class=\"gradient\">les sens</span>",
         "cocktails.title":"Cocktails <em>signatures</em> et <span class=\"gradient\">classiques</span>",
@@ -2307,7 +2462,7 @@ const i18nData = {
         "footer.col1.title":"Contact","footer.col2.title":"Follow us","footer.col2.tourism":"Official tourism website",
         "footer.col3.title":"Information","footer.col3.legal":"Legal notice","footer.col3.privacy":"Privacy","footer.col3.cookies":"Cookies",
         "footer.responsible":"Drink responsibly. +18",
-        "lb.close":"Close","lb.prev":"Previous","lb.next":"Next",
+        "lb.close":"Close","lb.prev":"Previous","lb.next":"Next","ig.text":"🔥 Latest news — don't miss it!","ig.handle":"@miamiloungebar",
         "about.title":"The reference <em>lounge bar</em><br/>in <span class=\"gradient\">Miami Platja</span>.",
         "gallery.title":"An <em>experience</em> for <span class=\"gradient\">the senses</span>",
         "cocktails.title":"Signature <em>cocktails</em> and <span class=\"gradient\">classics</span>",
