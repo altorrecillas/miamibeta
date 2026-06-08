@@ -1520,78 +1520,147 @@ blockquote footer {
    INSTAGRAM BANNER — Hero
    ================================================== */
 .ig-banner {
-    display: inline-flex; align-items: center; gap: 16px;
-    margin-bottom: 38px; padding: 12px 20px 12px 12px;
-    background: linear-gradient(135deg, rgba(255,46,147,0.08) 0%, rgba(139,92,246,0.10) 50%, rgba(255,107,53,0.08) 100%);
+    display: inline-flex; align-items: center; gap: 18px;
+    margin-bottom: 38px; padding: 14px 24px 14px 14px;
+    background: linear-gradient(135deg,
+        rgba(255,46,147,0.10) 0%,
+        rgba(255,107,0,0.08) 30%,
+        rgba(255,200,0,0.07) 55%,
+        rgba(139,92,246,0.10) 80%,
+        rgba(255,46,147,0.08) 100%);
     border: 1px solid transparent; border-radius: 70px;
     position: relative; cursor: pointer; text-decoration: none; color: #fff;
     overflow: hidden;
-    transition: transform 0.35s var(--ease), box-shadow 0.35s;
+    transition: transform 0.4s var(--ease), box-shadow 0.4s;
     animation: igPulseIn 0.8s 1.4s var(--ease-bounce) both;
+    box-shadow:
+        0 0 0 1px rgba(255,107,0,0.15),
+        0 8px 32px rgba(255,46,147,0.18),
+        0 0 60px rgba(255,107,0,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.06);
 }
+/* Rotating fire-border */
 .ig-banner::before {
-    content: ''; position: absolute; inset: -1px; border-radius: 70px;
-    background: conic-gradient(from var(--angle, 0deg), #ff2e93, #b794f6, #00f0ff, #ffd700, #ff6b35, #ff2e93);
+    content: ''; position: absolute; inset: -1.5px; border-radius: 72px;
+    background: conic-gradient(from var(--fire-angle, 0deg),
+        #ff2e93, #ff6b00, #ffd700, #ff4500, #ff2e93, #b794f6, #ff6b00, #ffd700, #ff2e93);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out; mask-composite: exclude; padding: 1.5px;
-    animation: igRotateBorder 3s linear infinite;
+    animation: igFireBorder 2.5s linear infinite;
+    opacity: 0.9;
 }
+/* Shimmer sweep */
 .ig-banner::after {
     content: ''; position: absolute; inset: 0;
-    background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.09) 50%, transparent 70%);
-    background-size: 250% 100%; animation: igShimmer 2.4s ease-in-out infinite; z-index: 0;
+    background: linear-gradient(105deg,
+        transparent 20%,
+        rgba(255,200,100,0.12) 38%,
+        rgba(255,255,255,0.10) 50%,
+        rgba(255,200,100,0.08) 62%,
+        transparent 80%);
+    background-size: 300% 100%;
+    animation: igFireShimmer 2.2s ease-in-out infinite;
+    z-index: 0; pointer-events: none;
 }
-@property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-@keyframes igRotateBorder { to { --angle: 360deg; } }
-@keyframes igShimmer { 0% { background-position: -250% 0; } 100% { background-position: 250% 0; } }
-@keyframes igPulseIn { from { opacity: 0; transform: translateY(24px) scale(0.93); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@property --fire-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes igFireBorder { to { --fire-angle: 360deg; } }
+@keyframes igFireShimmer {
+    0%   { background-position: -300% 0; }
+    100% { background-position: 300% 0; }
+}
+@keyframes igPulseIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.93); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* Ember glow layer — pure CSS */
+.ig-banner .ig-embers {
+    position: absolute; inset: 0; border-radius: 70px;
+    background:
+        radial-gradient(ellipse 80% 40% at 20% 60%, rgba(255,100,0,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 30% at 80% 40%, rgba(255,46,147,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 50% 100%, rgba(255,180,0,0.07) 0%, transparent 80%);
+    animation: igEmberPulse 3s ease-in-out infinite alternate;
+    pointer-events: none; z-index: 0;
+}
+@keyframes igEmberPulse {
+    0%   { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.03); }
+}
 .ig-banner:hover {
-    transform: translateY(-4px) scale(1.025);
-    box-shadow: 0 0 0 1px rgba(255,46,147,0.3), 0 20px 60px rgba(255,46,147,0.4), 0 0 80px rgba(139,92,246,0.2), inset 0 1px 0 rgba(255,255,255,0.08);
+    transform: translateY(-5px) scale(1.03);
+    box-shadow:
+        0 0 0 1px rgba(255,107,0,0.4),
+        0 20px 60px rgba(255,46,147,0.45),
+        0 0 80px rgba(255,107,0,0.25),
+        0 0 120px rgba(255,200,0,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.12);
 }
+.ig-banner:hover::before { animation-duration: 1.2s; opacity: 1; }
+/* BADGE — fire style */
 .ig-badge {
     display: inline-flex; align-items: center; gap: 7px;
-    padding: 6px 12px;
-    background: linear-gradient(135deg, #ff2e93, #b794f6);
+    padding: 7px 14px;
+    background: linear-gradient(135deg, #ff4500 0%, #ff2e93 50%, #ff6b00 100%);
+    background-size: 200% 200%;
     border-radius: 50px; font-size: 11px; font-weight: 800;
     letter-spacing: 0.12em; text-transform: uppercase; color: #fff;
     white-space: nowrap; flex-shrink: 0; position: relative; z-index: 1;
-    box-shadow: 0 4px 20px rgba(255,46,147,0.5);
-    animation: igBadgePop 2.5s ease-in-out infinite;
+    box-shadow: 0 4px 20px rgba(255,69,0,0.55), 0 0 12px rgba(255,180,0,0.3);
+    animation: igBadgeFire 2s ease-in-out infinite;
 }
-@keyframes igBadgePop {
-    0%, 100% { box-shadow: 0 4px 20px rgba(255,46,147,0.5); }
-    50%       { box-shadow: 0 4px 30px rgba(255,46,147,0.85), 0 0 20px rgba(183,148,246,0.6); }
+@keyframes igBadgeFire {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(255,69,0,0.55), 0 0 12px rgba(255,180,0,0.3);
+        background-position: 0% 50%;
+    }
+    50% {
+        box-shadow: 0 4px 30px rgba(255,69,0,0.9), 0 0 30px rgba(255,200,0,0.5), 0 0 50px rgba(255,46,147,0.3);
+        background-position: 100% 50%;
+    }
 }
 .ig-live-dot { position: relative; width: 8px; height: 8px; flex-shrink: 0; }
-.ig-live-dot::before, .ig-live-dot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #2dff8e; }
-.ig-live-dot::after { background: transparent; border: 1.5px solid #2dff8e; inset: -4px; animation: igDotPulse 1.6s ease-out infinite; }
-@keyframes igDotPulse { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(2.4); opacity: 0; } }
-.ig-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.12); flex-shrink: 0; position: relative; z-index: 1; }
+.ig-live-dot::before, .ig-live-dot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #ffd700; }
+.ig-live-dot::after { background: transparent; border: 1.5px solid #ffd700; inset: -4px; animation: igDotPulse 1.6s ease-out infinite; }
+@keyframes igDotPulse { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(2.6); opacity: 0; } }
+.ig-divider { width: 1px; height: 28px; background: linear-gradient(to bottom, transparent, rgba(255,107,0,0.5), transparent); flex-shrink: 0; position: relative; z-index: 1; }
 .ig-icon {
-    width: 38px; height: 38px; flex-shrink: 0; border-radius: 12px;
+    width: 42px; height: 42px; flex-shrink: 0; border-radius: 14px;
     background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
     display: grid; place-items: center;
-    box-shadow: 0 4px 18px rgba(220,39,67,0.45);
+    box-shadow: 0 4px 20px rgba(220,39,67,0.5), 0 0 20px rgba(255,100,0,0.3);
     transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s;
     position: relative; z-index: 1;
 }
-.ig-banner:hover .ig-icon { transform: rotate(-10deg) scale(1.12); box-shadow: 0 6px 28px rgba(220,39,67,0.65); }
-.ig-icon svg { width: 19px; height: 19px; fill: #fff; }
+.ig-banner:hover .ig-icon {
+    transform: rotate(-12deg) scale(1.15);
+    box-shadow: 0 6px 30px rgba(220,39,67,0.7), 0 0 30px rgba(255,150,0,0.5);
+}
+.ig-icon svg { width: 20px; height: 20px; fill: #fff; }
 .ig-banner-text { display: flex; flex-direction: column; gap: 3px; position: relative; z-index: 1; }
-.ig-banner-text strong { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: 0.01em; line-height: 1.2; }
-.ig-banner-text span { font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; }
+.ig-banner-text strong {
+    font-size: 14px; font-weight: 700; color: #fff;
+    letter-spacing: 0.01em; line-height: 1.2;
+    text-shadow: 0 0 20px rgba(255,107,0,0.4);
+}
+.ig-banner-text span { font-size: 11px; color: rgba(255,200,150,0.65); letter-spacing: 0.08em; }
 .ig-arrow {
-    margin-left: 2px; width: 28px; height: 28px; border-radius: 50%;
-    background: rgba(255,46,147,0.15); border: 1px solid rgba(255,46,147,0.3);
-    display: grid; place-items: center; font-size: 13px; color: var(--pink);
+    margin-left: 2px; width: 30px; height: 30px; border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255,69,0,0.2), rgba(255,46,147,0.2));
+    border: 1px solid rgba(255,107,0,0.4);
+    display: grid; place-items: center; font-size: 14px; color: #ffd700;
     position: relative; z-index: 1;
     transition: transform 0.3s var(--ease), background 0.3s, border-color 0.3s;
     flex-shrink: 0;
+    text-shadow: 0 0 8px rgba(255,200,0,0.8);
 }
-.ig-banner:hover .ig-arrow { transform: translateX(4px); background: var(--pink); border-color: var(--pink); color: #fff; }
+.ig-banner:hover .ig-arrow {
+    transform: translateX(5px);
+    background: linear-gradient(135deg, #ff4500, #ff2e93);
+    border-color: transparent; color: #fff;
+    text-shadow: none;
+}
 @media (max-width: 640px) {
-    .ig-banner { margin-bottom: 28px; padding: 10px 14px 10px 10px; gap: 10px; }
+    .ig-banner { margin-bottom: 28px; padding: 11px 16px 11px 11px; gap: 12px; }
     .ig-banner-text strong { font-size: 12px; }
     .ig-divider { display: none; }
 }
@@ -1720,6 +1789,7 @@ blockquote footer {
                 <span class="hero-line gradient">Cocktail Bar</span>
             </h1>
             <a href="https://www.instagram.com/miamiloungebar/" target="_blank" rel="noopener" class="ig-banner" data-reveal data-delay="250" aria-label="Síguenos en Instagram">
+                <div class="ig-embers" aria-hidden="true"></div>
                 <div class="ig-badge">
                     <span class="ig-live-dot" aria-hidden="true"></span>
                     <span data-i18n="ig.follow">Síguenos</span>
