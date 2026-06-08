@@ -2560,21 +2560,21 @@ document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
     /* ---------- LOADER ---------- */
-    const loader = document.getElementById('loader');
-    const _loaderKey = 'miamilounge_loader_index';
-    const _today = new Date().toISOString().slice(0, 10);
-    const _lastShown = localStorage.getItem(_loaderKey);
-    if (_lastShown === _today) {
-        loader.classList.add('is-hidden');
+        const loader = document.getElementById('loader');
+    const loaderKey = 'miamilounge_loader_index';
+    const today = new Date().toISOString().slice(0, 10);
+    const lastShown = localStorage.getItem(loaderKey);
+    if (lastShown === today) {
+      loader.classList.add('is-hidden');
     } else {
-        localStorage.setItem(_loaderKey, _today);
-        const hideLoader = () => setTimeout(() => loader.classList.add('is-hidden'), 1900);
-        if (document.readyState === 'complete') {
-          hideLoader();
-        } else {
-          window.addEventListener('load', hideLoader);
-        });
-        setTimeout(() => loader && loader.classList.add('is-hidden'), 4000);
+      localStorage.setItem(loaderKey, today);
+      const hideLoader = () => setTimeout(() => loader.classList.add('is-hidden'), 1900);
+      if (document.readyState === 'complete') {
+        hideLoader();
+      } else {
+        window.addEventListener('load', hideLoader);
+      }
+      setTimeout(() => loader.classList.add('is-hidden'), 4100);
     }
 
     /* ---------- YEAR ---------- */
