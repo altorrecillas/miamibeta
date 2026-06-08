@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <meta name="theme-color" content="#0a0118" />
+  <link rel="canonical" href="https://www.miamilounge.es/" />
     <title>Miami Lounge Bar · Cócteles & Música en Vivo · Miami Platja, Tarragona</title>
     <meta name="description" content="Miami Lounge Bar en Miami Platja (Tarragona, Costa Dorada). Cócteles artesanales, terraza chill-out con sofás, hamacas y columpios. Música y ambiente agradable. Av. de Barcelona, 40." />
     <meta name="keywords" content="Miami Lounge, cócteles Miami Platja, bar Tarragona, lounge bar Costa Dorada, cócteles artesanales, terraza Miami Platja, DJ Tarragona" />
@@ -13,10 +14,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Miami Lounge Bar · Miami Platja" />
     <meta name="twitter:description" content="Cócteles artesanales, combinados premium y platitos para compartir. Drink, eat, relax and repeat." />
-    <meta name="twitter:image" content="img/miami-hero.jpg" />
-    <meta property="og:image" content="img/miami-hero.jpg" />
+    <meta name="twitter:image" content="https://www.miamilounge.es/img/miami-hero.jpg" />
+    <meta property="og:image" content="https://www.miamilounge.es/img/miami-hero.jpg" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preload" as="image" href="img/miami-hero.jpg" fetchpriority="high" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Monoton&family=Outfit:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
         <style>
@@ -144,7 +146,7 @@ button { font: inherit; background: none; border: 0; color: inherit; cursor: non
     display: grid; place-items: center;
     transition: opacity 0.8s var(--ease), visibility 0.8s;
 }
-.loader.is-hidden { opacity: 0; visibility: hidden; }
+.loader.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .loader-bg {
     position: absolute; inset: 0;
     background:
@@ -1837,7 +1839,7 @@ blockquote footer {
     <!-- =============== HERO =============== -->
     <section class="hero" id="hero">
         <div class="hero-bg">
-            <img src="img/miami-hero.jpg" alt="Miami Lounge Bar Miami Platja" class="hero-img" loading="eager" decoding="async"/>
+            <img src="img/miami-hero.jpg" alt="Miami Lounge Bar Miami Platja" class="hero-img" loading="eager" decoding="async" fetchpriority="high"/>
             <div class="hero-overlay"></div>
             <div class="hero-grid"></div>
         </div>
@@ -1853,7 +1855,7 @@ blockquote footer {
                 <span class="hero-line gradient">Cocktail Bar</span>
             </h1>
             <div class="ig-glow-wrap">
-            <a href="https://www.instagram.com/miamiloungebar/" target="_blank" rel="noopener" class="ig-banner" data-reveal data-delay="0" aria-label="Síguenos en Instagram">
+            <a href="https://www.instagram.com/miamiloungebar/" target="_blank" rel="noopener noreferrer" class="ig-banner" data-reveal data-delay="0" aria-label="Síguenos en Instagram">
                 <div class="ig-embers" aria-hidden="true"></div>
                 <div class="ig-badge">
                     <span class="ig-live-dot" aria-hidden="true"></span>
@@ -2152,7 +2154,7 @@ blockquote footer {
                         <span data-i18n="schedule.p">Miami Lounge abre <strong>todas las noches del verano</strong> para que disfrutes
                         de cócteles, buena música y la mejor compañía en la Costa Dorada.</span>
                     </p>
-                    <p class="schedule-note" data-i18n="schedule.note">⚠️ Horario de temporada (verano 2026).. Llámanos o escríbenos al <a href="https://instagram.com/miamiloungebar" target="_blank" rel="noopener">@miamiloungebar</a> para reservas o eventos privados.</p>
+                    <p class="schedule-note" data-i18n="schedule.note">⚠️ Horario de temporada (verano 2026). Llámanos o escríbenos al <a href="https://instagram.com/miamiloungebar" target="_blank" rel="noopener noreferrer">@miamiloungebar</a> para reservas o eventos privados.</p>
                     <a href="tel:+34691691080" class="btn btn-primary" data-cursor="link">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                         <span data-i18n="schedule.cta">Llamar para reservar</span>
@@ -2211,7 +2213,7 @@ blockquote footer {
                             <span class="ci-icon" aria-hidden="true">📍</span>
                             <div>
                                 <strong data-i18n="contact.address">Dirección</strong>
-                                <a href="https://maps.google.com/?q=Avinguda+de+Barcelona,+40,+43892+Miami+Platja,+Tarragona" target="_blank" rel="noopener" data-cursor="link">
+                                <a href="https://maps.google.com/?q=Avinguda+de+Barcelona,+40,+43892+Miami+Platja,+Tarragona" target="_blank" rel="noopener noreferrer" data-cursor="link">
                                     Avinguda de Barcelona, 40<br/>43892 Miami Platja, Tarragona
                                 </a>
                             </div>
@@ -2234,7 +2236,7 @@ blockquote footer {
                             <span class="ci-icon" aria-hidden="true">🌐</span>
                             <div>
                                 <strong data-i18n="contact.web">Web</strong>
-                                <a href="https://www.miamilounge.es/" target="_blank" rel="noopener" data-cursor="link">www.miamilounge.es</a>
+                                <a href="https://www.miamilounge.es/" target="_blank" rel="noopener noreferrer" data-cursor="link">www.miamilounge.es</a>
                             </div>
                         </li>
                         <li>
@@ -2261,10 +2263,10 @@ blockquote footer {
                     </ul>
 
                     <div class="socials">
-                        <a href="https://www.facebook.com/miamiloungecocteles" target="_blank" rel="noopener" data-cursor="link" aria-label="Facebook">Facebook</a>
-                        <a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener" data-cursor="link" aria-label="Instagram">Instagram</a>
-                        <a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener" data-cursor="link" aria-label="Turismo" data-i18n="contact.tourism">Turismo</a>
-                        <a href="https://g.page/r/miami-lounge-miami-platja" target="_blank" rel="noopener" data-cursor="link" aria-label="Google">Google</a>
+                        <a href="https://www.facebook.com/miamiloungecocteles" target="_blank" rel="noopener noreferrer" data-cursor="link" aria-label="Facebook">Facebook</a>
+                        <a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener noreferrer" data-cursor="link" aria-label="Instagram">Instagram</a>
+                        <a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener noreferrer" data-cursor="link" aria-label="Turismo" data-i18n="contact.tourism">Turismo</a>
+                        <a href="https://g.page/r/miami-lounge-miami-platja" target="_blank" rel="noopener noreferrer" data-cursor="link" aria-label="Google">Google</a>
                     </div>
                 </div>
 
@@ -2301,14 +2303,14 @@ blockquote footer {
                         <p>Av. de Barcelona, 40<br/>43892 Miami Platja, Tarragona</p>
                         <p><a href="tel:+34691691080">+34 691 69 10 80</a></p>
                         <p><a href="mailto:nanievies@gmail.com">nanievies@gmail.com</a></p>
-                        <p><a href="https://www.miamilounge.es/" target="_blank" rel="noopener">www.miamilounge.es</a></p>
+                        <p><a href="https://www.miamilounge.es/" target="_blank" rel="noopener noreferrer">www.miamilounge.es</a></p>
                     </div>
                     <div>
                         <h4 data-i18n="footer.col2.title">Síguenos</h4>
-                        <p><a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener">Instagram</a></p>
-                        <p><a href="https://www.facebook.com/miamiloungecocteles" target="_blank" rel="noopener">Facebook</a></p>
-                        <p><a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener" data-i18n="footer.col2.tourism">Web oficial turismo</a></p>
-                        <p><a href="https://www.tripadvisor.com/" target="_blank" rel="noopener">TripAdvisor</a></p>
+                        <p><a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+                        <p><a href="https://www.facebook.com/miamiloungecocteles" target="_blank" rel="noopener noreferrer">Facebook</a></p>
+                        <p><a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener noreferrer" data-i18n="footer.col2.tourism">Web oficial turismo</a></p>
+                        <p><a href="https://www.tripadvisor.com/" target="_blank" rel="noopener noreferrer">TripAdvisor</a></p>
                     </div>
                     <div>
                         <h4 data-i18n="footer.col3.title">Información</h4>
@@ -2329,7 +2331,7 @@ blockquote footer {
     </footer>
 
     <!-- =============== LIGHTBOX =============== -->
-    <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de fotos" aria-hidden="true">
         <button class="lb-close" id="lbClose" aria-label="Cerrar" data-i18n-aria="lb.close">×</button>
         <button class="lb-prev" id="lbPrev" aria-label="Anterior">‹</button>
         <button class="lb-next" id="lbNext" aria-label="Siguiente">›</button>
@@ -2639,7 +2641,12 @@ document.addEventListener('DOMContentLoaded', () => {
             burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         };
         burger.addEventListener('click', toggle);
-        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', toggle));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      burger.classList.remove('is-open');
+      mobileMenu.classList.remove('is-open');
+      document.body.style.overflow = '';
+      burger.setAttribute('aria-expanded', 'false');
+    }));
     }
 
     /* ---------- REVEAL ON SCROLL ---------- */
@@ -2728,7 +2735,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (target) {
                 e.preventDefault();
                 const offset = 80;
-                const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                const top = target.getBoundingClientRect().top + window.scrollY - offset;
                 window.scrollTo({ top, behavior: 'smooth' });
             }
         });

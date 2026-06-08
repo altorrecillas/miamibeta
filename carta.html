@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <meta name="theme-color" content="#0a0118" />
+  <link rel="canonical" href="https://www.miamilounge.es/carta.html" />
     <title>Carta · Miami Lounge Bar · Cócteles & Tapas · Miami Platja</title>
     <meta name="description" content="Carta completa de Miami Lounge Bar en Miami Platja. Cócteles clásicos, mojitos XL, combinados, gin tonics, cervezas, vinos, champagne, caprichos y club gourmet. Temporada 2026." />
     <meta property="og:title" content="Carta · Miami Lounge Bar" />
@@ -12,10 +13,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Carta · Miami Lounge Bar" />
     <meta name="twitter:description" content="Cócteles artesanales, cócteles XL, combinados y platitos para compartir en Miami Platja." />
-    <meta name="twitter:image" content="img/miami-hero.jpg" />
-    <meta property="og:image" content="img/miami-hero.jpg" />
+    <meta name="twitter:image" content="https://www.miamilounge.es/img/miami-hero.jpg" />
+    <meta property="og:image" content="https://www.miamilounge.es/img/miami-hero.jpg" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preload" as="image" href="img/miami-hero.jpg" fetchpriority="high" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Monoton&family=Outfit:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
     <style>
@@ -149,7 +151,7 @@ button { font: inherit; background: none; border: 0; color: inherit; cursor: non
     display: grid; place-items: center;
     transition: opacity 0.8s var(--ease), visibility 0.8s;
 }
-.loader.is-hidden { opacity: 0; visibility: hidden; }
+.loader.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .loader-bg {
     position: absolute; inset: 0;
     background:
@@ -3930,7 +3932,7 @@ img { max-width: 100%; height: auto; }
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                             <span data-i18n="cta.call">Llamar: +34 691 691 080</span>
                         </a>
-                        <a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener" class="btn btn-ghost" data-cursor="link">
+                        <a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" data-cursor="link">
                             📷 @miamiloungebar
                         </a>
                         <a href="index.html" class="btn btn-ghost" data-cursor="link">
@@ -3961,13 +3963,13 @@ img { max-width: 100%; height: auto; }
                         <p>Av. de Barcelona, 40<br/>43892 Miami Platja, Tarragona</p>
                         <p><a href="tel:+34691691080">+34 691 69 10 80</a></p>
                         <p><a href="mailto:nanievies@gmail.com">nanievies@gmail.com</a></p>
-                        <p><a href="https://www.miamilounge.es" target="_blank" rel="noopener" class="web-soon">www.miamilounge.es</a></p>
+                        <p><a href="https://www.miamilounge.es" target="_blank" rel="noopener noreferrer" class="web-soon">www.miamilounge.es</a></p>
                     </div>
                     <div>
                         <h4 data-i18n="footer.col2.title">Síguenos</h4>
-                        <p><a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener">Instagram</a></p>
-                        <p><a href="https://www.facebook.com/miamiloungecocteles" target="_blank" rel="noopener">Facebook</a></p>
-                        <p><a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener" data-i18n="footer.col2.tourism">Web oficial turismo</a></p>
+                        <p><a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+                        <p><a href="https://www.facebook.com/miamiloungecocteles" target="_blank" rel="noopener noreferrer">Facebook</a></p>
+                        <p><a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener noreferrer" data-i18n="footer.col2.tourism">Web oficial turismo</a></p>
                     </div>
                     <div>
                         <h4 data-i18n="footer.col3.title">Información</h4>
@@ -4071,10 +4073,17 @@ img { max-width: 100%; height: auto; }
         const toggle = () => {
             burger.classList.toggle('is-open');
             mobileMenu.classList.toggle('is-open');
-            document.body.style.overflow = mobileMenu.classList.contains('is-open') ? 'hidden' : '';
+            const isOpen = mobileMenu.classList.contains('is-open');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         };
         burger.addEventListener('click', toggle);
-        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', toggle));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      burger.classList.remove('is-open');
+      mobileMenu.classList.remove('is-open');
+      document.body.style.overflow = '';
+      burger.setAttribute('aria-expanded', 'false');
+    }));
     }
 
     /* ---------- REVEAL ON SCROLL ---------- */
@@ -4179,7 +4188,7 @@ img { max-width: 100%; height: auto; }
             if (target) {
                 e.preventDefault();
                 const offset = 80;
-                const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                const top = target.getBoundingClientRect().top + window.scrollY - offset;
                 window.scrollTo({ top, behavior: 'smooth' });
             }
         });

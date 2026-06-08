@@ -4,16 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#0a0118">
+  <link rel="canonical" href="https://www.miamilounge.es/galeria.html" />
   <title>Galería · Miami Lounge Bar · Miami Platja, Tarragona</title>
   <meta name="description" content="Galería de fotos de Miami Lounge Bar en Miami Platja. Terraza chill-out, cócteles artesanales y noches únicas en la Costa Dorada.">
   <meta property="og:title" content="Galería · Miami Lounge Bar">
   <meta property="og:description" content="Imágenes de nuestra terraza, cócteles y ambiente en Miami Platja, Costa Dorada.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="galeria/galeria1.jpg">
+  <meta property="og:image" content="https://www.miamilounge.es/galeria/galeria1.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Galería · Miami Lounge Bar">
-  <meta name="twitter:image" content="galeria/galeria1.jpg">
+  <meta name="twitter:image" content="https://www.miamilounge.es/galeria/galeria1.jpg">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌴</text></svg>">
+    <link rel="preload" as="image" href="galeria/galeria1.jpg" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Monoton&family=Outfit:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -367,7 +369,7 @@
       <a href="carta.html" data-cursor="link" data-i18n="nav.menu">Carta</a>
       <a href="index.html#contact" data-cursor="link" data-i18n="nav.contact">Contacto</a>
     </nav>
-    <a href="tel:+34691691086" class="nav-cta" data-cursor="link">
+    <a href="tel:+34691691080" class="nav-cta" data-cursor="link">
       <span data-i18n="nav.book">Reservar</span>
       <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
     </a>
@@ -395,7 +397,7 @@
     <a href="index.html#cocktails" data-i18n="nav.cocktails">Cócteles</a>
     <a href="carta.html" data-i18n="nav.menu">Carta</a>
     <a href="index.html#contact" data-i18n="nav.contact">Contacto</a>
-    <a href="tel:+34691691086" class="mobile-cta">Reservar mesa</a>
+    <a href="tel:+34691691080" class="mobile-cta">Reservar mesa</a>
   </div>
 
   <!-- LIGHTBOX -->
@@ -433,7 +435,7 @@
           <span data-i18n="gallery.stats"><strong>28</strong> fotos · Miami Platja, Costa Dorada</span>
         </p>
         <div class="gallery-masonry" id="galleryGrid" data-reveal data-delay="120">
-          <a href="galeria/galeria1.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 1"><img src="galeria/galeria1.jpg" alt="Miami Lounge Bar foto 1" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria1.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 1"><img src="galeria/galeria1.jpg" alt="Miami Lounge Bar foto 1" loading="eager" decoding="async" fetchpriority="high"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
           <a href="galeria/galeria2.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 2"><img src="galeria/galeria2.jpg" alt="Miami Lounge Bar foto 2" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
           <a href="galeria/galeria3.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 3"><img src="galeria/galeria3.jpg" alt="Miami Lounge Bar foto 3" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
           <a href="galeria/galeria4.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 4"><img src="galeria/galeria4.jpg" alt="Miami Lounge Bar foto 4" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
@@ -486,7 +488,7 @@
         <a href="carta.html" data-cursor="link" data-i18n="footer.nav.menu">Carta</a>
         <a href="index.html#contact" data-cursor="link" data-i18n="footer.nav.contact">Contacto</a>
       </nav>
-      <p class="footer-copy"><span data-i18n="footer.responsible" style="display:inline">Drink responsibly · Bebe con responsabilidad. +18</span> &middot; © <span id="year"></span> Miami Lounge Bar &middot; Miami Platja, Costa Dorada &middot; <a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener" data-cursor="link">@miamiloungebar</a></p>
+      <p class="footer-copy"><span data-i18n="footer.responsible" style="display:inline">Drink responsibly · Bebe con responsabilidad. +18</span> &middot; © <span id="year"></span> Miami Lounge Bar &middot; Miami Platja, Costa Dorada &middot; <a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener noreferrer" data-cursor="link">@miamiloungebar</a></p>
     </div>
   </footer>
 
@@ -668,7 +670,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseleave', () => { cursor.style.opacity = 0; follower.style.opacity = 0; });
     document.addEventListener('mouseenter', () => { cursor.style.opacity = 1; follower.style.opacity = 1; });
     document.querySelectorAll('[data-cursor]').forEach(el => {
-      el.addEventListener('mouseenter', () => follower.classList.add('is-' + el.getAttribute('data-cursor')));
+      el.addEventListener('mouseenter', () => follower.classList.add('is-' + el.getAttribute('data-cursor'))));
       el.addEventListener('mouseleave', () => follower.classList.remove('is-link', 'is-view'));
     });
   }
