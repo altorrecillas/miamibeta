@@ -673,7 +673,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseleave', () => { cursor.style.opacity = 0; follower.style.opacity = 0; });
     document.addEventListener('mouseenter', () => { cursor.style.opacity = 1; follower.style.opacity = 1; });
     document.querySelectorAll('[data-cursor]').forEach(el => {
-      el.addEventListener('mouseenter', () => follower.classList.add('is-' + el.getAttribute('data-cursor'))));
+      el.addEventListener('mouseenter', () => follower.classList.add('is-' + el.getAttribute('data-cursor')));
       el.addEventListener('mouseleave', () => follower.classList.remove('is-link', 'is-view'));
     });
   }
