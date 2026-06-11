@@ -10,16 +10,29 @@
   <meta property="og:title" content="Galería · Miami Lounge Bar">
   <meta property="og:description" content="Imágenes de nuestra terraza, cócteles y ambiente en Miami Platja, Costa Dorada.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.miamilounge.es/galeria.html">
+  <meta property="og:site_name" content="Miami Lounge Bar">
+  <meta property="og:locale" content="es_ES">
   <meta property="og:image" content="https://www.miamilounge.es/galeria/galeria1.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Galería · Miami Lounge Bar">
   <meta name="twitter:image" content="https://www.miamilounge.es/galeria/galeria1.jpg">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌴</text></svg>">
-    <link rel="preload" as="image" href="galeria/galeria1.jpg" fetchpriority="high">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Monoton&family=Outfit:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+    <link rel="preload" as="image" href="galeria/galeria1.webp" fetchpriority="high">
+  <link rel="preload" as="font" type="font/woff2" href="fonts/outfit.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="fonts/bebas-neue.woff2" crossorigin>
   <style>
+    /* SELF-HOSTED FONTS (antes Google Fonts CDN) */
+    @font-face { font-family: 'Bebas Neue'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/bebas-neue.woff2') format('woff2'); }
+    @font-face { font-family: 'Monoton'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/monoton.woff2') format('woff2'); }
+    @font-face { font-family: 'Outfit'; font-style: normal; font-weight: 300 900; font-display: swap; src: url('fonts/outfit.woff2') format('woff2'); }
+    @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 400 600; font-display: swap; src: url('fonts/cormorant-garamond.woff2') format('woff2'); }
+    @font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 400; font-display: swap; src: url('fonts/cormorant-garamond-italic.woff2') format('woff2'); }
+
     /* VARIABLES idénticas al index */
     :root {
       --bg: #0a0118; --bg-2: #14032a; --bg-3: #1f0840;
@@ -148,8 +161,11 @@
     .nav-links a:hover { color: #fff; }
     .nav-links a:hover::before, .nav-links a.is-active::before { width: 100%; left: 0; }
     .nav-links a.is-active { color: var(--pink); }
-    .nav-cta { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; background: var(--grad-sunset); border-radius: 50px; font-size: 13px; font-weight: 600; color: #fff; letter-spacing: .04em; transition: transform .3s var(--ease), box-shadow .3s; box-shadow: 0 0 0 rgba(255,46,147,0); }
-    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,46,147,.5); }
+    .nav-cta { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; background: var(--grad-sunset); background-size: 170% 170%; background-position: 0% 50%; border-radius: 50px; font-size: 13px; font-weight: 600; color: #fff; letter-spacing: .04em; position: relative; overflow: hidden; transition: transform .3s var(--ease), box-shadow .3s, background-position .5s var(--ease); box-shadow: 0 3px 14px rgba(255,46,147,.25), inset 0 1px 0 rgba(255,255,255,.28); }
+    .nav-cta::after { content: ''; position: absolute; top: -2px; bottom: -2px; left: -75%; width: 50%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-20deg); pointer-events: none; transition: left .55s var(--ease); }
+    .nav-cta:hover::after { left: 130%; }
+    .nav-cta:hover { transform: translateY(-2px); background-position: 100% 50%; box-shadow: 0 10px 30px rgba(255,46,147,.5), inset 0 1px 0 rgba(255,255,255,.35); }
+    .nav-cta:active { transform: translateY(0) scale(.96); }
     .nav-burger { display: none; width: 32px; height: 32px; flex-direction: column; gap: 5px; align-items: center; justify-content: center; position: relative; z-index: 102; }
     .nav-burger span { width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform .4s var(--ease), opacity .3s; }
     .nav-burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -161,7 +177,8 @@
     .mobile-menu.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
     .mobile-menu a { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: .08em; color: #fff; transition: color .3s; }
     .mobile-menu a:hover { color: var(--cyan); }
-    .mobile-cta { margin-top: 20px; padding: 14px 30px; background: var(--grad-sunset); border-radius: 50px; font-family: 'Outfit', sans-serif; font-size: 16px !important; font-weight: 600; }
+    .mobile-cta { margin-top: 20px; padding: 14px 30px; background: var(--grad-sunset); border-radius: 50px; font-family: 'Outfit', sans-serif; font-size: 16px !important; font-weight: 600; box-shadow: 0 8px 28px rgba(255,46,147,.35), inset 0 1px 0 rgba(255,255,255,.3); transition: transform .25s var(--ease), box-shadow .25s; }
+    .mobile-cta:active { transform: scale(.96); }
 
     /* REVEAL */
     [data-reveal] { opacity: 0; transform: translateY(30px); transition: opacity .7s var(--ease) var(--delay, 0ms), transform .7s var(--ease) var(--delay, 0ms); }
@@ -192,8 +209,9 @@
     .g-item.loaded::before { display: none; }
     @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 9px 22px; border-radius: 50px; border: 1px solid var(--border); background: var(--glass); color: var(--ink-soft); font-size: .82rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; transition: all .25s var(--ease); }
-    .back-link:hover { border-color: var(--pink); color: var(--pink); gap: 12px; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 11px 26px; border-radius: 50px; border: 1px solid var(--border); background: var(--glass); color: var(--ink-soft); font-size: .82rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; box-shadow: inset 0 1px 0 rgba(255,255,255,.07); transition: all .3s var(--ease); }
+    .back-link:hover { border-color: var(--pink); color: var(--pink); gap: 13px; transform: translateY(-2px); background: rgba(255,46,147,.06); box-shadow: 0 10px 26px rgba(255,46,147,.18), inset 0 1px 0 rgba(255,255,255,.1); }
+    .back-link:active { transform: translateY(0) scale(.97); }
 
     /* LIGHTBOX */
     .lightbox { position: fixed; inset: 0; z-index: 10002; background: rgba(10,1,24,.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .3s var(--ease), visibility .3s; }
@@ -247,6 +265,22 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
       [data-reveal] { opacity: 1; transform: none; }
+    }
+
+    /* FOCUS-VISIBLE (keyboard navigation) */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--pink);
+      outline-offset: 3px;
+      border-radius: 4px;
+      box-shadow: 0 0 0 4px rgba(255,46,147,0.2);
+    }
+    a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
+
+    /* PRINT */
+    @media print {
+      .cursor, .cursor-follower, .grain, .loader, .nav, .mobile-menu,
+      .lightbox, .scroll-progress { display: none !important; }
+      body { background: #fff; color: #000; cursor: auto; }
     }
 
 /* ==================================================
@@ -311,9 +345,78 @@
     border-radius: 0 2px 2px 0;
   }
 
+
+  /* SKIP LINK (accesibilidad teclado) */
+  .skip-link {
+    position: fixed; top: -70px; left: 16px; z-index: 10010;
+    padding: 12px 22px; border-radius: 0 0 12px 12px;
+    background: var(--pink); color: #fff;
+    font-weight: 600; font-size: 14px;
+    transition: top 0.3s;
+  }
+  .skip-link:focus { top: 0; outline: none; }
+
+  /* WHATSAPP FLOAT */
+  .wa-float {
+    position: fixed; bottom: 30px; right: 30px; z-index: 99;
+    width: 58px; height: 58px; border-radius: 50%;
+    background: #25D366;
+    display: grid; place-items: center;
+    box-shadow: 0 8px 28px rgba(37,211,102,0.45), 0 4px 12px rgba(0,0,0,0.35);
+    transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s;
+  }
+  .wa-float svg { width: 30px; height: 30px; fill: #fff; display: block; }
+  .wa-float::before {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    border: 2px solid #25D366;
+    animation: waPulse 2.4s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes waPulse {
+    0%   { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.7); opacity: 0; }
+  }
+  .wa-float:hover {
+    transform: translateY(-4px) scale(1.07);
+    box-shadow: 0 14px 40px rgba(37,211,102,0.55), 0 6px 18px rgba(0,0,0,0.4);
+  }
+  .wa-float::after {
+    content: 'Reserva por WhatsApp';
+    position: absolute; right: calc(100% + 12px); top: 50%;
+    transform: translateY(-50%) translateX(6px);
+    background: rgba(10,1,24,0.92);
+    color: var(--ink-soft);
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 6px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s, transform 0.25s var(--ease);
+  }
+  .wa-float:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
+  .wa-float:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px #25D366, 0 0 0 6px rgba(37,211,102,0.3);
+  }
+  @media (max-width: 640px) {
+    .wa-float { bottom: 20px; right: 20px; width: 54px; height: 54px; }
+    .wa-float::after { display: none; }
+  }
+  @media print { .wa-float { display: none !important; } }
+
+  /* VIEW TRANSITIONS (cross-document, SPA-like fades) */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.25s; }
+  @media (prefers-reduced-motion: reduce) {
+    @view-transition { navigation: none; }
+  }
+
   </style>
 </head>
 <body>
+  <a href="#contenido" class="skip-link">Saltar al contenido</a>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 
@@ -415,11 +518,18 @@
     <a href="index.html#cocktails" data-i18n="nav.cocktails">Cócteles</a>
     <a href="carta.html" data-i18n="nav.menu">Carta</a>
     <a href="index.html#contact" data-i18n="nav.contact">Contacto</a>
-    <a href="tel:+34691691080" class="mobile-cta">Reservar mesa</a>
+    <a href="tel:+34691691080" class="mobile-cta" data-i18n="nav.bookTable">Reservar mesa</a>
   </div>
 
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/34691691080?text=Hola!%20Quiero%20reservar%20una%20mesa%20%2F%20Je%20voudrais%20r%C3%A9server%20%2F%20I%27d%20like%20to%20book%20a%20table%20%F0%9F%8C%B4"
+     class="wa-float" target="_blank" rel="noopener noreferrer"
+     aria-label="Reservar por WhatsApp" data-cursor="link">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </a>
+
   <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de fotos">
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de fotos" aria-hidden="true">
     <button class="lightbox-close" id="lbClose" aria-label="Cerrar" data-cursor="link">&#x2715;</button>
     <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Anterior" data-cursor="link">&#8592;</button>
     <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Siguiente" data-cursor="link">&#8594;</button>
@@ -435,7 +545,7 @@
   </div>
 
   <!-- MAIN -->
-  <main>
+  <main id="contenido">
     <section class="page-hero">
       <div class="page-hero-bg" aria-hidden="true"></div>
       <div class="container page-hero-content">
@@ -453,34 +563,34 @@
           <span data-i18n="gallery.stats"><strong>28</strong> fotos · Miami Platja, Costa Dorada</span>
         </p>
         <div class="gallery-masonry" id="galleryGrid" data-reveal data-delay="120">
-          <a href="galeria/galeria1.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 1"><img src="galeria/galeria1.jpg" alt="Miami Lounge Bar foto 1" loading="eager" decoding="async" fetchpriority="high"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria2.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 2"><img src="galeria/galeria2.jpg" alt="Miami Lounge Bar foto 2" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria3.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 3"><img src="galeria/galeria3.jpg" alt="Miami Lounge Bar foto 3" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria4.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 4"><img src="galeria/galeria4.jpg" alt="Miami Lounge Bar foto 4" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria5.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 5"><img src="galeria/galeria5.jpg" alt="Miami Lounge Bar foto 5" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria6.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 6"><img src="galeria/galeria6.jpg" alt="Miami Lounge Bar foto 6" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria7.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 7"><img src="galeria/galeria7.jpg" alt="Miami Lounge Bar foto 7" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria8.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 8"><img src="galeria/galeria8.jpg" alt="Miami Lounge Bar foto 8" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria9.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 9"><img src="galeria/galeria9.jpg" alt="Miami Lounge Bar foto 9" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria10.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 10"><img src="galeria/galeria10.jpg" alt="Miami Lounge Bar foto 10" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria11.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 11"><img src="galeria/galeria11.jpg" alt="Miami Lounge Bar foto 11" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria12.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 12"><img src="galeria/galeria12.jpg" alt="Miami Lounge Bar foto 12" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria13.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 13"><img src="galeria/galeria13.jpg" alt="Miami Lounge Bar foto 13" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria14.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 14"><img src="galeria/galeria14.jpg" alt="Miami Lounge Bar foto 14" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria15.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 15"><img src="galeria/galeria15.jpg" alt="Miami Lounge Bar foto 15" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria16.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 16"><img src="galeria/galeria16.jpg" alt="Miami Lounge Bar foto 16" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria17.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 17"><img src="galeria/galeria17.jpg" alt="Miami Lounge Bar foto 17" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria18.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 18"><img src="galeria/galeria18.jpg" alt="Miami Lounge Bar foto 18" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria19.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 19"><img src="galeria/galeria19.jpg" alt="Miami Lounge Bar foto 19" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria20.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 20"><img src="galeria/galeria20.jpg" alt="Miami Lounge Bar foto 20" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria21.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 21"><img src="galeria/galeria21.jpg" alt="Miami Lounge Bar foto 21" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria22.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 22"><img src="galeria/galeria22.jpg" alt="Miami Lounge Bar foto 22" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria23.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 23"><img src="galeria/galeria23.jpg" alt="Miami Lounge Bar foto 23" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria24.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 24"><img src="galeria/galeria24.jpg" alt="Miami Lounge Bar foto 24" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria25.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 25"><img src="galeria/galeria25.jpg" alt="Miami Lounge Bar foto 25" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria26.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 26"><img src="galeria/galeria26.jpg" alt="Miami Lounge Bar foto 26" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria27.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 27"><img src="galeria/galeria27.jpg" alt="Miami Lounge Bar foto 27" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
-          <a href="galeria/galeria28.jpg" class="g-item" data-cursor="view" aria-label="Ver foto 28"><img src="galeria/galeria28.jpg" alt="Miami Lounge Bar foto 28" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria1.webp" class="g-item" data-cursor="view" aria-label="Ver foto 1"><img src="galeria/galeria1.webp" alt="Cócteles tropicales de colores recién preparados en la barra del Miami Lounge" width="320" height="320" loading="eager" decoding="async" fetchpriority="high"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria2.webp" class="g-item" data-cursor="view" aria-label="Ver foto 2"><img src="galeria/galeria2.webp" alt="Entrada del Miami Lounge Bar con palmeras y arco de flores en Miami Platja" width="1080" height="1173" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria3.webp" class="g-item" data-cursor="view" aria-label="Ver foto 3"><img src="galeria/galeria3.webp" alt="Cócteles afrutados estilo sunrise servidos en la barra" width="1080" height="1173" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria4.webp" class="g-item" data-cursor="view" aria-label="Ver foto 4"><img src="galeria/galeria4.webp" alt="Terraza chill-out iluminada de noche con sofás y flores" width="1080" height="810" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria5.webp" class="g-item" data-cursor="view" aria-label="Ver foto 5"><img src="galeria/galeria5.webp" alt="Ronda de cócteles artesanales con adornos tropicales en la barra" width="1080" height="810" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria6.webp" class="g-item" data-cursor="view" aria-label="Ver foto 6"><img src="galeria/galeria6.webp" alt="Piña colada frente al mural synthwave de palmeras del bar" width="1080" height="810" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria7.webp" class="g-item" data-cursor="view" aria-label="Ver foto 7"><img src="galeria/galeria7.webp" alt="Dos cócteles naranjas decorados con piruletas y luces de colores" width="1080" height="810" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria8.webp" class="g-item" data-cursor="view" aria-label="Ver foto 8"><img src="galeria/galeria8.webp" alt="Zona VIP de noche con sofás y bandeja de cócteles rosas" width="1080" height="810" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria9.webp" class="g-item" data-cursor="view" aria-label="Ver foto 9"><img src="galeria/galeria9.webp" alt="Tabla de embutidos y quesos ibéricos para compartir" width="1080" height="810" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria10.webp" class="g-item" data-cursor="view" aria-label="Ver foto 10"><img src="galeria/galeria10.webp" alt="Tabla de quesos con frutos secos del Club Gourmet" width="1080" height="810" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria11.webp" class="g-item" data-cursor="view" aria-label="Ver foto 11"><img src="galeria/galeria11.webp" alt="Tabla de jamón ibérico con tostas y patatas fritas" width="1080" height="810" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria12.webp" class="g-item" data-cursor="view" aria-label="Ver foto 12"><img src="galeria/galeria12.webp" alt="Cartel de apertura de la temporada de verano 2026 del Miami Lounge" width="1080" height="1080" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria13.webp" class="g-item" data-cursor="view" aria-label="Ver foto 13"><img src="galeria/galeria13.webp" alt="Preparando la temporada: zumos frescos para los cócteles" width="1080" height="1440" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria14.webp" class="g-item" data-cursor="view" aria-label="Ver foto 14"><img src="galeria/galeria14.webp" alt="Aprovisionamiento de refrescos y zumos para la nueva temporada" width="1080" height="1436" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria15.webp" class="g-item" data-cursor="view" aria-label="Ver foto 15"><img src="galeria/galeria15.webp" alt="Terraza de madera del Miami Lounge al sol de la tarde" width="1080" height="1436" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria16.webp" class="g-item" data-cursor="view" aria-label="Ver foto 16"><img src="galeria/galeria16.webp" alt="Cócteles rosas y limonadas frente al botellero iluminado" width="1080" height="1436" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria17.webp" class="g-item" data-cursor="view" aria-label="Ver foto 17"><img src="galeria/galeria17.webp" alt="Cócteles en copa martini decorados con golosinas y sombrillas" width="1080" height="1436" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria18.webp" class="g-item" data-cursor="view" aria-label="Ver foto 18"><img src="galeria/galeria18.webp" alt="Surtido gourmet con cava en la terraza de noche" width="1080" height="1436" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria19.webp" class="g-item" data-cursor="view" aria-label="Ver foto 19"><img src="galeria/galeria19.webp" alt="Tabla de jamón con tostas y patatas para compartir" width="1080" height="1436" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria20.webp" class="g-item" data-cursor="view" aria-label="Ver foto 20"><img src="galeria/galeria20.webp" alt="Rincón chill-out nocturno con sofás de mimbre y jardín iluminado" width="1080" height="810" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria21.webp" class="g-item" data-cursor="view" aria-label="Ver foto 21"><img src="galeria/galeria21.webp" alt="Decoración tropical con flamenco rosa y flores en la terraza" width="1080" height="812" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria22.webp" class="g-item" data-cursor="view" aria-label="Ver foto 22"><img src="galeria/galeria22.webp" alt="Interior nocturno con sofás de estampado cebra y neones morados" width="1080" height="1436" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria23.webp" class="g-item" data-cursor="view" aria-label="Ver foto 23"><img src="galeria/galeria23.webp" alt="Cócteles sunrise con borde de azúcar rosa y nubes de golosina" width="1080" height="1080" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria24.webp" class="g-item" data-cursor="view" aria-label="Ver foto 24"><img src="galeria/galeria24.webp" alt="Mojito clásico con menta y lima fresca en la terraza" width="1080" height="1080" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria25.webp" class="g-item" data-cursor="view" aria-label="Ver foto 25"><img src="galeria/galeria25.webp" alt="Cóctel rojo de frutas decorado con golosinas" width="1080" height="1080" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria26.webp" class="g-item" data-cursor="view" aria-label="Ver foto 26"><img src="galeria/galeria26.webp" alt="Cóctel naranja estilo tequila sunrise con rodaja de naranja" width="1080" height="1080" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria27.webp" class="g-item" data-cursor="view" aria-label="Ver foto 27"><img src="galeria/galeria27.webp" alt="Copa de cóctel naranja con borde de azúcar rosa" width="1080" height="1080" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
+          <a href="galeria/galeria28.webp" class="g-item" data-cursor="view" aria-label="Ver foto 28"><img src="galeria/galeria28.webp" alt="Entrada del bar de día con buganvilla rosa y palmeras" width="1080" height="825" loading="lazy" decoding="async"><div class="g-item-overlay"><span class="g-item-zoom">&#128269;</span></div></a>
         </div>
         <div style="text-align:center;margin-top:clamp(40px,6vw,72px)" data-reveal>
           <a href="index.html" class="back-link" data-cursor="link">
@@ -533,9 +643,6 @@ const i18nData = {
         "hero.title":"<span class=\"gradient\">Galería</span>",
         "hero.sub":"Momentos únicos en nuestra terraza. Cócteles, música y las mejores noches de la Costa Dorada.",
         "gallery.stats":"<strong>28</strong> fotos · Miami Platja, Costa Dorada",
-        "lb.close":"Cerrar",
-        "lb.prev":"Anterior",
-        "lb.next":"Siguiente",
         "footer.responsible":"Drink responsibly · Bebe con responsabilidad. +18",
         "back.home":"Volver al inicio"
     },
@@ -556,9 +663,6 @@ const i18nData = {
         "hero.title":"<span class=\"gradient\">Galerie</span>",
         "hero.sub":"Moments uniques sur notre terrasse. Cocktails, musique et les meilleures nuits de la Costa Dorada.",
         "gallery.stats":"<strong>28</strong> photos · Miami Platja, Costa Dorada",
-        "lb.close":"Fermer",
-        "lb.prev":"Précédent",
-        "lb.next":"Suivant",
         "footer.responsible":"Consommez avec modération. +18",
         "back.home":"Retour à l'accueil"
     },
@@ -579,9 +683,6 @@ const i18nData = {
         "hero.title":"<span class=\"gradient\">Gallery</span>",
         "hero.sub":"Unique moments on our terrace. Cocktails, music and the best nights on the Costa Dorada.",
         "gallery.stats":"<strong>28</strong> photos · Miami Platja, Costa Dorada",
-        "lb.close":"Close",
-        "lb.prev":"Previous",
-        "lb.next":"Next",
         "footer.responsible":"Drink responsibly. +18",
         "back.home":"Back to home"
     }
@@ -648,6 +749,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTranslations();
 });
 
+(() => {
   'use strict';
 
   /* LOADER */
@@ -655,17 +757,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const loaderKey = 'miamilounge_loader_galeria';
   const today = new Date().toISOString().slice(0, 10);
   const lastShown = localStorage.getItem(loaderKey);
-  if (lastShown === today) {
-    loader.classList.add('is-hidden');
-  } else {
-    localStorage.setItem(loaderKey, today);
-    const hideLoader = () => setTimeout(() => loader.classList.add('is-hidden'), 1800);
-    if (document.readyState === 'complete') {
-      hideLoader();
+  if (loader) {
+    if (lastShown === today) {
+      loader.classList.add('is-hidden');
     } else {
-      window.addEventListener('load', hideLoader);
+      localStorage.setItem(loaderKey, today);
+      const hideLoader = () => setTimeout(() => loader.classList.add('is-hidden'), 1800);
+      if (document.readyState === 'complete') {
+        hideLoader();
+      } else {
+        window.addEventListener('load', hideLoader, { once: true });
+      }
+      setTimeout(() => loader.classList.add('is-hidden'), 4000);
     }
-    setTimeout(() => loader.classList.add('is-hidden'), 4000);
   }
 
   /* YEAR */
@@ -688,8 +792,8 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(af);
     };
     af();
-    document.addEventListener('mouseleave', () => { cursor.style.opacity = 0; follower.style.opacity = 0; });
-    document.addEventListener('mouseenter', () => { cursor.style.opacity = 1; follower.style.opacity = 1; });
+    document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; follower.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; follower.style.opacity = '1'; });
     document.querySelectorAll('[data-cursor]').forEach(el => {
       el.addEventListener('mouseenter', () => follower.classList.add('is-' + el.getAttribute('data-cursor')));
       el.addEventListener('mouseleave', () => follower.classList.remove('is-link', 'is-view'));
@@ -698,8 +802,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* NAV SCROLL */
   const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('is-scrolled', window.scrollY > 40), { passive: true });
-  nav.classList.toggle('is-scrolled', window.scrollY > 40);
+  if (nav) {
+    window.addEventListener('scroll', () => nav.classList.toggle('is-scrolled', window.scrollY > 40), { passive: true });
+    nav.classList.toggle('is-scrolled', window.scrollY > 40);
+  }
 
   /* MOBILE MENU */
   const burger = document.getElementById('navBurger');
@@ -712,8 +818,22 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.overflow = open ? 'hidden' : '';
       burger.setAttribute('aria-expanded', open ? 'true' : 'false');
     };
-    burger.addEventListener('click', toggle);
+    burger.addEventListener('click', () => {
+      toggle();
+      if (mobileMenu.classList.contains('is-open')) {
+        const firstLink = mobileMenu.querySelector('a');
+        if (firstLink) firstLink.focus();
+      } else {
+        burger.focus();
+      }
+    });
     mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', toggle));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+        toggle();
+        burger.focus();
+      }
+    });
   }
 
   /* REVEAL */
@@ -752,8 +872,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const lbThumbs = document.getElementById('lbThumbs');
   const allItems = Array.from(document.querySelectorAll('.g-item'));
   let cur = 0;
+  let thumbsBuilt = false;
   const buildThumbs = () => {
-    lbThumbs.innerHTML = '';
+    if (thumbsBuilt) return;
+    thumbsBuilt = true;
     allItems.forEach((item, i) => {
       const t = document.createElement('div');
       t.className = 'lb-thumb';
@@ -766,26 +888,49 @@ document.addEventListener('DOMContentLoaded', () => {
     lbThumbs.querySelectorAll('.lb-thumb').forEach((t, i) => t.classList.toggle('is-active', i === cur));
     lbThumbs.querySelectorAll('.lb-thumb')[cur]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   };
+  const preload = i => {
+    const idx = ((i % allItems.length) + allItems.length) % allItems.length;
+    new Image().src = allItems[idx].getAttribute('href');
+  };
+  let lbLastFocus = null;
+  /* Focus trap para el visor */
+  lightbox?.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const focusables = Array.from(
+      lightbox.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')
+    ).filter(el => el.offsetParent !== null);
+    if (!focusables.length) return;
+    const first = focusables[0], last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
   const openLb = i => {
     buildThumbs(); cur = i;
     lbImg.src = allItems[cur].getAttribute('href');
     lbCounter.textContent = `${cur + 1} / ${allItems.length}`;
     syncThumbs();
+    preload(cur + 1); preload(cur - 1);
     lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    lbLastFocus = document.activeElement;
+    lbClose?.focus();
   };
   const closeLb = () => {
     lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (lbLastFocus) { lbLastFocus.focus(); lbLastFocus = null; }
   };
   const goTo = i => {
     cur = ((i % allItems.length) + allItems.length) % allItems.length;
-    lbImg.style.opacity = 0;
+    lbImg.style.opacity = '0';
     setTimeout(() => {
       lbImg.src = allItems[cur].getAttribute('href');
       lbCounter.textContent = `${cur + 1} / ${allItems.length}`;
-      lbImg.style.opacity = 1;
+      lbImg.style.opacity = '1';
       syncThumbs();
+      preload(cur + 1); preload(cur - 1);
     }, 150);
   };
   allItems.forEach((item, i) => item.addEventListener('click', e => { e.preventDefault(); openLb(i); }));
@@ -805,6 +950,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const d = tx - e.changedTouches[0].clientX;
     if (Math.abs(d) > 50) goTo(cur + (d > 0 ? 1 : -1));
   }, { passive: true });
+})();
   </script>
 
 <script>
@@ -823,5 +969,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 </script>
+
+<!-- ═══ ANALÍTICA SIN COOKIES (GoatCounter, gratis, sin banner RGPD) ═══
+     Para activarla:
+     1. Crea una cuenta gratuita en https://www.goatcounter.com y elige un código (p. ej. "miamilounge")
+     2. Sustituye MIAMILOUNGE abajo por tu código y descomenta la línea:
+
+<script data-goatcounter="https://MIAMILOUNGE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+-->
 </body>
 </html>

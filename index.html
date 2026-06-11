@@ -11,17 +11,26 @@
     <meta property="og:title" content="Miami Lounge Bar · Cócteles & Música en Vivo" />
     <meta property="og:description" content="Lounge-bar de referencia en Miami Platja con terraza, sofás, hamacas, columpios y cócteles artesanales. 2.436 fans en Facebook." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.miamilounge.es/" />
+    <meta property="og:site_name" content="Miami Lounge Bar" />
+    <meta property="og:locale" content="es_ES" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Miami Lounge Bar · Miami Platja" />
     <meta name="twitter:description" content="Cócteles artesanales, combinados premium y platitos para compartir. Drink, eat, relax and repeat." />
     <meta name="twitter:image" content="https://www.miamilounge.es/img/miami-hero.jpg" />
     <meta property="og:image" content="https://www.miamilounge.es/img/miami-hero.jpg" />
 
-    <link rel="preload" as="image" href="img/miami-hero.jpg" fetchpriority="high" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Monoton&family=Outfit:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="img/miami-hero.webp" fetchpriority="high" />
+  <link rel="preload" as="font" type="font/woff2" href="fonts/outfit.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="fonts/bebas-neue.woff2" crossorigin />
         <style>
+/* === SELF-HOSTED FONTS (antes Google Fonts CDN) === */
+@font-face { font-family: 'Bebas Neue'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/bebas-neue.woff2') format('woff2'); }
+@font-face { font-family: 'Monoton'; font-style: normal; font-weight: 400; font-display: swap; src: url('fonts/monoton.woff2') format('woff2'); }
+@font-face { font-family: 'Outfit'; font-style: normal; font-weight: 300 900; font-display: swap; src: url('fonts/outfit.woff2') format('woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 400 600; font-display: swap; src: url('fonts/cormorant-garamond.woff2') format('woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 400; font-display: swap; src: url('fonts/cormorant-garamond-italic.woff2') format('woff2'); }
+
 /* === INLINED styles.css === */
 /* ==================================================
    MIAMI LOUNGE BAR — Miami Vice / Synthwave Theme
@@ -327,18 +336,33 @@ button { font: inherit; background: none; border: 0; color: inherit; cursor: non
     display: inline-flex; align-items: center; gap: 8px;
     padding: 11px 20px;
     background: var(--grad-sunset);
+    background-size: 170% 170%;
+    background-position: 0% 50%;
     border-radius: 50px;
     font-size: 13px;
     font-weight: 600;
     color: #fff;
     letter-spacing: 0.04em;
-    transition: transform 0.3s var(--ease), box-shadow 0.3s;
-    box-shadow: 0 0 0 rgba(255, 46, 147, 0);
+    position: relative; overflow: hidden;
+    transition: transform 0.3s var(--ease), box-shadow 0.3s, background-position 0.5s var(--ease);
+    box-shadow: 0 3px 14px rgba(255, 46, 147, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
+.nav-cta::after {
+    content: '';
+    position: absolute; top: -2px; bottom: -2px; left: -75%;
+    width: 50%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: skewX(-20deg);
+    pointer-events: none;
+    transition: left 0.55s var(--ease);
+}
+.nav-cta:hover::after { left: 130%; }
 .nav-cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(255, 46, 147, 0.5);
+    background-position: 100% 50%;
+    box-shadow: 0 10px 30px rgba(255, 46, 147, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
+.nav-cta:active { transform: translateY(0) scale(0.96); }
 
 .nav-burger {
     display: none;
@@ -385,7 +409,10 @@ button { font: inherit; background: none; border: 0; color: inherit; cursor: non
     font-family: 'Outfit', sans-serif;
     font-size: 16px !important;
     font-weight: 600;
+    box-shadow: 0 8px 28px rgba(255, 46, 147, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: transform 0.25s var(--ease), box-shadow 0.25s;
 }
+.mobile-cta:active { transform: scale(0.96); }
 
 /* ==================================================
    HERO
@@ -480,6 +507,11 @@ button { font: inherit; background: none; border: 0; color: inherit; cursor: non
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.5; transform: scale(1.3); }
 }
+@keyframes pulse-bg {
+    0%   { filter: hue-rotate(0deg) brightness(1); }
+    50%  { filter: hue-rotate(90deg) brightness(1.15); }
+    100% { filter: hue-rotate(0deg) brightness(1); }
+}
 
 .hero-title {
     font-family: 'Bebas Neue', sans-serif;
@@ -534,43 +566,81 @@ button { font: inherit; background: none; border: 0; color: inherit; cursor: non
     animation: blink 2.2s ease-in-out infinite;
 }
 
-.hero-ctas {
-    display: flex; gap: 16px; flex-wrap: wrap;
-    margin-bottom: 70px;
-}
+
 
 .btn {
-    display: inline-flex; align-items: center; gap: 10px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
     padding: 16px 32px;
     border-radius: 50px;
     font-size: 15px;
     font-weight: 600;
     letter-spacing: 0.02em;
-    transition: transform 0.3s var(--ease), box-shadow 0.3s, background 0.3s;
+    transition: transform 0.35s var(--ease-bounce), box-shadow 0.35s var(--ease),
+                border-color 0.3s, color 0.3s, background 0.3s;
     position: relative;
     overflow: hidden;
     isolation: isolate;
 }
+/* Capa de degradado (solo visible en .btn-primary) */
 .btn::before {
     content: '';
     position: absolute; inset: 0;
     background: var(--grad-sunset);
-    z-index: -1;
-    transition: opacity 0.3s;
+    background-size: 170% 170%;
+    background-position: 0% 50%;
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 0.3s, background-position 0.6s var(--ease);
 }
-.btn-primary { color: #fff; }
+/* Brillo barrido al pasar el ratón */
+.btn::after {
+    content: '';
+    position: absolute; top: -2px; bottom: -2px; left: -75%;
+    width: 50%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.32), transparent);
+    transform: skewX(-20deg);
+    z-index: -1;
+    pointer-events: none;
+    transition: left 0.65s var(--ease);
+}
+.btn:hover::after { left: 125%; }
+.btn:active { transform: translateY(-1px) scale(0.97); transition-duration: 0.12s; }
+
+.btn-primary {
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(10, 1, 24, 0.25);
+    box-shadow: 0 4px 18px rgba(255, 46, 147, 0.28),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -1px 0 rgba(10, 1, 24, 0.2);
+}
 .btn-primary::before { opacity: 1; }
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(255, 46, 147, 0.5); }
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 44px rgba(255, 46, 147, 0.45),
+                0 6px 18px rgba(183, 148, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -1px 0 rgba(10, 1, 24, 0.2);
+}
+.btn-primary:hover::before { background-position: 100% 50%; }
 .btn-primary svg { transition: transform 0.3s var(--ease); }
 .btn-primary:hover svg { transform: translateX(4px); }
 
 .btn-ghost {
-    background: transparent;
+    background: rgba(255, 255, 255, 0.03);
     color: #fff;
     border: 1px solid var(--border);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
-.btn-ghost:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--cyan); color: var(--cyan); }
+.btn-ghost:hover {
+    background: rgba(0, 240, 255, 0.06);
+    border-color: rgba(0, 240, 255, 0.55);
+    color: var(--cyan);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 240, 255, 0.18),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
 
 .hero-stats {
     display: flex; gap: clamp(20px, 4vw, 60px);
@@ -929,13 +999,37 @@ p strong { color: #fff; }
 /* ==================================================
    EVENTS
    ================================================== */
-
-.events-bg img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    filter: blur(2px) brightness(0.4) saturate(1.2);
-    transform: scale(1.05);
+.events { background: var(--bg-2); position: relative; overflow: hidden; }
+.events::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+    pointer-events: none;
 }
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+}
+.event-card {
+    padding: 32px 28px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease), border-color 0.4s, background 0.4s;
+    will-change: transform;
+}
+.events-foot { margin-top: 48px; text-align: center; position: relative; z-index: 1; }
+@media (max-width: 1024px) { .events-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .events-grid { grid-template-columns: 1fr; } }
+
+
 
 .event-card::before {
     content: '';
@@ -1326,6 +1420,7 @@ blockquote footer {
     object-fit: contain;
     border-radius: 12px;
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.2s ease;
 }
 .lb-close, .lb-prev, .lb-next {
     position: absolute;
@@ -1392,7 +1487,6 @@ blockquote footer {
 }
 
 @media (max-width: 640px) {
-        .t-grid { grid-template-columns: 1fr; }
     body { cursor: auto; }
     .nav { padding: 16px 5vw; }
     .nav.is-scrolled { padding: 12px 5vw; }
@@ -1411,7 +1505,6 @@ blockquote footer {
     .g-wide { grid-column: span 2; }
     .g-tall { grid-row: span 2; }
     .cocktails-grid { grid-template-columns: 1fr; }
-    
     .schedule-list li { grid-template-columns: 1fr; gap: 6px; padding: 14px 16px; text-align: center; }
     .schedule-list li:has(strong + strong) { grid-template-columns: 1fr; }
     .schedule-list li strong { font-size: 14px; }
@@ -1440,8 +1533,9 @@ blockquote footer {
     .hero-scroll,
     .cocktail-card, .event-card,
     .af-item, .about-card,
-    .lb-prev, .lb-next, .lb-close,
-    
+    .lb-prev, .lb-next, .lb-close {
+        touch-action: manipulation;
+    }
 
     /* ============== SCROLL ANCHOR OFFSET ============== */
     section[id] { scroll-margin-top: var(--nav-h, 70px); }
@@ -1457,7 +1551,13 @@ blockquote footer {
     .lb-prev:focus-visible,
     .lb-next:focus-visible,
     .lb-close:focus-visible,
-    
+    button:focus-visible,
+    a:focus-visible {
+        outline: 2px solid var(--pink);
+        outline-offset: 3px;
+        border-radius: 4px;
+        box-shadow: 0 0 0 4px rgba(255, 46, 147, 0.2);
+    }
     .btn:focus:not(:focus-visible),
     button:focus:not(:focus-visible),
     a:focus:not(:focus-visible) { outline: none; }
@@ -1465,7 +1565,8 @@ blockquote footer {
     /* ============== PRINT ============== */
     @media print {
         .cursor, .cursor-follower, .grain, .loader,
-        
+        .nav, .mobile-menu, .lightbox, .scroll-progress,
+        .marquee, .footer-marquee { display: none !important; }
         body { background: #fff; color: #000; cursor: auto; }
         a { color: #000; text-decoration: none; }
         section { page-break-inside: avoid; }
@@ -1520,217 +1621,148 @@ blockquote footer {
 @media (max-width: 640px) { .lang-btn .lang-code { display: none; } }
 
 /* ==================================================
-   INSTAGRAM BANNER — Hero
+   INSTAGRAM BANNER — Hero (premium, identidad IG real)
    ================================================== */
-.ig-banner {
-    display: inline-flex; align-items: center; gap: 18px;
-    margin-bottom: 38px; padding: 14px 24px 14px 14px;
-    background: linear-gradient(135deg,
-        rgba(255,46,147,0.10) 0%,
-        rgba(255,107,0,0.08) 30%,
-        rgba(255,200,0,0.07) 55%,
-        rgba(139,92,246,0.10) 80%,
-        rgba(255,46,147,0.08) 100%);
-    border: 1px solid transparent; border-radius: 70px;
-    position: relative; cursor: pointer; text-decoration: none; color: #fff;
-    overflow: hidden;
-    transition: transform 0.4s var(--ease), box-shadow 0.4s;
-    animation: igPulseIn 0.6s 0.3s var(--ease-bounce) both;
-    box-shadow:
-        0 0 0 1px rgba(255,107,0,0.15),
-        0 8px 32px rgba(255,46,147,0.18),
-        0 0 60px rgba(255,107,0,0.08),
-        inset 0 1px 0 rgba(255,255,255,0.06);
-}
-/* Rotating fire-border */
-.ig-banner::before {
-    content: ''; position: absolute; inset: -1.5px; border-radius: 72px;
-    background: conic-gradient(from var(--fire-angle, 0deg),
-        #ff2e93, #ff6b00, #ffd700, #ff4500, #ff2e93, #b794f6, #ff6b00, #ffd700, #ff2e93);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out; mask-composite: exclude; padding: 1.5px;
-    animation: igFireBorder 5s linear infinite;
-    opacity: 0.9;
-}
-/* Shimmer sweep */
-.ig-banner::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(105deg,
-        transparent 20%,
-        rgba(255,200,100,0.12) 38%,
-        rgba(255,255,255,0.10) 50%,
-        rgba(255,200,100,0.08) 62%,
-        transparent 80%);
-    background-size: 300% 100%;
-    animation: igFireShimmer 5s ease-in-out infinite;
-    z-index: 0; pointer-events: none;
-}
-@property --fire-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-@keyframes igFireBorder { to { --fire-angle: 360deg; } }
-@keyframes igFireShimmer {
-    0%   { background-position: -300% 0; }
-    100% { background-position: 300% 0; }
-}
-@keyframes igPulseIn {
-    from { opacity: 0; transform: translateY(24px) scale(0.93); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-/* Ember glow layer — pure CSS */
-.ig-banner .ig-embers {
-    position: absolute; inset: 0; border-radius: 70px;
-    background:
-        radial-gradient(ellipse 80% 40% at 20% 60%, rgba(255,100,0,0.08) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 30% at 80% 40%, rgba(255,46,147,0.08) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 60% at 50% 100%, rgba(255,180,0,0.07) 0%, transparent 80%);
-    animation: igEmberPulse 6s ease-in-out infinite alternate;
-    pointer-events: none; z-index: 0;
-}
-@keyframes igEmberPulse {
-    0%   { opacity: 0.6; transform: scale(1); }
-    100% { opacity: 1; transform: scale(1.03); }
-}
-.ig-banner:hover {
-    transform: translateY(-5px) scale(1.03);
-    box-shadow:
-        0 0 0 1px rgba(255,107,0,0.4),
-        0 20px 60px rgba(255,46,147,0.45),
-        0 0 80px rgba(255,107,0,0.25),
-        0 0 120px rgba(255,200,0,0.12),
-        inset 0 1px 0 rgba(255,255,255,0.12);
-}
-.ig-banner:hover::before { animation-duration: 2s; opacity: 1; }
-/* BADGE — fire style */
-.ig-badge {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 7px 14px;
-    background: linear-gradient(135deg, #ff4500 0%, #ff2e93 50%, #ff6b00 100%);
-    background-size: 200% 200%;
-    border-radius: 50px; font-size: 11px; font-weight: 800;
-    letter-spacing: 0.12em; text-transform: uppercase; color: #fff;
-    white-space: nowrap; flex-shrink: 0; position: relative; z-index: 1;
-    box-shadow: 0 4px 20px rgba(255,69,0,0.55), 0 0 12px rgba(255,180,0,0.3);
-    animation: igBadgeFire 4.5s ease-in-out infinite;
-}
-@keyframes igBadgeFire {
-    0%, 100% {
-        box-shadow: 0 4px 20px rgba(255,69,0,0.55), 0 0 12px rgba(255,180,0,0.3);
-        background-position: 0% 50%;
-    }
-    50% {
-        box-shadow: 0 4px 30px rgba(255,69,0,0.9), 0 0 30px rgba(255,200,0,0.5), 0 0 50px rgba(255,46,147,0.3);
-        background-position: 100% 50%;
-    }
-}
-.ig-live-dot { position: relative; width: 8px; height: 8px; flex-shrink: 0; }
-.ig-live-dot::before, .ig-live-dot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #ffd700; }
-.ig-live-dot::after { background: transparent; border: 1.5px solid #ffd700; inset: -4px; animation: igDotPulse 1.6s ease-out infinite; }
-@keyframes igDotPulse { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(2.6); opacity: 0; } }
-.ig-divider { width: 1px; height: 28px; background: linear-gradient(to bottom, transparent, rgba(255,107,0,0.5), transparent); flex-shrink: 0; position: relative; z-index: 1; }
-.ig-icon {
-    width: 42px; height: 42px; flex-shrink: 0; border-radius: 14px;
-    background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    display: grid; place-items: center;
-    box-shadow: 0 4px 20px rgba(220,39,67,0.5), 0 0 20px rgba(255,100,0,0.3);
-    transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s;
-    position: relative; z-index: 1;
-}
-.ig-banner:hover .ig-icon {
-    transform: rotate(-12deg) scale(1.15);
-    box-shadow: 0 6px 30px rgba(220,39,67,0.7), 0 0 30px rgba(255,150,0,0.5);
-}
-.ig-icon svg { width: 20px; height: 20px; fill: #fff; }
-.ig-banner-text { display: flex; flex-direction: column; gap: 3px; position: relative; z-index: 1; }
-.ig-banner-text strong {
-    font-size: 14px; font-weight: 700; color: #fff;
-    letter-spacing: 0.01em; line-height: 1.2;
-    text-shadow: 0 0 20px rgba(255,107,0,0.4);
-}
-.ig-banner-text span { font-size: 11px; color: rgba(255,200,150,0.65); letter-spacing: 0.08em; }
-.ig-arrow {
-    margin-left: 2px; width: 30px; height: 30px; border-radius: 50%;
-    background: linear-gradient(135deg, rgba(255,69,0,0.2), rgba(255,46,147,0.2));
-    border: 1px solid rgba(255,107,0,0.4);
-    display: grid; place-items: center; font-size: 14px; color: #ffd700;
-    position: relative; z-index: 1;
-    transition: transform 0.3s var(--ease), background 0.3s, border-color 0.3s;
-    flex-shrink: 0;
-    text-shadow: 0 0 8px rgba(255,200,0,0.8);
-}
-.ig-banner:hover .ig-arrow {
-    transform: translateX(5px);
-    background: linear-gradient(135deg, #ff4500, #ff2e93);
-    border-color: transparent; color: #fff;
-    text-shadow: none;
-}
-@media (max-width: 640px) {
-    .ig-banner { margin-bottom: 28px; padding: 11px 16px 11px 11px; gap: 12px; }
-    .ig-banner-text strong { font-size: 12px; }
-    .ig-divider { display: none; }
-}
-@media (max-width: 380px) { .ig-badge { display: none; } }
+@property --ig-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes igSpin { to { --ig-angle: 360deg; } }
 
-/* IG BANNER — Premium blur aura */
 .ig-glow-wrap {
     position: relative;
     display: inline-block;
     margin-bottom: 38px;
 }
-.ig-glow-wrap .ig-banner {
-    margin-bottom: 0;
-    position: relative;
-    z-index: 1;
-}
-/* Multi-layer blurred glow behind the banner */
-.ig-glow-wrap::before,
-.ig-glow-wrap::after {
-    content: '';
-    position: absolute;
-    border-radius: 80px;
-    pointer-events: none;
-    z-index: 0;
-}
-/* Outer soft aura — large, very blurred */
+/* Aurora con la paleta oficial de Instagram */
 .ig-glow-wrap::before {
-    inset: -18px -24px;
-    background: conic-gradient(from var(--glow-angle, 0deg),
-        rgba(255,46,147,0.22),
-        rgba(255,107,0,0.28),
-        rgba(255,200,0,0.20),
-        rgba(255,46,147,0.15),
-        rgba(139,92,246,0.18),
-        rgba(255,107,0,0.25),
-        rgba(255,46,147,0.22));
-    filter: blur(28px);
-    animation: igGlowRotate 8s linear infinite, igGlowPulse 4s ease-in-out infinite alternate;
-    opacity: 0.75;
+    content: ''; position: absolute; inset: -22px -28px;
+    border-radius: 90px;
+    background: conic-gradient(from var(--ig-angle, 0deg),
+        rgba(254,218,117,0.28), rgba(250,126,30,0.32), rgba(214,41,118,0.38),
+        rgba(150,47,191,0.32), rgba(79,91,213,0.26), rgba(254,218,117,0.28));
+    filter: blur(30px);
+    animation: igSpin 9s linear infinite, igBreath 4s ease-in-out infinite alternate;
+    pointer-events: none; z-index: 0;
 }
-/* Inner tight glow — sharper, more intense */
-.ig-glow-wrap::after {
-    inset: -6px -10px;
-    background: linear-gradient(135deg,
-        rgba(255,69,0,0.20) 0%,
-        rgba(255,46,147,0.18) 40%,
-        rgba(255,200,0,0.15) 70%,
-        rgba(139,92,246,0.12) 100%);
-    filter: blur(12px);
-    animation: igGlowPulse 3.5s ease-in-out infinite alternate-reverse;
-    opacity: 0.8;
+@keyframes igBreath {
+    from { opacity: 0.5; transform: scale(0.97); }
+    to   { opacity: 0.9; transform: scale(1.04); }
 }
-@property --glow-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-@keyframes igGlowRotate { to { --glow-angle: 360deg; } }
-@keyframes igGlowPulse {
-    0%   { opacity: 0.55; transform: scale(0.97); }
-    100% { opacity: 0.90; transform: scale(1.04); }
+
+.ig-banner {
+    position: relative; z-index: 1;
+    display: inline-flex; align-items: center; gap: 20px;
+    padding: 14px 22px 14px 14px;
+    background: rgba(10, 1, 24, 0.72);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border-radius: 80px;
+    color: #fff; text-decoration: none;
+    overflow: hidden; isolation: isolate;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s;
+    animation: igPulseIn 0.7s 0.25s var(--ease-bounce) both;
 }
-/* On hover — intensify aura */
-.ig-glow-wrap:hover::before {
-    opacity: 1;
-    filter: blur(36px);
-    animation-duration: 4s, 2s;
+@keyframes igPulseIn {
+    from { opacity: 0; transform: translateY(26px) scale(0.92); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
-.ig-glow-wrap:hover::after {
-    opacity: 1;
-    filter: blur(16px);
+/* Borde degradado IG rotatorio */
+.ig-banner::before {
+    content: ''; position: absolute; inset: 0;
+    border-radius: 80px; padding: 2px;
+    background: conic-gradient(from var(--ig-angle, 0deg),
+        #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5, #feda75);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    animation: igSpin 6s linear infinite;
+    z-index: -1;
+}
+/* Barrido de brillo */
+.ig-banner::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.13) 50%, transparent 70%);
+    background-size: 250% 100%;
+    animation: igSheen 4.5s ease-in-out infinite;
+    pointer-events: none;
+}
+@keyframes igSheen {
+    0%        { background-position: 250% 0; }
+    60%, 100% { background-position: -250% 0; }
+}
+.ig-banner:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 30px 70px rgba(214,41,118,0.38), 0 12px 30px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.12);
+}
+.ig-banner:hover::before { animation-duration: 2.5s; }
+
+/* Story ring + avatar (anillo de historia de IG) */
+.ig-ring {
+    position: relative; flex-shrink: 0;
+    width: 64px; height: 64px; border-radius: 50%;
+    background: conic-gradient(from var(--ig-angle, 0deg),
+        #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5, #feda75);
+    display: grid; place-items: center;
+    animation: igSpin 8s linear infinite;
+    box-shadow: 0 0 24px rgba(214,41,118,0.45);
+}
+.ig-banner:hover .ig-ring { animation-duration: 2s; }
+.ig-avatar {
+    width: 55px; height: 55px; border-radius: 50%;
+    overflow: hidden;
+    background: #14032a;
+    border: 3px solid #0a0118;
+    display: grid; place-items: center;
+}
+.ig-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Texto */
+.ig-banner-text {
+    display: flex; flex-direction: column; gap: 4px;
+    min-width: 0; position: relative; z-index: 1;
+}
+.ig-banner-text strong {
+    font-size: 16px; font-weight: 700;
+    letter-spacing: 0.01em; line-height: 1.15; color: #fff;
+}
+.ig-handle {
+    font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em;
+    background: linear-gradient(90deg, #feda75, #fa7e1e, #d62976, #b794f6);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Botón "Síguenos" estilo follow de IG */
+.ig-follow-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    flex-shrink: 0;
+    padding: 11px 20px; border-radius: 50px;
+    background: linear-gradient(45deg, #fa7e1e, #d62976 55%, #962fbf);
+    background-size: 180% 180%; background-position: 0% 50%;
+    font-size: 13.5px; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase; color: #fff;
+    box-shadow: 0 8px 22px rgba(214,41,118,0.45);
+    transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s, background-position 0.4s;
+}
+.ig-follow-btn svg { width: 15px; height: 15px; fill: #fff; flex-shrink: 0; }
+.ig-banner:hover .ig-follow-btn {
+    transform: scale(1.07);
+    background-position: 100% 50%;
+    box-shadow: 0 12px 30px rgba(214,41,118,0.6);
+}
+
+@media (max-width: 640px) {
+    .ig-glow-wrap { margin-bottom: 28px; }
+    .ig-banner { gap: 12px; padding: 10px 14px 10px 10px; }
+    .ig-ring { width: 52px; height: 52px; }
+    .ig-avatar { width: 44px; height: 44px; border-width: 2px; }
+    .ig-banner-text strong { font-size: 13.5px; }
+    .ig-handle { font-size: 11px; }
+    .ig-follow-btn { padding: 9px 14px; font-size: 11.5px; }
+}
+@media (max-width: 380px) {
+    .ig-follow-btn span { display: none; }
+    .ig-follow-btn { padding: 11px; border-radius: 50%; }
 }
 
     
@@ -1748,10 +1780,139 @@ blockquote footer {
     border-radius: 0 2px 2px 0;
   }
 
+
+  /* SKIP LINK (accesibilidad teclado) */
+  .skip-link {
+    position: fixed; top: -70px; left: 16px; z-index: 10010;
+    padding: 12px 22px; border-radius: 0 0 12px 12px;
+    background: var(--pink); color: #fff;
+    font-weight: 600; font-size: 14px;
+    transition: top 0.3s;
+  }
+  .skip-link:focus { top: 0; outline: none; }
+
+  /* ==================================================
+     WHATSAPP FLOAT
+     ================================================== */
+  .wa-float {
+    position: fixed; bottom: 30px; right: 30px; z-index: 99;
+    width: 58px; height: 58px; border-radius: 50%;
+    background: #25D366;
+    display: grid; place-items: center;
+    box-shadow: 0 8px 28px rgba(37,211,102,0.45), 0 4px 12px rgba(0,0,0,0.35);
+    transition: transform 0.3s var(--ease-bounce), box-shadow 0.3s;
+  }
+  .wa-float svg { width: 30px; height: 30px; fill: #fff; display: block; }
+  .wa-float::before {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    border: 2px solid #25D366;
+    animation: waPulse 2.4s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes waPulse {
+    0%   { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.7); opacity: 0; }
+  }
+  .wa-float:hover {
+    transform: translateY(-4px) scale(1.07);
+    box-shadow: 0 14px 40px rgba(37,211,102,0.55), 0 6px 18px rgba(0,0,0,0.4);
+  }
+  .wa-float::after {
+    content: 'Reserva por WhatsApp';
+    position: absolute; right: calc(100% + 12px); top: 50%;
+    transform: translateY(-50%) translateX(6px);
+    background: rgba(10,1,24,0.92);
+    color: var(--ink-soft);
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 6px 12px; border-radius: 6px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s, transform 0.25s var(--ease);
+  }
+  .wa-float:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
+  .wa-float:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px #25D366, 0 0 0 6px rgba(37,211,102,0.3);
+  }
+  @media (max-width: 640px) {
+    .wa-float { bottom: 20px; right: 20px; width: 54px; height: 54px; }
+    .wa-float::after { display: none; }
+  }
+  @media print { .wa-float { display: none !important; } }
+
+  /* ==================================================
+     VIEW TRANSITIONS (cross-document, SPA-like fades)
+     ================================================== */
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.25s; }
+  @media (prefers-reduced-motion: reduce) {
+    @view-transition { navigation: none; }
+  }
+
   </style>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌴%3C/text%3E%3C/svg%3E" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BarOrPub",
+      "name": "Miami Lounge Bar",
+      "image": "https://www.miamilounge.es/img/miami-hero.jpg",
+      "url": "https://www.miamilounge.es/",
+      "telephone": "+34691691080",
+      "email": "nanievies@gmail.com",
+      "priceRange": "€€",
+      "servesCuisine": "Cócteles, tapas",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Avinguda de Barcelona, 40",
+        "addressLocality": "Miami Platja",
+        "addressRegion": "Tarragona",
+        "postalCode": "43892",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 41.0036,
+        "longitude": 0.9956
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "19:00",
+        "closes": "02:30"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "bestRating": "5",
+        "reviewCount": "895"
+      },
+      "sameAs": [
+        "https://www.instagram.com/miamiloungebar",
+        "https://www.facebook.com/miamiloungecocteles",
+        "https://mont-roigmiami.cat/es/contactos/miami-lounge/",
+        "https://www.tripadvisor.es/Attraction_Review-g672802-d7694685-Reviews-Miami_Lounge-Miami_Platja_Costa_Dorada_Province_of_Tarragona_Catalonia.html"
+      ],
+      "hasMenu": "https://www.miamilounge.es/carta.html",
+      "acceptsReservations": "True",
+      "amenityFeature": [
+        { "@type": "LocationFeatureSpecification", "name": "Terraza chill-out", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Pet-friendly", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "WiFi gratis", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Accesible", "value": true }
+      ]
+    }
+    </script>
 </head>
 <body>
+  <a href="#hero" class="skip-link">Saltar al contenido</a>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 
@@ -1766,9 +1927,9 @@ blockquote footer {
             </div>
             <div class="loader-text">
                 <span class="loader-welcome">Welcome to</span>
-                <h1 class="loader-title">
+                <div class="loader-title" aria-label="Miami">
                     <span>M</span><span>I</span><span>A</span><span>M</span><span>I</span>
-                </h1>
+                </div>
                 <p class="loader-sub">Lounge Bar · Miami Platja</p>
             </div>
             <div class="loader-bar"><div class="loader-bar-fill"></div></div>
@@ -1789,12 +1950,7 @@ blockquote footer {
                     <path d="M100 100 C 125 95, 145 100, 160 115 C 135 110, 115 105, 102 110" />
                 </g>
             </symbol>
-            <symbol id="cocktail-svg" viewBox="0 0 64 64">
-                <path d="M8 12 L56 12 L32 40 Z" fill="none" stroke="currentColor" stroke-width="2"/>
-                <line x1="32" y1="40" x2="32" y2="58" stroke="currentColor" stroke-width="2"/>
-                <line x1="22" y1="58" x2="42" y2="58" stroke="currentColor" stroke-width="2"/>
-                <circle cx="44" cy="18" r="2" fill="currentColor"/>
-            </symbol>
+            
         </defs>
     </svg>
 
@@ -1839,7 +1995,7 @@ blockquote footer {
             </div>
         </div>
 
-        <button class="nav-burger" id="navBurger" aria-label="Menú">
+        <button class="nav-burger" id="navBurger" aria-label="Menú" aria-expanded="false">
             <span></span><span></span><span></span>
         </button>
     </header>
@@ -1857,7 +2013,7 @@ blockquote footer {
     <!-- =============== HERO =============== -->
     <section class="hero" id="hero">
         <div class="hero-bg">
-            <img src="img/miami-hero.jpg" alt="Miami Lounge Bar Miami Platja" class="hero-img" loading="eager" decoding="async" fetchpriority="high"/>
+            <img src="img/miami-hero.webp" alt="Miami Lounge Bar Miami Platja" class="hero-img" loading="eager" decoding="async" fetchpriority="high"/>
             <div class="hero-overlay"></div>
             <div class="hero-grid"></div>
         </div>
@@ -1873,21 +2029,18 @@ blockquote footer {
                 <span class="hero-line gradient">Cocktail Bar</span>
             </h1>
             <div class="ig-glow-wrap">
-            <a href="https://www.instagram.com/miamiloungebar/" target="_blank" rel="noopener noreferrer" class="ig-banner" data-reveal data-delay="0" aria-label="Síguenos en Instagram">
-                <div class="ig-embers" aria-hidden="true"></div>
-                <div class="ig-badge">
-                    <span class="ig-live-dot" aria-hidden="true"></span>
-                    <span data-i18n="ig.follow">Síguenos</span>
-                </div>
-                <div class="ig-divider" aria-hidden="true"></div>
-                <div class="ig-icon" aria-hidden="true">
+            <a href="https://www.instagram.com/miamiloungebar/" target="_blank" rel="noopener noreferrer" class="ig-banner" data-reveal data-delay="0" aria-label="Síguenos en Instagram — @miamiloungebar">
+                <span class="ig-ring" aria-hidden="true">
+                    <span class="ig-avatar"><img src="galeria/galeria7-avatar.webp" alt="" width="55" height="55" loading="eager" decoding="async"></span>
+                </span>
+                <span class="ig-banner-text">
+                    <strong data-i18n="ig.text">Síguenos en Instagram</strong>
+                    <span class="ig-handle" data-i18n="ig.handle">@miamiloungebar · eventos, fotos y noches únicas</span>
+                </span>
+                <span class="ig-follow-btn" aria-hidden="true">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                </div>
-                <div class="ig-banner-text">
-                    <strong data-i18n="ig.text">🔥 Síguenos — ¡no te lo pierdas!</strong>
-                    <span data-i18n="ig.handle">@miamiloungebar · Instagram</span>
-                </div>
-                <span class="ig-arrow" aria-hidden="true">→</span>
+                    <span data-i18n="ig.follow">Síguenos</span>
+                </span>
             </a>
             </div>
             <p class="hero-sub" data-reveal data-delay="200" data-i18n="hero.sub">
@@ -2005,14 +2158,14 @@ blockquote footer {
 
                 <div class="about-media" data-reveal data-delay="200">
                     <div class="about-card">
-                        <img src="img/miami-7.jpg" alt="Terraza Miami Lounge" loading="lazy" decoding="async"/>
+                        <img src="img/miami-7.webp" alt="Terraza Miami Lounge" loading="lazy" decoding="async"/>
                         <div class="about-card-tag" data-i18n="about.imgTag">Terraza chill-out</div>
                     </div>
                     <div class="about-card small">
-                        <img src="img/miami-8.jpg" alt="Cócteles Miami Lounge" loading="lazy" decoding="async"/>
+                        <img src="img/miami-8.webp" alt="Cócteles Miami Lounge" loading="lazy" decoding="async"/>
                     </div>
                     <div class="about-card small-2">
-                        <img src="img/miami-9.jpg" alt="Ambiente Miami Lounge" loading="lazy" decoding="async"/>
+                        <img src="img/miami-9.webp" alt="Ambiente Miami Lounge" loading="lazy" decoding="async"/>
                     </div>
                 </div>
             </div>
@@ -2029,40 +2182,40 @@ blockquote footer {
             </div>
 
             <div class="gallery-grid">
-                <a href="img/miami-1.jpg" class="g-item g-big" data-reveal data-cursor="view">
-                    <img src="img/miami-1.jpg" alt="Miami Lounge ambiente" loading="lazy" decoding="async"/>
+                <a href="img/miami-1.webp" class="g-item g-big" data-reveal data-cursor="view">
+                    <img src="img/miami-1.webp" alt="Miami Lounge ambiente" loading="lazy" decoding="async"/>
                     <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
-                <a href="img/miami-2.jpg" class="g-item g-tall" data-reveal data-cursor="view">
-                    <img src="img/miami-2.jpg" alt="Terraza Miami Lounge" loading="lazy" decoding="async"/>
+                <a href="img/miami-2.webp" class="g-item g-tall" data-reveal data-cursor="view">
+                    <img src="img/miami-2.webp" alt="Terraza Miami Lounge" loading="lazy" decoding="async"/>
                     <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
-                <a href="img/miami-3.jpg" class="g-item" data-reveal data-cursor="view">
-                    <img src="img/miami-3.jpg" alt="Miami Lounge interior" loading="lazy" decoding="async"/>
+                <a href="img/miami-3.webp" class="g-item" data-reveal data-cursor="view">
+                    <img src="img/miami-3.webp" alt="Miami Lounge interior" loading="lazy" decoding="async"/>
                     <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
-                <a href="img/miami-4.jpg" class="g-item" data-reveal data-cursor="view">
-                    <img src="img/miami-4.jpg" alt="Cócteles Miami Lounge" loading="lazy" decoding="async"/>
+                <a href="img/miami-4.webp" class="g-item" data-reveal data-cursor="view">
+                    <img src="img/miami-4.webp" alt="Cócteles Miami Lounge" loading="lazy" decoding="async"/>
                     <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
-                <a href="img/miami-5.jpg" class="g-item" data-reveal data-cursor="view">
-                    <img src="img/miami-5.jpg" alt="Terraza Miami Lounge" loading="lazy" decoding="async"/>
+                <a href="img/miami-5.webp" class="g-item" data-reveal data-cursor="view">
+                    <img src="img/miami-5.webp" alt="Terraza Miami Lounge" loading="lazy" decoding="async"/>
                     <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
-                <a href="img/miami-10.jpg" class="g-item g-wide" data-reveal data-cursor="view">
-                    <img src="img/miami-10.jpg" alt="Miami Lounge ambiente" loading="lazy" decoding="async"/>
+                <a href="img/miami-10.webp" class="g-item g-wide" data-reveal data-cursor="view">
+                    <img src="img/miami-10.webp" alt="Miami Lounge ambiente" loading="lazy" decoding="async"/>
                     <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
-                <a href="img/miami-11.jpg" class="g-item g-tall" data-reveal data-cursor="view">
-                    <img src="img/miami-11.jpg" alt="Cócteles Miami Lounge" loading="lazy" decoding="async"/>
+                <a href="img/miami-11.webp" class="g-item g-tall" data-reveal data-cursor="view">
+                    <img src="img/miami-11.webp" alt="Cócteles Miami Lounge" loading="lazy" decoding="async"/>
                     <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
-                <a href="img/miami-12.jpg" class="g-item" data-reveal data-cursor="view">
-                    <img src="img/miami-12.jpg" alt="Ambiente Miami Lounge" loading="lazy" decoding="async"/>
+                <a href="img/miami-12.webp" class="g-item" data-reveal data-cursor="view">
+                    <img src="img/miami-12.webp" alt="Ambiente Miami Lounge" loading="lazy" decoding="async"/>
                     <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
-                <a href="img/miami-13.jpg" class="g-item" data-reveal data-cursor="view">
-                    <img src="img/miami-13.jpg" alt="Noche en Miami Lounge" loading="lazy" decoding="async"/>
+                <a href="img/miami-13.webp" class="g-item" data-reveal data-cursor="view">
+                    <img src="img/miami-13.webp" alt="Noche en Miami Lounge" loading="lazy" decoding="async"/>
                     <div class="g-overlay"><span data-i18n="gallery.view">+ Ver</span></div>
                 </a>
             </div>
@@ -2146,17 +2299,17 @@ blockquote footer {
                     <span class="cocktail-tag" data-i18n="cocktails.mocktails.tag">Mocktails</span>
                 </article>
             </div>
-        </div>
-    
+
             <div style="text-align:center; margin-top: 48px;" data-reveal>
                 <a href="carta.html" class="btn btn-primary" data-cursor="link">
                     <span data-i18n="cocktails.btn">Ver carta</span>
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
                 </a>
             </div>
+        </div>
         </section>
 
-    <!-- =============== EVENTS =============== -->
+    
 
     <!-- =============== SCHEDULE =============== -->
     <section class="schedule" id="schedule">
@@ -2164,9 +2317,9 @@ blockquote footer {
             <div class="schedule-wrap" data-reveal>
                 <div class="schedule-text">
                     <span class="eyebrow" data-i18n="schedule.eyebrow">— Te esperamos</span>
-                    <h2 class="season-badge">
-                        <span class="dot"></span> <span data-i18n="schedule.badge">Temporada verano 2026 · ¡Ya estamos abiertos!</span>
-                    </h2>
+                    <p class="season-badge">
+                        <span class="dot" id="statusDot"></span> <span data-i18n="schedule.badge">Temporada verano 2026 · ¡Ya estamos abiertos!</span>
+                    </p>
                     <h2 class="section-title" data-i18n="schedule.title">Horario de <em>apertura</em></h2>
                     <p>
                         <span data-i18n="schedule.p">Miami Lounge abre <strong>todas las noches del verano</strong> para que disfrutes
@@ -2213,6 +2366,14 @@ blockquote footer {
                     <p><span data-i18n="reviews.r3">"Nice terrace/garden in Caribbean style. Very often music from 22:00 till 24:00 then it stops because of license. The house-made sangria was highlighted for its taste, and live music added to the ambiance. This is the best bar in the area."</span></p>
                     <footer>— Chris M · Google</footer>
                 </blockquote>
+            </div>
+            <div class="reviews-cta" data-reveal style="margin-top:48px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                <a href="https://maps.google.com/?q=Miami+Lounge,+Avinguda+de+Barcelona,+40,+43892+Miami+Platja,+Tarragona" target="_blank" rel="noopener noreferrer" class="btn btn-primary" data-cursor="link">
+                    <span data-i18n="reviews.cta1">★ Déjanos tu reseña en Google</span>
+                </a>
+                <a href="https://www.tripadvisor.es/UserReviewEdit-g672802-d7694685" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" data-cursor="link">
+                    <span data-i18n="reviews.cta2">Opina en TripAdvisor</span>
+                </a>
             </div>
         </div>
     </section>
@@ -2284,7 +2445,7 @@ blockquote footer {
                         <a href="https://www.facebook.com/miamiloungecocteles" target="_blank" rel="noopener noreferrer" data-cursor="link" aria-label="Facebook">Facebook</a>
                         <a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener noreferrer" data-cursor="link" aria-label="Instagram">Instagram</a>
                         <a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener noreferrer" data-cursor="link" aria-label="Turismo" data-i18n="contact.tourism">Turismo</a>
-                        <a href="https://g.page/r/miami-lounge-miami-platja" target="_blank" rel="noopener noreferrer" data-cursor="link" aria-label="Google">Google</a>
+                        <a href="https://maps.google.com/?q=Miami+Lounge,+Avinguda+de+Barcelona,+40,+43892+Miami+Platja,+Tarragona" target="_blank" rel="noopener noreferrer" data-cursor="link" aria-label="Google Maps">Google</a>
                     </div>
                 </div>
 
@@ -2328,13 +2489,13 @@ blockquote footer {
                         <p><a href="https://www.instagram.com/miamiloungebar" target="_blank" rel="noopener noreferrer">Instagram</a></p>
                         <p><a href="https://www.facebook.com/miamiloungecocteles" target="_blank" rel="noopener noreferrer">Facebook</a></p>
                         <p><a href="https://mont-roigmiami.cat/es/contactos/miami-lounge/" target="_blank" rel="noopener noreferrer" data-i18n="footer.col2.tourism">Web oficial turismo</a></p>
-                        <p><a href="https://www.tripadvisor.com/" target="_blank" rel="noopener noreferrer">TripAdvisor</a></p>
+                        <p><a href="https://www.tripadvisor.es/Attraction_Review-g672802-d7694685-Reviews-Miami_Lounge-Miami_Platja_Costa_Dorada_Province_of_Tarragona_Catalonia.html" target="_blank" rel="noopener noreferrer">TripAdvisor</a></p>
                     </div>
                     <div>
                         <h4 data-i18n="footer.col3.title">Información</h4>
-                        <p><a href="#" data-i18n="footer.col3.legal">Aviso legal</a></p>
-                        <p><a href="#" data-i18n="footer.col3.privacy">Privacidad</a></p>
-                        <p><a href="#" data-i18n="footer.col3.cookies">Cookies</a></p>
+                        <p><a href="legal.html#aviso-legal" data-i18n="footer.col3.legal">Aviso legal</a></p>
+                        <p><a href="legal.html#privacidad" data-i18n="footer.col3.privacy">Privacidad</a></p>
+                        <p><a href="legal.html#cookies" data-i18n="footer.col3.cookies">Cookies</a></p>
                     </div>
                 </div>
             </div>
@@ -2348,9 +2509,15 @@ blockquote footer {
         </div>
     </footer>
 
+    <!-- =============== WHATSAPP FLOAT =============== -->
+    <a href="https://wa.me/34691691080?text=Hola!%20Quiero%20reservar%20una%20mesa%20%2F%20Je%20voudrais%20r%C3%A9server%20%2F%20I%27d%20like%20to%20book%20a%20table%20%F0%9F%8C%B4"
+       class="wa-float" target="_blank" rel="noopener noreferrer"
+       aria-label="Reservar por WhatsApp" data-cursor="link">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+    </a>
+
     <!-- =============== LIGHTBOX =============== -->
-    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de fotos" aria-hidden="true">
-        <button class="lb-close" id="lbClose" aria-label="Cerrar" data-i18n-aria="lb.close">×</button>
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de fotos" aria-hidden="true">        <button class="lb-close" id="lbClose" aria-label="Cerrar">×</button>
         <button class="lb-prev" id="lbPrev" aria-label="Anterior">‹</button>
         <button class="lb-next" id="lbNext" aria-label="Siguiente">›</button>
         <img id="lbImg" alt="" loading="lazy" decoding="async"/>
@@ -2364,10 +2531,10 @@ blockquote footer {
 const i18nData = {
     es: {
         "nav.about":"Nosotros","nav.gallery":"Galería","nav.cocktails":"Cócteles","nav.menu":"Carta","nav.contact":"Contacto","nav.book":"Reservar","nav.bookTable":"Reservar mesa",
-        "hero.tag":"Temporada 2026 · Miami Platja · Tarragona","hero.country":"España",
+        "hero.country":"España",
         "hero.sub":"Cócteles artesanales elaborados al momento, una terraza chill-out con sofás, hamacas y columpios para desconectar junto al mar, y un ambiente cuidado que invita a relajarse y disfrutar sin prisas. Un rincón imprescindible en la <strong>Costa Dorada</strong> donde cada detalle está pensado para que vivas una experiencia única.",
-        "hero.cta1":"Reservar mesa","hero.cta2":"Ver carta completa","hero.stat1":"Google Reviews","hero.stat2":"seguidores en Facebook","hero.stat3":"visitas registradas",
-        "ig.follow":"Síguenos","ig.text":"🔥 Síguenos — ¡no te lo pierdas!","ig.handle":"@miamiloungebar · Instagram",
+        "hero.stat1":"Google Reviews","hero.stat2":"seguidores en Facebook","hero.stat3":"visitas registradas",
+        "ig.follow":"Síguenos","ig.text":"Síguenos en Instagram","ig.handle":"@miamiloungebar · eventos, fotos y noches únicas",
         "marquee.1":"Cócteles artesanales","marquee.2":"Terraza chill-out","marquee.3":"Sofás, hamacas & columpios","marquee.4":"Pet-friendly","marquee.5":"WiFi gratis","marquee.6":"Accesible",
         "about.eyebrow":"— Sobre nosotros","about.title":"El lounge-bar de <em>referencia</em><br/>en <span class=\"gradient\">Miami Platja</span>.",
         "about.feat1.title":"Cócteles artesanales","about.feat1.sub":"De la casa y clásicos",
@@ -2393,26 +2560,26 @@ const i18nData = {
         "schedule.note":"⚠️ Horario de temporada (verano 2026). Llámanos o escríbenos al <a href=\"https://instagram.com/miamiloungebar\" target=\"_blank\" rel=\"noopener\">@miamiloungebar</a> para reservas o eventos privados.",
         "schedule.cta":"Llamar para reservar",
         "schedule.mon":"Lunes","schedule.tue":"Martes","schedule.wed":"Miércoles","schedule.thu":"Jueves","schedule.fri":"Viernes","schedule.sat":"Sábado","schedule.sun":"Domingo",
+        "reviews.cta1":"★ Déjanos tu reseña en Google","reviews.cta2":"Opina en TripAdvisor",
         "reviews.eyebrow":"— Lo que dicen","reviews.title":"2.436 razones para <em>venir</em>","reviews.sub":"Reseñas reales de Google y TripAdvisor (4.5/5 sobre 895 opiniones).",
         "reviews.r1":"\"Una cálida bienvenida, un lugar bien equipado, una terraza preciosa, un servicio y cócteles de primera. ¡Una delicia! Encontramos este lugar durante nuestro paseo nocturno. Ambos cócteles (caipiriña y mojito) estaban deliciosos.\"",
         "reviews.r2":"\"¡El Miami Lounge es muy recomendable! 🍹 Las bebidas están preparadas de forma excelente y tienen un sabor delicioso. El personal es súper amable y atento; te sientes como en casa enseguida. La música también se adapta perfectamente al ambiente. ¡La sangría está buenísima!\"",
         "reviews.r3":"\"Nice terrace/garden in Caribbean style. Very often music from 22:00 till 24:00 then it stops because of license. The house-made sangria was highlighted for its taste, and live music added to the ambiance. This is the best bar in the area.\"",
         "contact.eyebrow":"— Encuéntranos","contact.title":"Ven a <em>vivirlo</em>","contact.sub":"En el corazón de <strong>Miami Platja</strong>, a un paso de la playa, en la avenida principal de la Costa Dorada.",
         "contact.address":"Dirección","contact.phone":"Teléfono","contact.email":"Email","contact.web":"Web","contact.zone":"Zona",
-        "contact.mapBadge":"<span>📍</span> Av. de Barcelona, 40, Miami Platja",
+        
         "contact.pet":"Tu mascota es bienvenida en nuestra terraza","contact.accessible":"Accesible","contact.accessibleDesc":"Adaptado para personas con movilidad reducida","contact.tourism":"Turismo",
         "footer.brand":"Lounge-bar de referencia en Miami Platja, Costa Dorada. Cócteles, música y atardeceres mediterráneos.",
         "footer.col1.title":"Contacto","footer.col2.title":"Síguenos","footer.col2.tourism":"Web oficial turismo",
         "footer.col3.title":"Información","footer.col3.legal":"Aviso legal","footer.col3.privacy":"Privacidad","footer.col3.cookies":"Cookies",
-        "footer.responsible":"Drink responsibly · Bebe con responsabilidad. +18",
-        "lb.close":"Cerrar","lb.prev":"Anterior","lb.next":"Siguiente"
+        "footer.responsible":"Drink responsibly · Bebe con responsabilidad. +18"
     },
     fr: {
         "nav.about":"À propos","nav.gallery":"Galerie","nav.cocktails":"Cocktails","nav.menu":"Carte","nav.contact":"Contact","nav.book":"Réserver","nav.bookTable":"Réserver une table",
-        "hero.tag":"Saison 2026 · Miami Platja · Tarragona","hero.country":"Espagne",
+        "hero.country":"Espagne",
         "hero.sub":"Cocktails artisanaux préparés sur place, une terrasse chill-out avec canapés, hamacs et balançoires pour se déconnecter au bord de la mer, et une ambiance soignée qui invite à se détendre et profiter sans se presser. Un endroit incontournable sur la <strong>Costa Dorada</strong> où chaque détail est pensé pour vous offrir une expérience unique.",
-        "hero.cta1":"Réserver une table","hero.cta2":"Voir la carte complète","hero.stat1":"Avis Google","hero.stat2":"abonnés sur Facebook","hero.stat3":"visites enregistrées",
-        "ig.follow":"Suivez-nous","ig.text":"🔥 Suivez-nous — ne ratez pas ça !","ig.handle":"@miamiloungebar · Instagram",
+        "hero.stat1":"Avis Google","hero.stat2":"abonnés sur Facebook","hero.stat3":"visites enregistrées",
+        "ig.follow":"Suivez-nous","ig.text":"Suivez-nous sur Instagram","ig.handle":"@miamiloungebar · événements, photos et nuits uniques",
         "marquee.1":"Cocktails artisanaux","marquee.2":"Terrasse chill-out","marquee.3":"Canapés, hamacs & balançoires","marquee.4":"Animaux bienvenus","marquee.5":"WiFi gratuit","marquee.6":"Accessible PMR",
         "about.eyebrow":"— À propos","about.title":"Le bar lounge de <em>référence</em><br/>à <span class=\"gradient\">Miami Platja</span>.",
         "about.feat1.title":"Cocktails artisanaux","about.feat1.sub":"Maison et classiques",
@@ -2438,26 +2605,26 @@ const i18nData = {
         "schedule.note":"⚠️ Horaires de saison (été 2026). Appelez-nous ou écrivez-nous sur <a href=\"https://instagram.com/miamiloungebar\" target=\"_blank\" rel=\"noopener\">@miamiloungebar</a> pour les réservations ou événements privés.",
         "schedule.cta":"Appeler pour réserver",
         "schedule.mon":"Lundi","schedule.tue":"Mardi","schedule.wed":"Mercredi","schedule.thu":"Jeudi","schedule.fri":"Vendredi","schedule.sat":"Samedi","schedule.sun":"Dimanche",
+        "reviews.cta1":"★ Laissez-nous votre avis sur Google","reviews.cta2":"Donnez votre avis sur TripAdvisor",
         "reviews.eyebrow":"— Ce qu'ils disent","reviews.title":"2.436 raisons de <em>venir</em>","reviews.sub":"Avis réels de Google et TripAdvisor (4.5/5 sur 895 avis).",
         "reviews.r1":"\"Un accueil chaleureux, un endroit bien équipé, une terrasse magnifique, un service et des cocktails de première classe. Un délice ! Nous avons trouvé cet endroit lors de notre promenade nocturne. Les deux cocktails étaient délicieux.\"",
         "reviews.r2":"\"Le Miami Lounge est très recommandable ! 🍹 Les boissons sont excellentes et délicieuses. Le personnel est super aimable et attentionné ; on se sent chez soi immédiatement. La musique s'adapte parfaitement à l'ambiance. La sangria est délicieuse !\"",
         "reviews.r3":"\"Terrasse/jardin de style caribéen. Souvent de la musique de 22h à minuit. La sangria maison est à souligner pour son goût. C'est le meilleur bar de la région.\"",
         "contact.eyebrow":"— Trouvez-nous","contact.title":"Venez <em>nous rendre visite</em>","contact.sub":"Au cœur de <strong>Miami Platja</strong>, à deux pas de la plage, sur l'avenue principale de la Costa Dorada.",
         "contact.address":"Adresse","contact.phone":"Téléphone","contact.email":"E-mail","contact.web":"Site web","contact.zone":"Zone",
-        "contact.mapBadge":"<span>📍</span> Av. de Barcelona, 40, Miami Platja",
+        
         "contact.pet":"Votre animal de compagnie est le bienvenu sur notre terrasse","contact.accessible":"Accessible","contact.accessibleDesc":"Adapté aux personnes à mobilité réduite","contact.tourism":"Tourisme",
         "footer.brand":"Bar lounge de référence à Miami Platja, Costa Dorada. Cocktails, musique et couchers de soleil méditerranéens.",
         "footer.col1.title":"Contact","footer.col2.title":"Suivez-nous","footer.col2.tourism":"Site officiel tourisme",
         "footer.col3.title":"Informations","footer.col3.legal":"Mentions légales","footer.col3.privacy":"Confidentialité","footer.col3.cookies":"Cookies",
-        "footer.responsible":"Consommez avec modération. +18",
-        "lb.close":"Fermer","lb.prev":"Précédent","lb.next":"Suivant"
+        "footer.responsible":"Consommez avec modération. +18"
     },
     en: {
         "nav.about":"About","nav.gallery":"Gallery","nav.cocktails":"Cocktails","nav.menu":"Menu","nav.contact":"Contact","nav.book":"Book now","nav.bookTable":"Book a table",
-        "hero.tag":"Season 2026 · Miami Platja · Tarragona","hero.country":"Spain",
+        "hero.country":"Spain",
         "hero.sub":"Handcrafted cocktails made fresh to order, a chill-out terrace with sofas, hammocks and swings to unwind by the sea, and a carefully curated atmosphere that invites you to relax and enjoy without rushing. A must-visit spot on the <strong>Costa Dorada</strong> where every detail is designed for an unforgettable experience.",
-        "hero.cta1":"Book a table","hero.cta2":"View full menu","hero.stat1":"Google Reviews","hero.stat2":"Facebook followers","hero.stat3":"registered visits",
-        "ig.follow":"Follow us","ig.text":"🔥 Follow us — don't miss it!","ig.handle":"@miamiloungebar · Instagram",
+        "hero.stat1":"Google Reviews","hero.stat2":"Facebook followers","hero.stat3":"registered visits",
+        "ig.follow":"Follow us","ig.text":"Follow us on Instagram","ig.handle":"@miamiloungebar · events, photos and unique nights",
         "marquee.1":"Handcrafted cocktails","marquee.2":"Chill-out terrace","marquee.3":"Sofas, hammocks & swings","marquee.4":"Pet-friendly","marquee.5":"Free WiFi","marquee.6":"Accessible",
         "about.eyebrow":"— About us","about.title":"The reference <em>lounge bar</em><br/>in <span class=\"gradient\">Miami Platja</span>.",
         "about.feat1.title":"Handcrafted cocktails","about.feat1.sub":"House specials & classics",
@@ -2483,19 +2650,19 @@ const i18nData = {
         "schedule.note":"⚠️ Seasonal hours (summer 2026). Call us or message us at <a href=\"https://instagram.com/miamiloungebar\" target=\"_blank\" rel=\"noopener\">@miamiloungebar</a> for reservations or private events.",
         "schedule.cta":"Call to book",
         "schedule.mon":"Monday","schedule.tue":"Tuesday","schedule.wed":"Wednesday","schedule.thu":"Thursday","schedule.fri":"Friday","schedule.sat":"Saturday","schedule.sun":"Sunday",
+        "reviews.cta1":"★ Leave us a review on Google","reviews.cta2":"Review us on TripAdvisor",
         "reviews.eyebrow":"— What they say","reviews.title":"2,436 reasons to <em>visit us</em>","reviews.sub":"Real reviews from Google and TripAdvisor (4.5/5 based on 895 reviews).",
         "reviews.r1":"\"A warm welcome, a well-equipped place, a beautiful terrace, top-notch service and cocktails. A delight! We found this place during our evening stroll. Both cocktails (caipirinha and mojito) were delicious.\"",
         "reviews.r2":"\"Miami Lounge is highly recommended! 🍹 The drinks are prepared excellently and taste amazing. The staff is super friendly and attentive; you feel at home straight away. The music perfectly matches the atmosphere. The sangria is amazing!\"",
         "reviews.r3":"\"Nice terrace/garden in Caribbean style. Very often music from 22:00 till 24:00 then it stops because of license. The house-made sangria was highlighted for its taste, and live music added to the ambiance. This is the best bar in the area.\"",
         "contact.eyebrow":"— Find us","contact.title":"Come and <em>experience it</em>","contact.sub":"In the heart of <strong>Miami Platja</strong>, steps from the beach, on the main avenue of the Costa Dorada.",
         "contact.address":"Address","contact.phone":"Phone","contact.email":"Email","contact.web":"Website","contact.zone":"Area",
-        "contact.mapBadge":"<span>📍</span> Av. de Barcelona, 40, Miami Platja",
+        
         "contact.pet":"Your pet is welcome on our terrace","contact.accessible":"Accessible","contact.accessibleDesc":"Adapted for people with reduced mobility","contact.tourism":"Tourism",
         "footer.brand":"Reference lounge bar in Miami Platja, Costa Dorada. Cocktails, music and Mediterranean sunsets.",
         "footer.col1.title":"Contact","footer.col2.title":"Follow us","footer.col2.tourism":"Official tourism website",
         "footer.col3.title":"Information","footer.col3.legal":"Legal notice","footer.col3.privacy":"Privacy","footer.col3.cookies":"Cookies",
-        "footer.responsible":"Drink responsibly. +18",
-        "lb.close":"Close","lb.prev":"Previous","lb.next":"Next"
+        "footer.responsible":"Drink responsibly. +18"
     }
 };
 
@@ -2582,17 +2749,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const loaderKey = 'miamilounge_loader_index';
     const today = new Date().toISOString().slice(0, 10);
     const lastShown = localStorage.getItem(loaderKey);
-    if (lastShown === today) {
-      loader.classList.add('is-hidden');
-    } else {
-      localStorage.setItem(loaderKey, today);
-      const hideLoader = () => setTimeout(() => loader.classList.add('is-hidden'), 1900);
-      if (document.readyState === 'complete') {
-        hideLoader();
+    if (loader) {
+      if (lastShown === today) {
+        loader.classList.add('is-hidden');
       } else {
-        window.addEventListener('load', hideLoader);
+        localStorage.setItem(loaderKey, today);
+        const hideLoader = () => setTimeout(() => loader.classList.add('is-hidden'), 1900);
+        if (document.readyState === 'complete') {
+          hideLoader();
+        } else {
+          window.addEventListener('load', hideLoader, { once: true });
+        }
+        setTimeout(() => loader.classList.add('is-hidden'), 4100);
       }
-      setTimeout(() => loader.classList.add('is-hidden'), 4100);
     }
 
     /* ---------- YEAR ---------- */
@@ -2644,6 +2813,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ---------- NAV SCROLL ---------- */
     const nav = document.getElementById('nav');
     const handleScroll = () => {
+        if (!nav) return;
         if (window.scrollY > 40) nav.classList.add('is-scrolled');
         else nav.classList.remove('is-scrolled');
     };
@@ -2661,13 +2831,27 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = isOpen ? 'hidden' : '';
             burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         };
-        burger.addEventListener('click', toggle);
+        burger.addEventListener('click', () => {
+            toggle();
+            if (mobileMenu.classList.contains('is-open')) {
+                const firstLink = mobileMenu.querySelector('a');
+                if (firstLink) firstLink.focus();
+            } else {
+                burger.focus();
+            }
+        });
         mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
       burger.classList.remove('is-open');
       mobileMenu.classList.remove('is-open');
       document.body.style.overflow = '';
       burger.setAttribute('aria-expanded', 'false');
     }));
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('is-open')) {
+                toggle();
+                burger.focus();
+            }
+        });
     }
 
     /* ---------- REVEAL ON SCROLL ---------- */
@@ -2699,19 +2883,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const gItems = document.querySelectorAll('.g-item');
     const images = Array.from(gItems).map(a => a.getAttribute('href'));
     let currentIndex = 0;
+    let lbLastFocus = null;
+
+    /* Focus trap genérico para diálogos */
+    const trapFocus = (container) => {
+        container.addEventListener('keydown', e => {
+            if (e.key !== 'Tab') return;
+            const focusables = Array.from(
+                container.querySelectorAll('button, a[href], input, [tabindex]:not([tabindex="-1"])')
+            ).filter(el => el.offsetParent !== null);
+            if (!focusables.length) return;
+            const first = focusables[0], last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        });
+    };
 
     const openLightbox = (index) => {
         currentIndex = index;
         lbImg.src = images[currentIndex];
         lbCounter.textContent = `${currentIndex + 1} / ${images.length}`;
         lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+        lbLastFocus = document.activeElement;
+        if (lbClose) lbClose.focus();
     };
 
     const closeLightbox = () => {
         lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+        if (lbLastFocus) { lbLastFocus.focus(); lbLastFocus = null; }
     };
+
+    if (lightbox) trapFocus(lightbox);
 
     const navigate = (dir) => {
         currentIndex = (currentIndex + dir + images.length) % images.length;
@@ -2762,13 +2968,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* ---------- PARALLAX FOR HERO IMG (subtle) ---------- */
-    const heroImg = document.querySelector('.hero-img');
-    if (heroImg) {
+    /* ---------- PARALLAX FOR HERO BG (subtle) ---------- */
+    const heroBg = document.querySelector('.hero-bg');
+    if (heroBg) {
         window.addEventListener('scroll', () => {
             const scrolled = window.scrollY;
             if (scrolled < window.innerHeight) {
-                heroImg.style.transform = `scale(1.05) translateY(${scrolled * 0.15}px)`;
+                heroBg.style.transform = `translateY(${scrolled * 0.15}px)`;
             }
         }, { passive: true });
     }
@@ -2809,7 +3015,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.documentElement.style.setProperty('--nav-h', h + 'px');
             }
             updateNavH();
-            window.addEventListener('scroll', updateNavH, { passive: true });
             window.addEventListener('resize', updateNavH, { passive: true });
         })();
     </script>
@@ -2861,5 +3066,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 </script>
+
+<!-- ═══ ANALÍTICA SIN COOKIES (GoatCounter, gratis, sin banner RGPD) ═══
+     Para activarla:
+     1. Crea una cuenta gratuita en https://www.goatcounter.com y elige un código (p. ej. "miamilounge")
+     2. Sustituye MIAMILOUNGE abajo por tu código y descomenta la línea:
+
+<script data-goatcounter="https://MIAMILOUNGE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+-->
 </body>
 </html>
